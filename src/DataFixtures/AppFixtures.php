@@ -6,7 +6,6 @@ use Faker\Factory;
 use App\Entity\Media;
 use App\Entity\Figure;
 use App\Entity\Groupe;
-use Cocur\Slugify\Slugify;
 use App\Entity\Commentaire;
 use App\Entity\Utilisateur;
 use Faker\Provider\Youtube;
@@ -56,8 +55,7 @@ class AppFixtures extends Fixture
 
             $nom = $faker->word;
 
-            $groupe->setNom($nom)
-                   ->setSlug((new Slugify())->slugify($nom));
+            $groupe->setNom($nom);
             
             $manager->persist($groupe);
             array_push($groupes, $groupe);
@@ -74,7 +72,6 @@ class AppFixtures extends Fixture
             $figure->setNom($nom)
                    ->setDescription(implode(" ", $faker->sentences()))
                    ->setEditeur($utilisateurs[array_rand($utilisateurs)])
-                   ->setSlug((new Slugify())->slugify($nom))
                    ->setGroupe($groupes[array_rand($groupes)]);
             
             $fakerYoutube = Factory::create();
