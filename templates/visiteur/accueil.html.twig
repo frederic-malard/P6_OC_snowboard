@@ -4,7 +4,6 @@
 
 {% block body %}
 
-<!-- Full Page Image Header with Vertically Centered Content -->
 <header class="masthead">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
@@ -22,12 +21,18 @@
 
 <div class="corps">
     <div id="tricks">
-        <div class="row">
+        <div class="row m-3 mt-4">
             {% for figure in figures %}
                 <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="card bg-light mb-3" style="max-width: 20rem;">
-                        <img src="{{ figure.illustrations[0].url }}" alt="{{ figure.illustrations[0].alt }}" class="miniatureFigure">
-                        <div class="card-header">{{ figure.nom }}</div>
+                        <a href="{{ path("figure_affichage", {"slug" : figure.slug}) }}">
+                            {% if figure.illustrations|length > 0 %}
+                                <img src="{{ figure.illustrations[0].url }}" alt="{{ figure.illustrations[0].alt }}" class="miniatureFigure">
+                            {% else %}
+                                <img src="/images/enTete.jpg" alt="image par défaut" class="miniatureFigure">
+                            {% endif %}
+                            <div class="card-header">{{ figure.nom }}</div>
+                        </a>
                     </div>
                 </div>
             {% endfor %}
@@ -35,14 +40,15 @@
     </div>
 </div>
 
+<p class="text-secondary photographe text-right">
+    Site par Frédéric Malard, photo d'en tête par 
+    <a href="https://pixabay.com/fr/users/Pexels-2286921/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1283525">
+        Pexels
+    </a>
+    de 
+    <a href="https://pixabay.com/fr/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1283525">
+        Pixabay
+    </a>
+</p>
+
 {% endblock %}
-
-
-
-{#
-
-lien pour auteur image :
-
-Image par<a href="https://pixabay.com/fr/users/Pexels-2286921/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1283525">Pexels</a> de <a href="https://pixabay.com/fr/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1283525">Pixabay</a>
-
-#}

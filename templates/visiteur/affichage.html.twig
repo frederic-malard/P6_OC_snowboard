@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ figure.nom }}{% endblock %}
+
+{% block body %}
+
+{# image en tête : première image, s'il n'y a pas d'images, une image par défaut. image d'en tête de l'accueil ? #}
+
+<header class="m-0 w-100" style="height: 100vh; min-height: 500px; background-image: url('{{ figure.illustrations[0].url }}'); background-size: cover; background-position: center; background-repeat: no-repeat; color: #fea; text-shadow: 3px 3px 3px black;">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="font-weight-bold text-uppercase" style="color: #fea;">
+                    {{ figure.nom }}
+                </h1>
+                <p class="lead">
+                    test
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+
+{# illustrations et vidéos #}
+<div class="d-sm-flex justify-content-center flex-wrap">
+    {% for illustration in figure.illustrations %}
+        <img src="{{ illustration.url }}" alt="{{ illustration.alt }}" style="display: block; width: 250px;" class="mx-auto my-3">
+    {% endfor %}
+    {% for video in figure.videos %}
+        <iframe src="https://www.youtube.com/embed/pYJbes1VChQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 250px;" class="mx-auto my-3">{{ video.alt }}</iframe>
+    {% endfor %}
+</div>
+
+<div class="container my-4 jumbotron">
+    {# description #}
+    {{ figure.description }}
+
+    {# données importantes : date création, groupe, date modification si existe #}
+    <div class="text-center">
+        <span class="badge badge-primary mx-auto my-3">
+            {{ figure.getDateCreationString() }}
+        </span>
+        <span class="badge badge-primary mx-auto my-3">
+            {{ figure.groupe.nom }}
+        </span>
+        {% if not figure.dateModification is null %}
+            <span class="badge badge-primary mx-auto my-3">
+                {{ figure.getDateModificationString() }}
+            </span>
+        {% endif %}
+    </div>
+
+    {# formulaire d'ajout de commentaire (si inscrit) #}
+
+    {# derniers commentaires #}
+
+    {# bouton de chargement de commentaires #}
+    
+</div>
+
+{% endblock %}
