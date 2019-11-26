@@ -64,6 +64,16 @@ class Figure
     private $videos;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateCreation;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModification;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -71,6 +81,8 @@ class Figure
     {
         if (empty($this->slug))
             $this->slug = (new Slugify())->slugify($this->nom);
+        if (empty($this->dateCreation))
+            $this->dateCreation = new \DateTime();
     }
 
     public function __construct()
@@ -234,6 +246,40 @@ class Figure
                 $video->setFigure(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function getDateCreationString()
+    {
+        return $this->dateCreation->format('d/m/Y H:i:s');
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    public function getDateModificationString()
+    {
+        return $this->dateModification->format('d/m/Y H:i:s');
+    }
+
+    public function getDateModification(): ?\DateTimeInterface
+    {
+        return $this->dateModification;
+    }
+
+    public function setDateModification(?\DateTimeInterface $dateModification): self
+    {
+        $this->dateModification = $dateModification;
 
         return $this;
     }

@@ -9,6 +9,13 @@
     color: #fea;
     text-shadow: 3px 3px 3px black;
 }
+
+/*.figureEnTete
+{
+    color: #fea;
+    text-shadow: 3px 3px 3px black;
+}*/
+
 .masthead h1
 {
     color: #fea;
@@ -19,4 +26,15 @@
     height: 150px;
     width: 100%;
     display: block;
+}
+
+.photographe
+{
+    margin-bottom: 1em;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0);
+}
+
+.photographe a
+{
+    color: #a0a0a0
 }

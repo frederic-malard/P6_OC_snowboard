@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
                    ->setEditeur($utilisateurs[array_rand($utilisateurs)])
                    ->setGroupe($groupes[array_rand($groupes)]);
                    
-            for ($i=0 ; $i<mt_rand(3, 10) ; $i++)
+            for ($i=0 ; $i<mt_rand(0, 5) ; $i++)
             {
                 $illustration = new Illustration();
                 
@@ -89,7 +89,7 @@ class AppFixtures extends Fixture
             $fakerYoutube = Factory::create();
             $fakerYoutube->addProvider(new Youtube($faker));
                     
-            for ($i=0 ; $i<mt_rand(3, 10) ; $i++)
+            for ($i=0 ; $i<mt_rand(0, 5) ; $i++)
             {
                 $video = new Video();
 
