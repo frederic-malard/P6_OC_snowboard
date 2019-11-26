@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\IllustrationRepository")
  */
-class Media
+class Illustration
 {
     /**
      * @ORM\Id()
@@ -27,12 +27,7 @@ class Media
     private $alt;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $video;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="medias")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="illustrations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $figure;
@@ -62,18 +57,6 @@ class Media
     public function setAlt(?string $alt): self
     {
         $this->alt = $alt;
-
-        return $this;
-    }
-
-    public function getVideo(): ?bool
-    {
-        return $this->video;
-    }
-
-    public function setVideo(bool $video): self
-    {
-        $this->video = $video;
 
         return $this;
     }
