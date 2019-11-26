@@ -3,12 +3,13 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
-use App\Entity\Media;
+use App\Entity\Video;
 use App\Entity\Figure;
 use App\Entity\Groupe;
 use App\Entity\Commentaire;
 use App\Entity\Utilisateur;
 use Faker\Provider\Youtube;
+use App\Entity\Illustration;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -73,20 +74,30 @@ class AppFixtures extends Fixture
                    ->setDescription(implode(" ", $faker->sentences()))
                    ->setEditeur($utilisateurs[array_rand($utilisateurs)])
                    ->setGroupe($groupes[array_rand($groupes)]);
+                   
+            for ($i=0 ; $i<mt_rand(3, 10) ; $i++)
+            {
+                $illustration = new Illustration();
+                
+                $illustration->setUrl($faker->imageUrl(720, 480))
+                ->setAlt($faker->sentence())
+                ->setFigure($figure);
+                
+                $manager->persist($illustration);
+            }
             
             $fakerYoutube = Factory::create();
             $fakerYoutube->addProvider(new Youtube($faker));
-            
-            for ($i=0 ; $i<mt_rand(6, 20) ; $i++)
+                    
+            for ($i=0 ; $i<mt_rand(3, 10) ; $i++)
             {
-                $media = new Media();
+                $video = new Video();
 
-                $media->setUrl($fakerYoutube->youtubeEmbedUri())
+                $video->setUrl($fakerYoutube->youtubeEmbedUri())
                       ->setAlt($faker->sentence())
-                      ->setVideo(mt_rand(0, 1))
                       ->setFigure($figure);
                 
-                $manager->persist($media);
+                $manager->persist($video);
             }
             
             for ($i=0 ; $i<mt_rand(0, 30) ; $i++)

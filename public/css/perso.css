@@ -1,0 +1,22 @@
+.masthead
+{
+    height: 100vh;
+    min-height: 500px;
+    background-image: url('/images/enTete.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fea;
+    text-shadow: 3px 3px 3px black;
+}
+.masthead h1
+{
+    color: #fea;
+}
+
+.miniatureFigure
+{
+    height: 150px;
+    width: 100%;
+    display: block;
+}
