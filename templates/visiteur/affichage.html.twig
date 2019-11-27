@@ -6,7 +6,11 @@
 
 {# image en tête : première image, s'il n'y a pas d'images, une image par défaut. image d'en tête de l'accueil ? #}
 
-<header class="m-0 w-100" style="height: 100vh; min-height: 500px; background-image: url('{{ figure.illustrations[0].url }}'); background-size: cover; background-position: center; background-repeat: no-repeat; color: #fea; text-shadow: 3px 3px 3px black;">
+{% if figure.illustrations|length > 0 %}
+    <header class="m-0 w-100" style="height: 100vh; min-height: 500px; background-image: url('{{ figure.illustrations[0].url }}'); background-size: cover; background-position: center; background-repeat: no-repeat; color: #fea; text-shadow: 3px 3px 3px black;">
+{% else %}
+    <header class="m-0 w-100" style="height: 100vh; min-height: 500px; background-image: url('/images/enTete.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; color: #fea; text-shadow: 3px 3px 3px black;">
+{% endif %}
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12 text-center">
@@ -56,26 +60,38 @@
 
     <hr class="my-5">
 
-    {% for commentaire in figure.commentaires %}
-        <div class="m-3">
-            {% if not commentaire.auteur.avatar is null %}
-                <img src="{{ commentaire.auteur.avatar }}" alt="avatar" style="float: left; width: 64px; height: 64px; display:block;">
+    <div id="commentaires">
+        {% for commentaire in figure.commentaires %}
+            {% if loop.index > 7 %}
+                <div class="commentaire m-3 d-none">
             {% else %}
-                {# TODO : mettre un avatar par défaut genre bonhomme bleu #}
+                <div class="commentaire m-3 d-block">
             {% endif %}
-            <div style="margin-left: 80px;">
-                <p class="lead">
-                    {{ commentaire.auteur.login }} - le {{ commentaire.getDateCreationString() }}
-                </p>
-                <p>
-                    {{ commentaire.contenu }}
-                </p>
+                {% if not commentaire.auteur.avatar is null %}
+                    <img src="{{ commentaire.auteur.avatar }}" alt="avatar" style="float: left; width: 64px; height: 64px; display:block;">
+                {% else %}
+                    {# TODO : mettre un avatar par défaut genre bonhomme bleu #}
+                {% endif %}
+                <div style="margin-left: 80px;">
+                    <p class="lead">
+                        {{ commentaire.auteur.login }} - le {{ commentaire.getDateCreationString() }}
+                    </p>
+                    <p>
+                        {{ commentaire.contenu }}
+                    </p>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
     {# bouton de chargement de commentaires #}
     
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="/js/gestionListeCommentaires.js"></script>
 
 {% endblock %}
