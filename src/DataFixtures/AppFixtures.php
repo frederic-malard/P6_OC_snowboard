@@ -61,7 +61,7 @@ class AppFixtures extends Fixture
 
         $groupes = array();
 
-        for ($i=0 ; $i<4 ; $i++)
+        for ($j=0 ; $j<4 ; $j++)
         {
             $groupe = new Groupe();
 
@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
 
         $figures = array();
 
-        for ($i=0 ; $i<12 ; $i++)
+        for ($k=0 ; $k<20 ; $k++)
         {
             $figure = new Figure();
 
@@ -86,7 +86,7 @@ class AppFixtures extends Fixture
                    ->setEditeur($utilisateurs[array_rand($utilisateurs)])
                    ->setGroupe($groupes[array_rand($groupes)]);
                    
-            for ($i=0 ; $i<mt_rand(0, 5) ; $i++)
+            for ($l=0 ; $l<mt_rand(0, 5) ; $l++)
             {
                 $illustration = new Illustration();
                 
@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
             $fakerYoutube = Factory::create();
             $fakerYoutube->addProvider(new Youtube($faker));
                     
-            for ($i=0 ; $i<mt_rand(0, 5) ; $i++)
+            for ($m=0 ; $m<mt_rand(0, 5) ; $m++)
             {
                 $video = new Video();
 
@@ -111,7 +111,7 @@ class AppFixtures extends Fixture
                 $manager->persist($video);
             }
             
-            for ($i=0 ; $i<mt_rand(0, 30) ; $i++)
+            for ($n=0 ; $n<mt_rand(0, 30) ; $n++)
             {
                 $commentaire = new Commentaire();
 
