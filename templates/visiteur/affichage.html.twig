@@ -54,6 +54,26 @@
 
     {# derniers commentaires #}
 
+    <hr class="my-5">
+
+    {% for commentaire in figure.commentaires %}
+        <div class="m-3">
+            {% if not commentaire.auteur.avatar is null %}
+                <img src="{{ commentaire.auteur.avatar }}" alt="avatar" style="float: left; width: 64px; height: 64px; display:block;">
+            {% else %}
+                {# TODO : mettre un avatar par défaut genre bonhomme bleu #}
+            {% endif %}
+            <div style="margin-left: 80px;">
+                <p class="lead">
+                    {{ commentaire.auteur.login }} - le {{ commentaire.getDateCreationString() }}
+                </p>
+                <p>
+                    {{ commentaire.contenu }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+
     {# bouton de chargement de commentaires #}
     
 </div>
