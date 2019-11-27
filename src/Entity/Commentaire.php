@@ -47,6 +47,11 @@ class Commentaire
         return $this->dateCreation;
     }
 
+    public function getDateCreationString()
+    {
+        return $this->dateCreation->format("d/m/Y à H:i:s");
+    }
+
     public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;

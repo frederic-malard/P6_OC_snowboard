@@ -22,14 +22,25 @@ class AppFixtures extends Fixture
         $moderateurExiste = false;
         $adminExiste = false;
 
+        $genres = ['homme', 'femme'];
+
         $utilisateurs = array();
 
         for ($i=0 ; $i<8 ; $i++){
             $utilisateur = new Utilisateur();
 
+            $urlAvatar = "https://randomuser.me/api/portraits/";
+            $genre = $faker->randomElement($genres);
+            $idAvatar = $faker->numberBetween(1, 99);
+
+            $avatar = $urlAvatar . $genre . "/" . $idAvatar . ".jpg";
+
             $utilisateur->setLogin($faker->word . mt_rand(1000, 9999))
                         ->setMotDePasse(str_shuffle("azertyuiopqsdFGHJKLMWXCVBN1234567890"))
                         ->setMail($faker->email);
+            
+            if ($faker->numberBetween(0, 3) != 0)
+                $utilisateur->setAvatar($avatar);
             
             if (! $moderateurExiste)
             {
