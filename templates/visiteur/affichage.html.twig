@@ -2,6 +2,8 @@
 
 {% block title %}{{ figure.nom }}{% endblock %}
 
+{% form_theme form _self %}
+
 {% block body %}
 
 {# image en tête : première image, s'il n'y a pas d'images, une image par défaut. image d'en tête de l'accueil ? #}
@@ -56,12 +58,16 @@
 
     {# formulaire d'ajout de commentaire (si inscrit) #}
 
+    <hr class="my-5">
+
+    {{ form(form) }}
+
     {# derniers commentaires #}
 
     <hr class="my-5">
 
     <div id="commentaires">
-        {% for commentaire in figure.commentaires %}
+        {% for commentaire in figure.commentaires|reverse %}
             {% if loop.index > 7 %}
                 <div class="commentaire m-3 d-none">
             {% else %}
