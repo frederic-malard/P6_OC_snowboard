@@ -111,7 +111,7 @@ class AppFixtures extends Fixture
                 $manager->persist($video);
             }
             
-            for ($n=0 ; $n<mt_rand(0, 30) ; $n++)
+            for ($n=0 ; $faker->numberBetween(0, 30) ; $n++)
             {
                 $commentaire = new Commentaire();
 
