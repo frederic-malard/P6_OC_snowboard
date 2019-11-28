@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -185,4 +186,28 @@ class Utilisateur
 
         return $this;
     }
+
+    public function getRoles()
+    {
+        if ($this->role == "administrateur")
+            $roles = ['ROLE_USER', 'ROLE_MODO', 'ROLE_ADMIN'];
+        elseif ($this->role == "moderateur")
+            $roles = ['ROLE_USER', 'ROLE_MODO'];
+        else
+            $roles = ['ROLE_USER'];
+    }
+
+    public function getPassword()
+    {
+        return $this->hash;
+    }
+
+    public function getSalt(){}
+
+    public function getUsername()
+    {
+        return $this->login;
+    }
+
+    public function eraseCredentials(){}
 }

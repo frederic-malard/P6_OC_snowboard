@@ -12,9 +12,17 @@ use Faker\Provider\Youtube;
 use App\Entity\Illustration;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('FR-fr');
@@ -36,7 +44,7 @@ class AppFixtures extends Fixture
             $avatar = $urlAvatar . $genre . "/" . $idAvatar . ".jpg";
 
             $utilisateur->setLogin($faker->word . mt_rand(1000, 9999))
-                        ->setMotDePasse(str_shuffle("azertyuiopqsdFGHJKLMWXCVBN1234567890"))
+                        ->setMotDePasse($this->encoder->encodePassword($utilisateur, "mdpBidonExemple"))
                         ->setMail($faker->email);
             
             if ($faker->numberBetween(0, 3) != 0)
@@ -44,12 +52,16 @@ class AppFixtures extends Fixture
             
             if (! $moderateurExiste)
             {
-                $utilisateur->setRole("moderateur");
+                $utilisateur->setRole("moderateur")
+                            ->setMotDePasse($this->encoder->encodePassword($utilisateur, "mdpModo1048"))
+                            ->setLogin("modo");
                 $moderateurExiste = true;
             }
             elseif (! $adminExiste)
             {
-                $utilisateur->setRole("administrateur");
+                $utilisateur->setRole("administrateur")
+                            ->setMotDePasse($this->encoder->encodePassword($utilisateur, "mdpAdmin8590"))
+                            ->setLogin("admin");
                 $adminExiste = true;
             }
             else
