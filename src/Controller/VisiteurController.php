@@ -26,8 +26,17 @@ class VisiteurController extends AbstractController
         ]);
     }
 
+    /*
+    / * *
+     * @ Route ("/connexion", name="connexion")
+     * /
+    public function connexion()
+    {
+        return $this->render("visiteur/connexion.html.twig");
+    }*/
+
     /**
-     * @Route("/{slug}", name="figure_affichage")
+     * @Route("/figures/{slug}", name="figure_affichage")
      */
     public function affichage(Figure $figure, Request $request, ObjectManager $manager, UtilisateurRepository $repo)
     {

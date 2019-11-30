@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7205160a4a8b4fe4bbdf188ccaa224e",
+    "content-hash": "52d53633d9c19a957c8712393abe8c7a",
     "packages": [
         {
             "name": "aalaap/faker-youtube",

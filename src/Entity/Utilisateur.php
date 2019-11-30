@@ -189,17 +189,21 @@ class Utilisateur implements UserInterface
 
     public function getRoles()
     {
+        $roles = array();
+        
         if ($this->role == "administrateur")
             $roles = ['ROLE_USER', 'ROLE_MODO', 'ROLE_ADMIN'];
         elseif ($this->role == "moderateur")
             $roles = ['ROLE_USER', 'ROLE_MODO'];
         else
             $roles = ['ROLE_USER'];
+        
+        return $roles;
     }
 
     public function getPassword()
     {
-        return $this->hash;
+        return $this->motDePasse;
     }
 
     public function getSalt(){}
