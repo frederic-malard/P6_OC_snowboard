@@ -5,8 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
@@ -31,6 +32,11 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $motDePasse;
+
+    /**
+     * @Assert\EqualTo(propertyPath="motDePasse", message="Le mot de passe doit être identique à sa confirmation")
+     */
+    public $confirmationMdp;
 
     /**
      * @ORM\Column(type="string", length=255)
