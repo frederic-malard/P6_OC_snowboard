@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  * @UniqueEntity(fields={"login"}, message="Ce login est déjà pris.")
+ * @ORM\HasLifecycleCallbacks
  */
 class Utilisateur implements UserInterface
 {
@@ -37,7 +38,7 @@ class Utilisateur implements UserInterface
     private $mail;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $role;
 
@@ -55,6 +56,16 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function prepare()
+    {
+        if (empty($this->role))
+            $this->role = "utilisateur";
+    }
 
     public function __construct()
     {
