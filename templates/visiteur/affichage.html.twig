@@ -58,9 +58,11 @@
 
     {# formulaire d'ajout de commentaire (si inscrit) #}
 
-    <hr class="my-5">
-
-    {{ form(form) }}
+    {% if app.user %}
+        <hr class="my-5">
+        
+        {{ form(form) }}
+    {% endif %}
 
     {# derniers commentaires #}
 
