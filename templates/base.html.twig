@@ -20,11 +20,24 @@
 
             <div class="collapse navbar-collapse" id="navbarColor03">
                 <ul class="navbar-nav ml-auto">
-                    {% if path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) == path('accueil') %}
-                        <li class="nav-item active">
-                    {% else %}
-                        <li class="nav-item"></li>
+                    {% if app.user and "ROLE_ADMIN" in app.user.roles %}
+                        <li class="nav-item">
+                            <a href="{{ path("menu_admin") }}" class="nav-link">
+                                administration comptes
+                            </a>
+                        </li>
+                    {% elseif app.user and "ROLE_MODO" in app.user.roles %}
+                        <li class="nav-item">
+                            <a href="{{ path("gestion_utilisateurs") }}" class="nav-link">
+                                modération comptes
+                            </a>
+                        </li>
                     {% endif %}
+                    {#{% if path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) == path('accueil') %}
+                        <li class="nav-item active">
+                    {% else %}#}
+                    <li class="nav-item">
+                    {#{% endif %}#}
                         <a class="nav-link" href="{{ path("accueil") }}">
                             accueil
                         </a>

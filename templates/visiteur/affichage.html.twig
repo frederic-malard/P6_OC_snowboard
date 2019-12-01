@@ -68,6 +68,15 @@
                 {{ figure.getDateModificationString() }}
             </span>
         {% endif %}
+        {% if app.user and "ROLE_MODO" in app.user.roles %}
+            <span class="badge badge-primary mx-auto my-3">
+                {% if figure.editeur is defined and not figure.editeur is null %}
+                    {{ figure.editeur.login }} {# pour modération : modo peut retrouver l'éditeur dans l'interface de gestion des comptes s'il troll ou créé n'importe quoi volontairement #}
+                {% elseif not figure.editeur is defined or figure.editeur is null %}
+                    utilisateur supprimé
+                {% endif %}
+            </span>
+        {% endif %}
     </div>
 
     {# formulaire d'ajout de commentaire (si inscrit) #}

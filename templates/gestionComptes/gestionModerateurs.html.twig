@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}gestion des comptes{% endblock %}
+
+{% block body %}
+
+<div class="container jumbotron">
+    
+    {# accessible aux admins uniquement : liste des modérateurs avec infos + paires de boutons pour les faire repasser simples utilisateurs, ou promouvoir administrateur #}
+
+    <h1 class="text-center mb-5">
+        gestion modérateurs
+    </h1>
+
+    {# liste des modérateurs #}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    login
+                </th>
+                <th>
+                    mail
+                </th>
+                <th>
+                    rendre simple utilisateur
+                </th>
+                <th>
+                    promouvoir administrateur
+                </th>
+            </tr>
+        </thead>
+        {% for moderateur in moderateurs %}
+            <tr>
+                <td>
+                    {{ moderateur.login }}
+                </td>
+                <td>
+                    {{ moderateur.mail }}
+                </td>
+                <td class="text-center">
+                    <a href="{{ path("perte_statut_moderateur", {"slug" : moderateur.slug}) }}" class="text-danger">
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a href="{{ path("promotion_administrateur", {"slug" : moderateur.slug}) }}" class="text-success">
+                        <i class="fas fa-arrow-up"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

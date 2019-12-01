@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}gestion des comptes{% endblock %}
+
+{% block body %}
+
+<div class="container jumbotron">
+    <p class="my-5 text-center text-uppercase">
+        <a href="{{ path("gestion_utilisateurs") }}">
+            gestion des utilisateurs
+        </a>
+    </p>
+    <p class="my-5 text-center text-uppercase">
+        <a href="{{ path("gestion_moderateurs") }}">
+            gestion des modérateurs
+        </a>
+    </p>
+</div>
+
+{% endblock %}

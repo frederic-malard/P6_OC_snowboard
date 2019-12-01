@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}gestion des comptes{% endblock %}
+
+{% block body %}
+
+<div class="container jumbotron">
+    
+    {# liste des logins des utilisateurs avec leurs infos, au dessus, un champs de recherche pour trouver par login, et deux boutons par utilisateur, un pour le supprimer, l'autre, accessible uniquement aux admins, pour le promouvoir modérateur. #}
+
+    <h1 class="text-center mb-5">
+        gestion utilisateurs
+    </h1>
+
+    {# champs de recherche pour trouver un utilisateur par login, gérer en javascript, si champs vide, tout afficher, sinon, à chaque appuie sur une lettre, masquer toutes les lignes sauf celles sont le string du champs est contenu dans le login #}
+
+
+
+    {# liste des utilisateurs #}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    login
+                </th>
+                <th>
+                    mail
+                </th>
+                <th>
+                    supprimer
+                </th>
+                {% if "ROLE_ADMIN" in app.user.roles %}
+                    <th>
+                        promouvoir modérateur
+                    </th>
+                {% endif %}
+            </tr>
+        </thead>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>
+                    {{ utilisateur.login }}
+                </td>
+                <td>
+                    {{ utilisateur.mail }}
+                </td>
+                <td class="text-center">
+                    <a href="{{ path("suppression_utilisateur", {"slug" : utilisateur.slug}) }}" class="text-danger">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+                {% if "ROLE_ADMIN" in app.user.roles %}
+                    <td class="text-center">
+                        <a href="{{ path("promotion_moderateur", {"slug" : utilisateur.slug}) }}" class="text-success">
+                            <i class="fas fa-arrow-up"></i>
+                        </a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}
