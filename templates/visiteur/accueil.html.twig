@@ -41,14 +41,39 @@
                             {% else %}
                                 <img src="/images/enTete.jpg" alt="image par défaut" class="miniatureFigure">
                             {% endif %}
-                            <div class="card-header">{{ figure.nom }}</div>
                         </a>
+                        <div class="card-header">
+                            {% if app.user == figure.editeur or (app.user and "ROLE_MODO" in app.user.roles) %}
+                                <div class="float-right mb-0 ml-2">
+                                    <a href="{{ path("modifier_figure", {"slug" : figure.slug}) }}">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                    </a>
+                                    <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}">
+                                        <i class="fas fa-trash-alt">
+                                        </i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <a href="{{ path("figure_affichage", {"slug" : figure.slug}) }}">
+                                {{ figure.nom }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
+{% if app.user %}
+    <hr class="my-4">
+    <p class="text-center">
+        <a href="{{ path("ajout_figure") }}" class="btn btn-warning">
+            Ajouter une annonce
+        </a>
+    </p>
+{% endif %}
 
 <p class="text-secondary photographe text-right mt-5 mr-3">
     Site par Frédéric Malard, photo d'en tête par 
