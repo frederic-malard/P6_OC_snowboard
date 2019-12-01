@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ figure.nom }}{% endblock %}
+{% block title %}nouvelle figure{% endblock %}
 
 {% form_theme form _self %}
 
 {% block body %}
 
-    
+    <div class="container jumbotron">
+        <h1 class="text-center mb-5">Nouvelle figure</h1>
+
+        {{ form(form) }}
+    </div>
 
 {% endblock %}

@@ -60,10 +60,7 @@ class VisiteurController extends AbstractController
     {
         $commentaire = new Commentaire();
 
-        // A EFFACER PLUS TARD !!! En attendant la gestion des comptes
-        $utilisateur = $repo->findOneByLogin("earum2219");
-
-        $commentaire->setAuteur($utilisateur)
+        $commentaire->setAuteur($this->getUser())
                     ->setFigure($figure);
 
         $form = $this->createForm(CommentaireType::class, $commentaire);
@@ -74,6 +71,8 @@ class VisiteurController extends AbstractController
         {
             $manager->persist($commentaire);
             $manager->flush();
+
+            $this->addFlash("success", "Commentaire ajouté");
         }
 
         return $this->render('visiteur/affichage.html.twig', [
