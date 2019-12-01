@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -64,11 +65,18 @@ class Utilisateur implements UserInterface
     private $avatar;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
     public function prepare()
     {
+        if (empty($this->slug))
+            $this->slug = (new Slugify)->slugify($this->login);
         if (empty($this->role))
             $this->role = "utilisateur";
     }
@@ -233,4 +241,16 @@ class Utilisateur implements UserInterface
     }
 
     public function eraseCredentials(){}
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
 }
