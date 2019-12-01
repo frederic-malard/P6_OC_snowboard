@@ -27,6 +27,20 @@
     </div>
 </header>
 
+{# modifier ou supprimer #}
+{% if app.user == figure.editeur or (app.user and "ROLE_MODO" in app.user.roles) %}
+    <div class="float-right" style="margin-top: -3em; margin-right: 1em; font-size: 2em;">
+        <a href="{{ path("modifier_figure", {"slug" : figure.slug}) }}" style="color: #fea;">
+            <i class="fas fa-pencil-alt">
+            </i>
+        </a>
+        <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}" style="color: #fea;" class="ml-3">
+            <i class="fas fa-trash-alt">
+            </i>
+        </a>
+    </div>
+{% endif %}
+
 {# illustrations et vidéos #}
 <div class="d-sm-flex justify-content-center flex-wrap">
     {% for illustration in figure.illustrations %}
