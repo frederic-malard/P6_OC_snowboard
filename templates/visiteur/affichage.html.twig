@@ -104,6 +104,16 @@
                     {# TODO : mettre un avatar par défaut genre bonhomme bleu #}
                 {% endif %}
                 <div style="margin-left: 80px;">
+                    <p class="float-right">
+                        <span class="badge badge-warning">
+                            signaler
+                        </span>
+                        {% if "ROLE_MODO" in app.user.roles %}
+                            <span class="badge badge-danger">
+                                supprimer
+                            </span>
+                        {% endif %}
+                    </p>
                     <p class="lead">
                         {{ commentaire.auteur.login }} - le {{ commentaire.getDateCreationString() }}
                     </p>

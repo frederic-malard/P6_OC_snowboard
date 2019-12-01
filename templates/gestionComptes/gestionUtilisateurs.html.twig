@@ -14,7 +14,10 @@
 
     {# champs de recherche pour trouver un utilisateur par login, gérer en javascript, si champs vide, tout afficher, sinon, à chaque appuie sur une lettre, masquer toutes les lignes sauf celles sont le string du champs est contenu dans le login #}
 
-
+    <form action="post">
+        <label for="recherche">recheche par login : </label>
+        <input type="text" id="recherche" name="recherche">
+    </form>
 
     {# liste des utilisateurs #}
 
@@ -38,7 +41,7 @@
             </tr>
         </thead>
         {% for utilisateur in utilisateurs %}
-            <tr>
+            <tr class="trUtilisateur">
                 <td>
                     {{ utilisateur.login }}
                 </td>
@@ -63,4 +66,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/rechercheUtilisateur.js"></script>
 {% endblock %}
