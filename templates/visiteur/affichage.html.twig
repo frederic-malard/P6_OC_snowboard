@@ -60,7 +60,7 @@
 
     {% if app.user %}
         <hr class="my-5">
-        
+
         {{ form(form) }}
     {% endif %}
 
@@ -75,7 +75,7 @@
             {% else %}
                 <div class="commentaire m-3 d-block">
             {% endif %}
-                {% if not commentaire.auteur.avatar is null %}
+                {% if commentaire.auteur.avatar is defined and not commentaire.auteur.avatar is null %}
                     <img src="{{ commentaire.auteur.avatar }}" alt="avatar" style="float: left; width: 64px; height: 64px; display:block;">
                 {% else %}
                     {# TODO : mettre un avatar par défaut genre bonhomme bleu #}
