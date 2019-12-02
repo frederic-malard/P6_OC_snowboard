@@ -45,11 +45,11 @@
                         <div class="card-header">
                             {% if app.user == figure.editeur or (app.user and "ROLE_MODO" in app.user.roles) %}
                                 <div class="float-right mb-0 ml-2">
-                                    <a href="{{ path("modifier_figure", {"slug" : figure.slug}) }}">
+                                    <a href="{{ path("modifier_figure", {"slug" : figure.slug}) }}" class="text-warning">
                                         <i class="fas fa-pencil-alt">
                                         </i>
                                     </a>
-                                    <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}">
+                                    <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}" class="text-danger">
                                         <i class="fas fa-trash-alt">
                                         </i>
                                     </a>
@@ -69,7 +69,7 @@
 {% if app.user %}
     <hr class="my-4">
     <p class="text-center">
-        <a href="{{ path("ajout_figure") }}" class="btn btn-warning">
+        <a href="{{ path("ajout_figure") }}" class="btn btn-success">
             Ajouter une annonce
         </a>
     </p>
