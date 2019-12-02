@@ -20,6 +20,13 @@
 
             <div class="collapse navbar-collapse" id="navbarColor03">
                 <ul class="navbar-nav ml-auto">
+                    {% if app.user and "ROLE_MODO" in app.user.roles %}
+                        <li class="nav-item">
+                            <a href="{{ path("consulter_signales") }}" class="nav-link">
+                                commentaires signalés
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if app.user and "ROLE_ADMIN" in app.user.roles %}
                         <li class="nav-item">
                             <a href="{{ path("menu_admin") }}" class="nav-link">
