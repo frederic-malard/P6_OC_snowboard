@@ -22,20 +22,23 @@
                 <ul class="navbar-nav ml-auto">
                     {% if app.user and "ROLE_MODO" in app.user.roles %}
                         <li class="nav-item">
-                            <a href="{{ path("consulter_signales") }}" class="nav-link">
+                            <a href="{{ path("consulter_signales") }}" class="nav-link text-warning">
+                                <i class="fas fa-comments"></i>
                                 commentaires signalés
                             </a>
                         </li>
                     {% endif %}
                     {% if app.user and "ROLE_ADMIN" in app.user.roles %}
                         <li class="nav-item">
-                            <a href="{{ path("menu_admin") }}" class="nav-link">
+                            <a href="{{ path("menu_admin") }}" class="nav-link text-info">
+                                <i class="fas fa-user"></i>
                                 administration comptes
                             </a>
                         </li>
                     {% elseif app.user and "ROLE_MODO" in app.user.roles %}
                         <li class="nav-item">
-                            <a href="{{ path("gestion_utilisateurs") }}" class="nav-link">
+                            <a href="{{ path("gestion_utilisateurs") }}" class="nav-link text-info">
+                                <i class="fas fa-user"></i>
                                 modération comptes
                             </a>
                         </li>
@@ -46,28 +49,33 @@
                     <li class="nav-item">
                     {#{% endif %}#}
                         <a class="nav-link" href="{{ path("accueil") }}">
+                            <i class="fas fa-home"></i>
                             accueil
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path("accueil", {"_fragment" : "tricks"}) }}" class="nav-link">
+                            <i class="fas fa-snowboarding"></i>
                             tricks
                         </a>
                     </li>
                     {% if app.user %}
                         <li class="nav-item">
                             <a href="{{ path("deconnexion") }}" class="nav-link">
+                                <i class="fas fa-power-off"></i>
                                 déconnexion
                             </a>
                         </li>
                     {% else %}
                         <li class="nav-item">
                             <a href="{{ path("connexion") }}" class="nav-link">
+                                <i class="fas fa-plug"></i>
                                 connexion
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path("app_register") }}" class="nav-link">
+                                <i class="fas fa-sign-in-alt"></i>
                                 inscription
                             </a>
                         </li>

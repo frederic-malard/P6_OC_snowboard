@@ -30,11 +30,11 @@
 {# modifier ou supprimer #}
 {% if app.user == figure.editeur or (app.user and "ROLE_MODO" in app.user.roles) %}
     <div class="float-right" style="margin-top: -3em; margin-right: 1em; font-size: 2em;">
-        <a href="{{ path("modifier_figure", {"slug" : figure.slug}) }}" style="color: #fea;">
+        <a href="{{ path("modifier_figure", {"slug" : figure.slug}) }}" style="color: #fea;" class="text-warning">
             <i class="fas fa-pencil-alt">
             </i>
         </a>
-        <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}" style="color: #fea;" class="ml-3">
+        <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}" style="color: #fea;" class="ml-3 text-danger">
             <i class="fas fa-trash-alt">
             </i>
         </a>
@@ -105,13 +105,13 @@
                 {% endif %}
                 <div style="margin-left: 80px;">
                     <p class="float-right">
-                        <span class="badge badge-warning signalerCommentaire" id="signaler{{ commentaire.id }}">
+                        <button class="badge badge-warning signalerCommentaire" style="border: 0px;" id="signaler{{ commentaire.id }}">
                             signaler
-                        </span>
-                        {% if "ROLE_MODO" in app.user.roles %}
-                            <span class="badge badge-danger supprimerCommentaire" id="supprimer{{ commentaire.id }}">
+                        </button>
+                        {% if app.user and "ROLE_MODO" in app.user.roles %}
+                            <button class="badge badge-danger supprimerCommentaire" style="border: 0px;" id="supprimer{{ commentaire.id }}">
                                 supprimer
-                            </span>
+                            </button>
                         {% endif %}
                     </p>
                     <p class="lead">
