@@ -39,6 +39,11 @@ class Commentaire
     private $figure;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $signale;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -102,6 +107,18 @@ class Commentaire
     public function setFigure(?Figure $figure): self
     {
         $this->figure = $figure;
+
+        return $this;
+    }
+
+    public function getSignale(): ?bool
+    {
+        return $this->signale;
+    }
+
+    public function setSignale(?bool $signale): self
+    {
+        $this->signale = $signale;
 
         return $this;
     }

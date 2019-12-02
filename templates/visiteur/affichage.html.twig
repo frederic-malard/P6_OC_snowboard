@@ -105,11 +105,11 @@
                 {% endif %}
                 <div style="margin-left: 80px;">
                     <p class="float-right">
-                        <span class="badge badge-warning">
+                        <span class="badge badge-warning signalerCommentaire" id="signaler{{ commentaire.id }}">
                             signaler
                         </span>
                         {% if "ROLE_MODO" in app.user.roles %}
-                            <span class="badge badge-danger">
+                            <span class="badge badge-danger supprimerCommentaire" id="supprimer{{ commentaire.id }}">
                                 supprimer
                             </span>
                         {% endif %}
@@ -133,6 +133,10 @@
 
 {% block javascripts %}
 
-    <script src="/js/gestionListeCommentaires.js"></script>
+    <script type="text/javascript">
+        $pathSignaler = "{{ path("signaler_commentaire", {"slug" : figure.slug, "idCommentaire" : "id"}) }}";
+        $pathSupprimer = "{{ path("supprimer_commentaire", {"slug" : figure.slug, "idCommentaire" : "id"}) }}";
+    </script>
+    <script src="/js/gestionCommentaires.js"></script>
 
 {% endblock %}
