@@ -47,8 +47,9 @@ $(function(){
                     $boutonAfficher.addClass("d-none");
                 }
 
-                // gerer le signalement
+                // gerer le signalement et la suppression
                 $gererSignalement();
+                $gererSuppression();
             });
             
         }
