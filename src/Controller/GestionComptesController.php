@@ -6,6 +6,8 @@ use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -69,6 +71,35 @@ class GestionComptesController extends AbstractController
         $this->addFlash("success", "Utilisateur supprimé");
     
         return $this->redirectToRoute('gestion_utilisateurs');
+    }
+    
+    /**
+     * @Route("/suppression-compte-perso/{slug}", name="suppression_compte_perso")
+     * @Security("is_granted('ROLE_USER') and user === utilisateur")
+     */
+    public function suppressionComptePerso(Utilisateur $utilisateur, ObjectManager $manager)
+    {
+        $figures = $utilisateur->getFigures();
+        $commentaires = $utilisateur->getCommentaires();
+
+        foreach ($figures as $figure) {
+            $figure->setEditeur(null);
+        }
+        foreach ($commentaires as $commentaire) {
+            $manager->remove($commentaire);
+        }
+
+        $manager->remove($utilisateur);
+
+        $manager->flush();
+
+        $this->addFlash("success", "Votre compte a bien été supprimé");
+        
+        $session = $this->get('session');
+        $session = new Session();
+        $session->invalidate();
+    
+        return $this->redirectToRoute('accueil');
     }
     
     /**
