@@ -49,13 +49,13 @@
                     {{ utilisateur.mail }}
                 </td>
                 <td class="text-center">
-                    <a href="{{ path("suppression_utilisateur", {"slug" : utilisateur.slug}) }}" class="text-danger">
+                    <a href="{{ path("suppression_utilisateur", {"slug" : utilisateur.slug}) }}" class="text-danger" onclick="return confirm('Voulez vous vraiment supprimer l\'utilisateur {{ utilisateur.login }} ?')">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>
                 {% if "ROLE_ADMIN" in app.user.roles %}
                     <td class="text-center">
-                        <a href="{{ path("promotion_moderateur", {"slug" : utilisateur.slug}) }}" class="text-success">
+                        <a href="{{ path("promotion_moderateur", {"slug" : utilisateur.slug}) }}" class="text-success" onclick="return confirm('Voulez vous vraiment promouvoir modérateur l\'utilisateur {{ utilisateur.login }} ?')">
                             <i class="fas fa-arrow-up"></i>
                         </a>
                     </td>

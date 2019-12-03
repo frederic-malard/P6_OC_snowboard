@@ -50,12 +50,12 @@
                     {{ commentaire.contenu }}
                 </td>
                 <td class="text-center">
-                    <a href="{{ path("valider_commentaire", {"idCommentaire" : commentaire.id}) }}" class="text-success">
+                    <a href="{{ path("valider_commentaire", {"idCommentaire" : commentaire.id}) }}" class="text-success" onclick="return confirm('Valider le commentaire suivant ?\n\n{{ commentaire.contenu }}')">
                         <i class="fas fa-check"></i>
                     </a>
                 </td>
                 <td class="text-center">
-                    <a href="{{ path("supprimer_commentaire_via_liste", {"idCommentaire" : commentaire.id}) }}" class="text-danger">
+                    <a href="{{ path("supprimer_commentaire_via_liste", {"idCommentaire" : commentaire.id}) }}" class="text-danger" onclick="return confirm('Voulez vous vraiment supprimer le commentaire suivant ?\n\n{{ commentaire.contenu }}')">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>

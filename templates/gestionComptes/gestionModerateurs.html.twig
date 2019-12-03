@@ -40,12 +40,12 @@
                     {{ moderateur.mail }}
                 </td>
                 <td class="text-center">
-                    <a href="{{ path("perte_statut_moderateur", {"slug" : moderateur.slug}) }}" class="text-danger">
+                    <a href="{{ path("perte_statut_moderateur", {"slug" : moderateur.slug}) }}" class="text-danger" onclick="return confirm('Voulez vous vraiment déchoir l\'utilisateur {{ moderateur.login }} de son statut de modérateur ?')">
                         <i class="fas fa-arrow-down"></i>
                     </a>
                 </td>
                 <td class="text-center">
-                    <a href="{{ path("promotion_administrateur", {"slug" : moderateur.slug}) }}" class="text-success">
+                    <a href="{{ path("promotion_administrateur", {"slug" : moderateur.slug}) }}" class="text-success"  onclick="return confirm('Voulez vous vraiment promouvoir administrateur l\'utilisateur {{ moderateur.login }} ? Attention, ayant alors un statut égal au votre, vous n\'aurez plus l\'autorité de lui retirer son statut !')">
                         <i class="fas fa-arrow-up"></i>
                     </a>
                 </td>

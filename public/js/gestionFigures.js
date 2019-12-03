@@ -95,7 +95,7 @@ $(function(){
     // confirmation suppression figure
 
     $gererSuppression = function(){
-        $liensSupprimer = $('.supprimerFigure');
+        /*$liensSupprimer = $('.supprimerFigure');
     
         $liensSupprimer.each(function(cle, lien){
             $lien = jQuery(lien);
@@ -111,7 +111,7 @@ $(function(){
                     window.location.replace($pathSupprimer.substring(0, $pathSupprimer.length - 6) + $slugFigure);
                 }
             });
-        });
+        });*/
     };
 
     $gererSuppression();
