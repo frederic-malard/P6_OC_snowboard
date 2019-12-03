@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}page non trouvée{% endblock %}
+
+{% block body %}
+
+<div class="container jumbotron">
+
+    <p class="alert alert-warning text-center">
+        Erreur : la page demandée n'a pas été trouvée.
+    </p>
+
+    <p class="text-center mt-5">
+        <a href="{{ path("accueil") }}" class="btn btn-primary">
+            Retour à l'accueil
+        </a>
+    </p>
+
+</div>
+
+{% endblock %}
