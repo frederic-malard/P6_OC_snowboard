@@ -56,7 +56,7 @@
     {{ figure.description }}
 
     {# données importantes : date création, groupe, date modification si existe #}
-    <div class="text-center">
+    <div class="text-center mt-5">
         <span class="badge badge-primary mx-auto my-3">
             {{ figure.getDateCreationString() }}
         </span>
@@ -78,6 +78,242 @@
             </span>
         {% endif %}
     </div>
+
+    {# difficulté #}
+
+    {% set opacite = 0.2 %}
+    {% set nbAffiches = 0 %}
+
+    {% if nbAffichages > 0 %}
+
+        <div class="bg-dark text-center text-white py-4 my-4">
+
+        <p class="text-uppercase">
+            difficulté de la figure
+        </p>
+
+        {% if nbAffichages > 1 %}
+            <div class="row">
+        {% endif %}
+        
+        {% if nbAffichages == 2 %}
+            <div class="col-sm-6">
+        {% endif %}
+
+        {% if nbAffichages == 3 %}
+            <div class="col-md-4">
+        {% endif %}
+
+            {# affichage note éditeur si l'éditeur n'est pas l'utilisateur courant (sinon ferait doublon avec la suite) #}
+            {% if not difficulteEditeur is null and not utilisateurCourantEstEditeur %}
+                {% set rouge = min(((difficulteEditeur.note-1)*(255/4.5)), 255)|round %}
+                {% set vert = min(((10-difficulteEditeur.note)*(255/4.5)), 255)|round %}
+
+                <p style="color : rgb({{ rouge }}, {{ vert }}, 0)">
+                    <span class="">
+                        selon l'éditeur
+                    </span> 
+                    
+                    <br>
+
+                    {% for i in 1..difficulteEditeur.note %}
+                        <i class="fas fa-skull-crossbones"></i>
+                    {% endfor %}
+                    {% if difficulteEditeur.note != 10 %}
+                        {% for i in 1..(10-difficulteEditeur.note) %}
+                            <i class="fas fa-skull-crossbones" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
+                        {% endfor %}
+                    {% endif %}
+
+                    <br>
+
+                    <span>
+                        {% if difficulteEditeur.note == 1 %}
+                            initiation
+                        {% elseif difficulteEditeur.note == 2 %}
+                            débutant
+                        {% elseif difficulteEditeur.note == 3 %}
+                            facile
+                        {% elseif difficulteEditeur.note == 4 %}
+                            y'a du niveau !
+                        {% elseif difficulteEditeur.note == 5 %}
+                            pas mal !
+                        {% elseif difficulteEditeur.note == 6 %}
+                            connaisseur
+                        {% elseif difficulteEditeur.note == 7 %}
+                            maîtrise
+                        {% elseif difficulteEditeur.note == 8 %}
+                            pro
+                        {% elseif difficulteEditeur.note == 9 %}
+                            hardcore !
+                        {% elseif difficulteEditeur.note == 10 %}
+                            légendaire
+                        {% endif %}
+                    </span>
+                </p>
+                
+                {% set nbAffiches = 1 %}
+
+                {% if nbAffichages == 2 %}
+                    </div>
+                    <div class="col-sm-6">
+                {% endif %}
+
+                {% if nbAffichages == 3 %}
+                    </div>
+                    <div class="col-md-4">
+                {% endif %}
+            {% endif %}
+
+            {# affichage note moyenne sans compter l'éditeur #}
+            {% if not difficultesAutres|length == 0 %}
+                {% set rouge = min(((difficulteMoyenneSansEditeur-1)*(255/4.5)), 255)|round %}
+                {% set vert = min(((10-difficulteMoyenneSansEditeur)*(255/4.5)), 255)|round %}
+
+                <p style="color : rgb({{ rouge }}, {{ vert }}, 0)">
+                    <span class="">
+                        moyenne des utilisateurs
+                    </span>
+                    
+                    <br>
+
+                    {% for i in 1..difficulteMoyenneSansEditeur %}
+                        <i class="fas fa-skull-crossbones"></i>
+                    {% endfor %}
+
+                    {% if difficulteMoyenneSansEditeur != 10 %}
+                        {% for i in 1..(10-difficulteMoyenneSansEditeur) %}
+                            <i class="fas fa-skull-crossbones" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
+                        {% endfor %}
+                    {% endif %}
+
+                    <br>
+
+                    <span>
+                        {% if difficulteMoyenneSansEditeur == 1 %}
+                            initiation
+                        {% elseif difficulteMoyenneSansEditeur == 2 %}
+                            débutant
+                        {% elseif difficulteMoyenneSansEditeur == 3 %}
+                            facile
+                        {% elseif difficulteMoyenneSansEditeur == 4 %}
+                            y'a du niveau !
+                        {% elseif difficulteMoyenneSansEditeur == 5 %}
+                            pas mal !
+                        {% elseif difficulteMoyenneSansEditeur == 6 %}
+                            connaisseur
+                        {% elseif difficulteMoyenneSansEditeur == 7 %}
+                            maîtrise
+                        {% elseif difficulteMoyenneSansEditeur == 8 %}
+                            pro
+                        {% elseif difficulteMoyenneSansEditeur == 9 %}
+                            hardcore !
+                        {% elseif difficulteMoyenneSansEditeur == 10 %}
+                            légendaire
+                        {% endif %}
+                    </span>
+                </p>
+                
+                {% set nbAffiches = nbAffiches + 1 %}
+
+                {% if nbAffichages == 2 and nbAffichages != nbAffiches %}
+                    </div>
+                    <div class="col-sm-6">
+                {% endif %}
+
+                {% if nbAffichages == 3 %}
+                    </div>
+                    <div class="col-md-4">
+                {% endif %}
+            {% endif %}
+
+            {# affichage note utilisateur courant s'il en a mit une #}
+            {% if not difficulteUtilisateurCourant is null %}
+                {% set rouge = min(((difficulteUtilisateurCourant.note-1)*(255/4.5)), 255)|round %}
+                {% set vert = min(((10-difficulteUtilisateurCourant.note)*(255/4.5)), 255)|round %}
+
+                <p style="color : rgb({{ rouge }}, {{ vert }}, 0)">
+                    <span class="">
+                        votre avis
+                    </span>
+                    
+                    <br>
+
+                    {% for i in 1..difficulteUtilisateurCourant.note %}
+                        <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgb({{ rouge }}, {{ vert }}, 0)">
+                            <i class="fas fa-skull-crossbones"></i>
+                        </a>
+                    {% endfor %}
+
+                    {% if difficulteUtilisateurCourant.note != 10 %}
+                        {% for i in 1..(10-difficulteUtilisateurCourant.note) %}
+                            <a href="{{ path("noter_difficulte", {"note" : (i+difficulteUtilisateurCourant.note), "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}">
+                                <i class="fas fa-skull-crossbones" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+
+                    <br>
+
+                    <span>
+                        {% if difficulteUtilisateurCourant.note == 1 %}
+                            initiation
+                        {% elseif difficulteUtilisateurCourant.note == 2 %}
+                            débutant
+                        {% elseif difficulteUtilisateurCourant.note == 3 %}
+                            facile
+                        {% elseif difficulteUtilisateurCourant.note == 4 %}
+                            y'a du niveau !
+                        {% elseif difficulteUtilisateurCourant.note == 5 %}
+                            pas mal !
+                        {% elseif difficulteUtilisateurCourant.note == 6 %}
+                            connaisseur
+                        {% elseif difficulteUtilisateurCourant.note == 7 %}
+                            maîtrise
+                        {% elseif difficulteUtilisateurCourant.note == 8 %}
+                            pro
+                        {% elseif difficulteUtilisateurCourant.note == 9 %}
+                            hardcore !
+                        {% elseif difficulteUtilisateurCourant.note == 10 %}
+                            légendaire
+                        {% endif %}
+                    </span>
+                </p>
+            {% endif %}
+
+            {# pour l'utilisateur courant, si est connecté mais n'a pas noté : affichage têtes grisées, qui serviront à noter en cliquant sur l'une d'elle #}
+            {% if app.user and difficulteUtilisateurCourant is null %}
+                
+                <p>
+                    <span class="">
+                        votre avis
+                    </span>
+                    
+                    <br>
+
+                    {% for i in 1..10 %}
+                        <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}">
+                            <i class="fas fa-skull-crossbones" style="color : rgba(255, 255, 255, 0.2)"></i>
+                        </a>
+                    {% endfor %}
+                </p>
+            {% endif %}
+
+        {% if nbAffichages == 3 %}
+            </div>
+        {% endif %}
+
+        {% if nbAffichages == 2 %}
+            </div>
+        {% endif %}
+
+        {% if nbAffichages > 1 %}
+            </div>
+        {% endif %}
+
+        </div>
+        
+    {% endif %}
 
     {# formulaire d'ajout de commentaire (si inscrit) #}
 

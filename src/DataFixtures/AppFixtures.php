@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\Video;
 use App\Entity\Figure;
 use App\Entity\Groupe;
+use App\Entity\Difficulte;
 use App\Entity\Commentaire;
 use App\Entity\Utilisateur;
 use Faker\Provider\Youtube;
@@ -103,8 +104,8 @@ class AppFixtures extends Fixture
                 $illustration = new Illustration();
                 
                 $illustration->setUrl($faker->imageUrl(720, 480))
-                ->setAlt($faker->sentence())
-                ->setFigure($figure);
+                             ->setAlt($faker->sentence())
+                             ->setFigure($figure);
                 
                 $manager->persist($illustration);
             }
@@ -133,6 +134,19 @@ class AppFixtures extends Fixture
                             ->setFigure($figure);
                 
                 $manager->persist($commentaire);
+            }
+
+            foreach ($utilisateurs as $utilisateur) {
+                if (mt_rand(1, 3) == 2)
+                {
+                    $difficulte = new Difficulte();
+
+                    $difficulte->setNote(mt_rand(1, 10))
+                               ->setNotant($utilisateur)
+                               ->setFigure($figure);
+
+                    $manager->persist($difficulte);
+                }
             }
             
             $manager->persist($figure);

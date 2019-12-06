@@ -70,6 +70,11 @@ class Utilisateur implements UserInterface
     private $slug;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Difficulte", mappedBy="notant")
+     */
+    private $difficultes;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -85,6 +90,7 @@ class Utilisateur implements UserInterface
     {
         $this->figures = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->difficultes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,6 +256,37 @@ class Utilisateur implements UserInterface
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Difficulte[]
+     */
+    public function getDifficultes(): Collection
+    {
+        return $this->difficultes;
+    }
+
+    public function addDifficulte(Difficulte $difficulte): self
+    {
+        if (!$this->difficultes->contains($difficulte)) {
+            $this->difficultes[] = $difficulte;
+            $difficulte->setNotant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDifficulte(Difficulte $difficulte): self
+    {
+        if ($this->difficultes->contains($difficulte)) {
+            $this->difficultes->removeElement($difficulte);
+            // set the owning side to null (unless already changed)
+            if ($difficulte->getNotant() === $this) {
+                $difficulte->setNotant(null);
+            }
+        }
 
         return $this;
     }
