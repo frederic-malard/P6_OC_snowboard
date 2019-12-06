@@ -77,6 +77,11 @@ class Figure
     private $dateModification;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Difficulte", mappedBy="figure")
+     */
+    private $difficultes;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -93,6 +98,7 @@ class Figure
         $this->commentaires = new ArrayCollection();
         $this->illustrations = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->difficultes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -283,6 +289,37 @@ class Figure
     public function setDateModification(?\DateTimeInterface $dateModification): self
     {
         $this->dateModification = $dateModification;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Difficulte[]
+     */
+    public function getDifficultes(): Collection
+    {
+        return $this->difficultes;
+    }
+
+    public function addDifficulte(Difficulte $difficulte): self
+    {
+        if (!$this->difficultes->contains($difficulte)) {
+            $this->difficultes[] = $difficulte;
+            $difficulte->setFigure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDifficulte(Difficulte $difficulte): self
+    {
+        if ($this->difficultes->contains($difficulte)) {
+            $this->difficultes->removeElement($difficulte);
+            // set the owning side to null (unless already changed)
+            if ($difficulte->getFigure() === $this) {
+                $difficulte->setFigure(null);
+            }
+        }
 
         return $this;
     }
