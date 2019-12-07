@@ -12,7 +12,10 @@
     
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-            <a class="navbar-brand" href="{{ path("accueil") }}">SnowTricks</a>
+            <a class="navbar-brand" href="{{ path("accueil") }}">
+                <img src="/images/snowTricksLogo.png" alt="logo perso snowBoarder" style="height: 42px;" class="mx-3">
+                SnowTricks
+            </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -96,8 +99,19 @@
 
         {% block body %}{% endblock %}
 
+        <p class="text-secondary photographe text-right mt-5 mr-4">
+            Site et logo par Frédéric Malard, photo d'en tête par 
+            <a href="https://pixabay.com/fr/users/Pexels-2286921/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1283525">
+                Pexels
+            </a>
+            de 
+            <a href="https://pixabay.com/fr/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1283525">
+                Pixabay
+            </a>
+        </p>
+
         {% if app.user %}
-            <p class="text-right mr-3">
+            <p class="text-right mr-4 mb-4">
                 <a href="{{ path("suppression_compte_perso", {"slug" : app.user.slug}) }}" onclick="return confirm('Etes vous certains de vouloir supprimer votre compte ? Attention : opération irréversible !!!')">
                     supprimer mon compte
                 </a>
