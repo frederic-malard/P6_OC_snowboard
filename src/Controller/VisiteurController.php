@@ -150,8 +150,10 @@ class VisiteurController extends AbstractController
 
         $difficultesUtilisateur = $difficulteRepo->findByNotant($utilisateur);
 
-        foreach ($difficultesUtilisateur as $difficulteUtilisateur) {
-            if ($difficulteUtilisateur->getFigure()->getSlug() == $figure->getSlug()) {
+        foreach ($difficultesUtilisateur as $difficulteUtilisateur)
+        {
+            if ($difficulteUtilisateur->getFigure()->getSlug() == $figure->getSlug())
+            {
                 $manager->remove($difficulteUtilisateur);
             }
         }
