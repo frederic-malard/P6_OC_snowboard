@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Figure;
 use App\Form\FigureType;
+use App\Entity\Illustration;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,21 +27,39 @@ class ManipulationFiguresController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $figure->setEditeur($this->getUser());
 
-            $fichiers = $form['illustrations']->getData();
+            $illustrations = $form['illustrations']->getData();
 
-            if($fichiers)
+            if($illustrations)
             {
-                foreach ($fichiers as $fichier) {
+                foreach ($illustrations as $illustrationFichier) {
                     $dossier = "illustrations";
-                    $extension = $fichier->guessExtension();
+                    $extension = $illustrationFichier->guessExtension();
                     if(!$extension)
                         $extension = "bin";
-                    $nomFichier = rand(1, 999999999);
+                    $nomIllustration = rand(1, 999999999);
         
-                    $fichier->move($dossier, $nomFichier . "." . $extension);
+                    $illustrationFichier->move($dossier, $nomIllustration . "." . $extension);
+
+                    $illustration = new Illustration();
+
+                    $illustration->setUrl("/" . $dossier . "/" . $nomIllustration . "." . $extension)
+                                 ->setAlt("une illustration de la figure " . $figure->getNom())
+                                 ->setFigure($figure);
+
+                    $manager->persist($illustration);
         
-                    $user->addIllustration("/" . $dossier . "/" . $nomFichier . "." . $extension);
+                    $figure->addIllustration($illustration);
                 }
+            }
+
+            $videos = $figure->getVideos();
+
+            foreach ($videos as $video) {
+                $video->setFigure($figure);
+
+                $manager->persist($video);
+
+                $figure->addVideo();
             }
 
             $manager->persist($figure);
