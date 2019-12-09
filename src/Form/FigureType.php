@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Figure;
 use App\Entity\Groupe;
+use App\Form\VideoType;
 use App\Repository\GroupeRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class FigureType extends AbstractType
 {
@@ -44,6 +46,11 @@ class FigureType extends AbstractType
                         "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif, de 10 mégas octets maximum"
                     ])
                 ]
+            ])
+            ->add('videos', CollectionType::class, [
+                "label" => "Videos (optionnel)",
+                "entry_type" => VideoType::class,
+                "allow_add" => true
             ])
             ->add('Valider', SubmitType::class)
         ;
