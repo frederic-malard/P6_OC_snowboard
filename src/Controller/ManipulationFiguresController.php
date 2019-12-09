@@ -26,6 +26,23 @@ class ManipulationFiguresController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $figure->setEditeur($this->getUser());
 
+            $fichiers = $form['illustrations']->getData();
+
+            if($fichiers)
+            {
+                foreach ($fichiers as $fichier) {
+                    $dossier = "illustrations";
+                    $extension = $fichier->guessExtension();
+                    if(!$extension)
+                        $extension = "bin";
+                    $nomFichier = rand(1, 999999999);
+        
+                    $fichier->move($dossier, $nomFichier . "." . $extension);
+        
+                    $user->addIllustration("/" . $dossier . "/" . $nomFichier . "." . $extension);
+                }
+            }
+
             $manager->persist($figure);
             $manager->flush();
 

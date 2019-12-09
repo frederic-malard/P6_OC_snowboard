@@ -67,7 +67,7 @@ class RegistrationFormType extends AbstractType
                             "image/jpeg",
                             "image/gif"
                         ],
-                        "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif"
+                        "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif, d'un méga octet maximum"
                     ])
                 ]
             ])
