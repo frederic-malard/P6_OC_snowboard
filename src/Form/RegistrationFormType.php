@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -53,6 +54,23 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('mail', EmailType::class)
+            ->add('attachment', FileType::class, [
+                "label" => "Votre avatar (optionnel)",
+                "mapped" => false,
+                "required" => false,
+                "constraints" => [
+                    new File([
+                        "maxSize" => "1024k",
+                        "mimeTypes" => [
+                            "image/png",
+                            "image/jpg",
+                            "image/jpeg",
+                            "image/gif"
+                        ],
+                        "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif"
+                    ])
+                ]
+            ])
             ->add('Valider', SubmitType::class)
         ;
     }
