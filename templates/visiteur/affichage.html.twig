@@ -239,19 +239,21 @@
                     
                     <br>
 
-                    {% for i in 1..difficulteUtilisateurCourant.note %}
-                        <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgb({{ rouge }}, {{ vert }}, 0)">
-                            <i class="fas fa-skull-crossbones"></i>
-                        </a>
-                    {% endfor %}
-
-                    {% if difficulteUtilisateurCourant.note != 10 %}
-                        {% for i in 1..(10-difficulteUtilisateurCourant.note) %}
-                            <a href="{{ path("noter_difficulte", {"note" : (i+difficulteUtilisateurCourant.note), "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}">
-                                <i class="fas fa-skull-crossbones" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
+                    <span class="tetes">
+                        {% for i in 1..difficulteUtilisateurCourant.note %}
+                            <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgb({{ rouge }}, {{ vert }}, 0)">
+                                <i class="fas fa-skull-crossbones teteColoree tete" id="teteDeMortUtilisateur{{ i }}"></i>
                             </a>
                         {% endfor %}
-                    {% endif %}
+
+                        {% if difficulteUtilisateurCourant.note != 10 %}
+                            {% for i in 1..(10-difficulteUtilisateurCourant.note) %}
+                                <a href="{{ path("noter_difficulte", {"note" : (i+difficulteUtilisateurCourant.note), "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}">
+                                    <i class="fas fa-skull-crossbones teteTransparente tete" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})" id="teteDeMortUtilisateur{{ difficulteUtilisateurCourant.note + i }}"></i>
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    </span>
 
                     <br>
 
@@ -291,11 +293,13 @@
                     
                     <br>
 
-                    {% for i in 1..10 %}
-                        <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}">
-                            <i class="fas fa-skull-crossbones" style="color : rgba(255, 255, 255, 0.2)"></i>
-                        </a>
-                    {% endfor %}
+                    <span class="tetes m-0 p-0">
+                        {% for i in 1..10 %}
+                            <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgba(255, 255, 255, 0.2);" class="lienTeteDeMort link-unstyled">
+                                <i class="fas fa-skull-crossbones teteGrise tete" id="teteDeMortUtilisateur{{ i }}"></i>
+                            </a>
+                        {% endfor %}
+                    </span>
                 </p>
             {% endif %}
 
@@ -374,5 +378,6 @@
         $pathSupprimer = "{{ path("supprimer_commentaire", {"slug" : figure.slug, "idCommentaire" : "id"}) }}";
     </script>
     <script src="/js/gestionCommentaires.js"></script>
+    <script src="/js/survolTetesDeMort.js"></script>
 
 {% endblock %}
