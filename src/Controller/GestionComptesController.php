@@ -77,16 +77,31 @@ class GestionComptesController extends AbstractController
      * @Route("/suppression-compte-perso/{slug}", name="suppression_compte_perso")
      * @Security("is_granted('ROLE_USER') and user === utilisateur")
      */
-    public function suppressionComptePerso(Utilisateur $utilisateur, ObjectManager $manager)
+    public function suppressionComptePerso(Utilisateur $utilisateur, ObjectManager $manager, UtilisateurRepository $repo)
     {
+        if($utilisateur->getRole() == "administrateur")
+        {
+            $admins = $repo->findByRole("administrateur");
+            if(count($admins) <= 1)
+            {
+                $this->addFlash("danger", "Votre compte ne peut être supprimé car vous êtes le seul administrateur. Si vous ne voulez plus l'être, veuillez nommer quelqu'un d'autre administrateur. Vous pourrez alors supprimer votre compte, ou repasser simple modérateur.");
+
+                return $this->redirectToRoute("accueil");
+            }
+        }
+
         $figures = $utilisateur->getFigures();
         $commentaires = $utilisateur->getCommentaires();
+        $difficultes = $utilisateur->getDifficultes();
 
         foreach ($figures as $figure) {
             $figure->setEditeur(null);
         }
         foreach ($commentaires as $commentaire) {
             $manager->remove($commentaire);
+        }
+        foreach ($difficultes as $difficulte) {
+            $manager->remove($difficulte);
         }
 
         $manager->remove($utilisateur);
@@ -134,6 +149,34 @@ class GestionComptesController extends AbstractController
         $this->addFlash("success", "Modérateur repassé simple utilisateur");
         
         return $this->redirectToRoute('gestion_moderateurs');
+    }
+    
+    /**
+     * @Route("/perte-statut-administrateur/{slug}", name="perte_statut_administrateur")
+     * @Security("is_granted('ROLE_ADMIN') and user === administrateur")
+     */
+    public function perteStatutAdministrateur(Utilisateur $administrateur, ObjectManager $manager, UtilisateurRepository $repo)
+    {
+        if($administrateur->getRole() == "administrateur")
+        {
+            $admins = $repo->findByRole("administrateur");
+            if(count($admins) <= 1)
+            {
+                $this->addFlash("danger", "Vous ne pouvez pas perdre votre statut d'administrateur, car vous êtes le seul administrateur restant. Si vous ne voulez plus l'être, veuillez nommer quelqu'un d'autre administrateur. Vous pourrez alors repasser simple modérateur, ou supprimer votre compte.");
+
+                return $this->redirectToRoute("accueil");
+            }
+        }
+
+        $administrateur->setRole("moderateur");
+        
+        $manager->persist($administrateur);
+        
+        $manager->flush();
+
+        $this->addFlash("success", "Administrateur repassé simple modérateur");
+        
+        return $this->redirectToRoute('accueil');
     }
     
     /**
