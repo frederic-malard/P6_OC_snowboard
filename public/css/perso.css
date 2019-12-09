@@ -38,3 +38,18 @@
 {
     color: #a0a0a0
 }
+
+/*.lienTeteDeMort:hover, .lienTeteDeMort:focus, .lienTeteDeMort, a:hover, a:focus, a, 
+{
+    text-decoration: none !important;
+}* /
+
+.tetes:hover .tete
+{
+    color: white;
+}
+
+.tete i:hover ~ i
+{
+    color: black;
+}*/
