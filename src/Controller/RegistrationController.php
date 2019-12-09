@@ -32,6 +32,21 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $fichier = $form['attachment']->getData();
+
+            if($fichier)
+            {
+                $dossier = "avatars";
+                $extension = $fichier->guessExtension();
+                if(!$extension)
+                    $extension = "bin";
+                $nomFichier = rand(1, 999999999);
+    
+                $fichier->move($dossier, $nomFichier . "." . $extension);
+    
+                $user->setAvatar("/" . $dossier . "/" . $nomFichier . "." . $extension);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
