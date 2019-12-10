@@ -241,15 +241,15 @@
 
                     <span class="tetes">
                         {% for i in 1..difficulteUtilisateurCourant.note %}
-                            <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgb({{ rouge }}, {{ vert }}, 0)">
-                                <i class="fas fa-skull-crossbones teteColoree tete" id="teteDeMortUtilisateur{{ i }}"></i>
+                            <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgb({{ rouge }}, {{ vert }}, 0)" id="teteDeMortUtilisateur{{ i }}">
+                                <i class="fas fa-skull-crossbones teteColoree tete"></i>
                             </a>
                         {% endfor %}
 
                         {% if difficulteUtilisateurCourant.note != 10 %}
                             {% for i in 1..(10-difficulteUtilisateurCourant.note) %}
-                                <a href="{{ path("noter_difficulte", {"note" : (i+difficulteUtilisateurCourant.note), "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}">
-                                    <i class="fas fa-skull-crossbones teteTransparente tete" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})" id="teteDeMortUtilisateur{{ difficulteUtilisateurCourant.note + i }}"></i>
+                                <a href="{{ path("noter_difficulte", {"note" : (i+difficulteUtilisateurCourant.note), "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" id="teteDeMortUtilisateur{{ difficulteUtilisateurCourant.note + i }}">
+                                    <i class="fas fa-skull-crossbones teteTransparente tete" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
                                 </a>
                             {% endfor %}
                         {% endif %}
@@ -257,7 +257,7 @@
 
                     <br>
 
-                    <span>
+                    <span id="commentaireDifficulte">
                         {% if difficulteUtilisateurCourant.note == 1 %}
                             initiation
                         {% elseif difficulteUtilisateurCourant.note == 2 %}
@@ -295,11 +295,15 @@
 
                     <span class="tetes m-0 p-0">
                         {% for i in 1..10 %}
-                            <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgba(255, 255, 255, 0.2);" class="lienTeteDeMort link-unstyled">
-                                <i class="fas fa-skull-crossbones teteGrise tete" id="teteDeMortUtilisateur{{ i }}"></i>
+                            <a href="{{ path("noter_difficulte", {"note" : i, "slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug}) }}" style="color : rgba(255, 255, 255, 0.2);" class="lienTeteDeMort link-unstyled" id="teteDeMortUtilisateur{{ i }}">
+                                <i class="fas fa-skull-crossbones teteGrise tete"></i>
                             </a>
                         {% endfor %}
                     </span>
+
+                    <br>
+
+                    <span id="commentaireDifficulte" style="height: 1em; display:block;"></span>{# évite l'effet épilaptique du bloc parent qui se redau rythme des apparitions / disparitions du texte dessous #}
                 </p>
             {% endif %}
 
