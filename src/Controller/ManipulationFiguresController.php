@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Video;
 use App\Entity\Figure;
 use App\Form\FigureType;
 use App\Entity\Illustration;
@@ -21,6 +22,7 @@ class ManipulationFiguresController extends AbstractController
     public function ajoutFigure(Request $request, ObjectManager $manager)
     {
         $figure = new Figure();
+
         $form = $this->createForm(FigureType::class, $figure);
         $form->handleRequest($request);
 
@@ -59,7 +61,7 @@ class ManipulationFiguresController extends AbstractController
 
                 $manager->persist($video);
 
-                $figure->addVideo();
+                //$figure->addVideo($video);
             }
 
             $manager->persist($figure);
