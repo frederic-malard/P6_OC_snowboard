@@ -32,6 +32,17 @@ class Video
      */
     private $figure;
 
+    /* *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * /
+    private prepare()
+    {
+        // finalement retiré car pas forcément youtube
+        /*if (empty($this->video) || strlen($this->video) < 20)
+            $this->video = "https://www.youtube.com/embed/" . $this->video;* /
+    }*/
+
     public function getId(): ?int
     {
         return $this->id;
