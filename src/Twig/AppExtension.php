@@ -14,7 +14,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function tetesDeMort($enTete, $note = 0, $liens = false, $slugFigure, $slugUtilisateur)
+    public function tetesDeMort($enTete, $note = 0, $liens = false, $slugFigure = "", $slugUtilisateur = "")
     {
         // opacité des têtes semi transparentes
 
@@ -116,7 +116,7 @@ class AppExtension extends AbstractExtension
             $html .= "\"></i>";
 
             // fermeture lien
-            if ($lien)
+            if ($liens)
                 $html .= "</a>";
             
         }
@@ -149,19 +149,19 @@ class AppExtension extends AbstractExtension
                 $html .= " style=\"color : rgba(" . $rouge . ", " . $vert . ", " . $bleu . ", " . $opacite . ")\"></i>";
     
                 // fermeture lien
-                if ($lien)
+                if ($liens)
                     $html .= "</a>";
             }
         }
 
-        if ($lien)
+        if ($liens)
         $html .= "</span>";
         
         $html .= "<br />";
         
         // commentaires relatifs à la difficulté (ici $mots)
 
-        if ($lien)
+        if ($liens)
             $html .= "<span id=\"commentaireDifficulte\">";
         else
             $html .= "<span>";
