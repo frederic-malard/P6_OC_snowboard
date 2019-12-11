@@ -106,51 +106,7 @@
 
             {# affichage note éditeur si l'éditeur n'est pas l'utilisateur courant (sinon ferait doublon avec la suite) #}
             {% if not difficulteEditeur is null and not utilisateurCourantEstEditeur %}
-                {% set rouge = min(((difficulteEditeur.note-1)*(255/4.5)), 255)|round %}
-                {% set vert = min(((10-difficulteEditeur.note)*(255/4.5)), 255)|round %}
-
-                <p style="color : rgb({{ rouge }}, {{ vert }}, 0)">
-                    <span class="">
-                        selon l'éditeur
-                    </span> 
-                    
-                    <br>
-
-                    {% for i in 1..difficulteEditeur.note %}
-                        <i class="fas fa-skull-crossbones"></i>
-                    {% endfor %}
-                    {% if difficulteEditeur.note != 10 %}
-                        {% for i in 1..(10-difficulteEditeur.note) %}
-                            <i class="fas fa-skull-crossbones" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
-                        {% endfor %}
-                    {% endif %}
-
-                    <br>
-
-                    <span>
-                        {% if difficulteEditeur.note == 1 %}
-                            initiation
-                        {% elseif difficulteEditeur.note == 2 %}
-                            débutant
-                        {% elseif difficulteEditeur.note == 3 %}
-                            facile
-                        {% elseif difficulteEditeur.note == 4 %}
-                            y'a du niveau !
-                        {% elseif difficulteEditeur.note == 5 %}
-                            pas mal !
-                        {% elseif difficulteEditeur.note == 6 %}
-                            connaisseur
-                        {% elseif difficulteEditeur.note == 7 %}
-                            maîtrise
-                        {% elseif difficulteEditeur.note == 8 %}
-                            pro
-                        {% elseif difficulteEditeur.note == 9 %}
-                            hardcore !
-                        {% elseif difficulteEditeur.note == 10 %}
-                            légendaire
-                        {% endif %}
-                    </span>
-                </p>
+                {{ "selon l'éditeur" | tetes(difficulteEditeur.note) | raw }}
                 
                 {% set nbAffiches = 1 %}
 
