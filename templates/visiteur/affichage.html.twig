@@ -123,52 +123,7 @@
 
             {# affichage note moyenne sans compter l'éditeur #}
             {% if not difficultesAutres|length == 0 %}
-                {% set rouge = min(((difficulteMoyenneSansEditeur-1)*(255/4.5)), 255)|round %}
-                {% set vert = min(((10-difficulteMoyenneSansEditeur)*(255/4.5)), 255)|round %}
-
-                <p style="color : rgb({{ rouge }}, {{ vert }}, 0)">
-                    <span class="">
-                        moyenne des utilisateurs
-                    </span>
-                    
-                    <br>
-
-                    {% for i in 1..difficulteMoyenneSansEditeur %}
-                        <i class="fas fa-skull-crossbones"></i>
-                    {% endfor %}
-
-                    {% if difficulteMoyenneSansEditeur != 10 %}
-                        {% for i in 1..(10-difficulteMoyenneSansEditeur) %}
-                            <i class="fas fa-skull-crossbones" style="color : rgba({{ rouge }}, {{ vert }}, 0, {{ opacite }})"></i>
-                        {% endfor %}
-                    {% endif %}
-
-                    <br>
-
-                    <span>
-                        {% if difficulteMoyenneSansEditeur == 1 %}
-                            initiation
-                        {% elseif difficulteMoyenneSansEditeur == 2 %}
-                            débutant
-                        {% elseif difficulteMoyenneSansEditeur == 3 %}
-                            facile
-                        {% elseif difficulteMoyenneSansEditeur == 4 %}
-                            y'a du niveau !
-                        {% elseif difficulteMoyenneSansEditeur == 5 %}
-                            pas mal !
-                        {% elseif difficulteMoyenneSansEditeur == 6 %}
-                            connaisseur
-                        {% elseif difficulteMoyenneSansEditeur == 7 %}
-                            maîtrise
-                        {% elseif difficulteMoyenneSansEditeur == 8 %}
-                            pro
-                        {% elseif difficulteMoyenneSansEditeur == 9 %}
-                            hardcore !
-                        {% elseif difficulteMoyenneSansEditeur == 10 %}
-                            légendaire
-                        {% endif %}
-                    </span>
-                </p>
+                {{ "moyenne des utilisateurs" | tetes(difficulteMoyenneSansEditeur) | raw }}
                 
                 {% set nbAffiches = nbAffiches + 1 %}
 

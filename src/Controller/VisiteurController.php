@@ -141,7 +141,9 @@ class VisiteurController extends AbstractController
     }
 
     /**
-     * @Route("/noter-difficulte/{note}/{slugFigure}/{slugUtilisateur}", name="noter_difficulte")
+     * Note : le paramètre "note" doit rester à la fin, car ajouté par concaténation manuellement dans appExtension
+     * 
+     * @Route("/noter-difficulte/{slugFigure}/{slugUtilisateur}/{note}", name="noter_difficulte")
      */
     function noterDifficulte($note, $slugFigure, $slugUtilisateur, FigureRepository $figureRepo, UtilisateurRepository $utilisateurRepo, DifficulteRepository $difficulteRepo, ObjectManager $manager)
     {
