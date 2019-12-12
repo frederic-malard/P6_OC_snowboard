@@ -14,7 +14,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function tetesDeMort($enTete, $note = 0, $liens = false, $slugFigure = "", $slugUtilisateur = "")
+    public function tetesDeMort($enTete, $note = 0, $liens = false, $pathSansNote = "")
     {
         // opacité des têtes semi transparentes
 
@@ -93,17 +93,25 @@ class AppExtension extends AbstractExtension
 
         // gestion des liens de notation s'il s'agit de la colonne prévue à cet effet
         if ($liens)
-        $html .= "<span class=\"tetes\">";
+            $html .= "<span class=\"tetes\">";
         
         // icones opaques
         for ($i=1 ; $i<=$note ; $i++)
         {
             if ($liens)
             {
+                // préparation path : remplacement du 0 mit par défaut
+                $longueurPath = strlen($pathSansNote);
+                $pathSansNote = substr(0, $longueurPath - 1);
+                $path = $pathSansNote . $i;
+
                 // href avec path
                 $html .= "<a href=\"";
-                $html .= path("noter_difficulte", ["note" => i, "slugFigure" => figure.slug, "slugUtilisateur" => app.user.slug]);
+                $html .= $path;
                 $html .= "\"";
+
+                // style
+                $html .= "style=\"color : rgb(" . $rouge . ", " . $vert . ", " . $bleu . ")\"";
 
                 // id
                 $html .= " id=\"teteDeMortUtilisateur" . $i . "\">";
@@ -118,6 +126,9 @@ class AppExtension extends AbstractExtension
             // fermeture lien
             if ($liens)
                 $html .= "</a>";
+
+            // espace entre les têtes
+            $html .= "\n";
             
         }
 
@@ -128,9 +139,14 @@ class AppExtension extends AbstractExtension
             { 
                 if ($liens)
                 {
+                    // préparation path : remplacement du 0 mit par défaut
+                    $longueurPath = strlen($pathSansNote);
+                    $pathSansNote = substr(0, $longueurPath - 1);
+                    $path = $pathSansNote . ($i + $note);
+
                     // href
                     $html .= "<a href=\"";
-                    $html .= path("noter_difficulte", ["note" => ($i + $note), "slugFigure" => $slugFigure, "slugUtilisateur" => $slugUtilisateur]);
+                    $html .= $path;
                     $html .= "\"";
                     
                     // id
@@ -151,6 +167,9 @@ class AppExtension extends AbstractExtension
                 // fermeture lien
                 if ($liens)
                     $html .= "</a>";
+
+                // espace entre les têtes
+                $html .= "\n";
             }
         }
 
