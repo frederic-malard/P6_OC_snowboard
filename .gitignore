@@ -6,6 +6,8 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/config/packages/swiftmailer.yaml
+config/packages/swiftmailer.yaml
 /public/bundles/
 var
 /var/
