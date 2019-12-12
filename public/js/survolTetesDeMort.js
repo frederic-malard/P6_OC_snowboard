@@ -52,8 +52,10 @@ $(function(){
         $target.parent().parent().parent().children().css("color", "rgb(" + $rouge + ", " + $vert + ", 0)");
         $target.parent().prevAll().children().css("color", "rgb(" + $rouge + ", " + $vert + ", 0)");
         $target.parent().nextAll().children().css("color", "rgba(" + $rouge + ", " + $vert + ", 0, 0.2)");
-        if ($id <= 5)
+        if ($num <= 5)
+        {
             $target.parent().next().prev().children().css("color", "rgb(" + $rouge + ", " + $vert + ", 0)");
+        }
         else
             $target.parent().prev().next().children().css("color", "rgb(" + $rouge + ", " + $vert + ", 0)");
     };

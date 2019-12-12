@@ -95,41 +95,43 @@ class AppExtension extends AbstractExtension
         if ($liens)
             $html .= "<span class=\"tetes\">";
         
-        // icones opaques
-        for ($i=1 ; $i<=$note ; $i++)
+        // éventuelles icones opaques (il n'y en a pas si n'a jamais été noté)
+        if ($note != 0)
         {
-            if ($liens)
+            for ($i=1 ; $i<=$note ; $i++)
             {
-                // préparation path : remplacement du 0 mit par défaut
-                $longueurPath = strlen($pathSansNote);
-                $pathSansNote = substr(0, $longueurPath - 1);
-                $path = $pathSansNote . $i;
+                if ($liens)
+                {
+                    // préparation path : remplacement du 0 mit par défaut
+                    $longueurPath = strlen($pathSansNote);
+                    $pathSansNote = substr(0, $longueurPath - 1);
+                    $path = $pathSansNote . $i;
 
-                // href avec path
-                $html .= "<a href=\"";
-                $html .= $path;
-                $html .= "\"";
+                    // href avec path
+                    $html .= "<a href=\"";
+                    $html .= $path;
+                    $html .= "\"";
 
-                // style
-                $html .= "style=\"color : rgb(" . $rouge . ", " . $vert . ", " . $bleu . ")\"";
+                    // style
+                    $html .= "style=\"color : rgb(" . $rouge . ", " . $vert . ", " . $bleu . ")\"";
 
-                // id
-                $html .= " id=\"teteDeMortUtilisateur" . $i . "\">";
+                    // id
+                    $html .= " id=\"teteDeMortUtilisateur" . $i . "\">";
+                }
+                
+                // icone
+                $html .= "<i class=\"fas fa-skull-crossbones";
+                if ($liens)
+                    $html .= " teteColoree tete";
+                $html .= "\"></i>";
+
+                // fermeture lien
+                if ($liens)
+                    $html .= "</a>";
+
+                // espace entre les têtes
+                $html .= "\n";
             }
-            
-            // icone
-            $html .= "<i class=\"fas fa-skull-crossbones";
-            if ($liens)
-                $html .= " teteColoree tete";
-            $html .= "\"></i>";
-
-            // fermeture lien
-            if ($liens)
-                $html .= "</a>";
-
-            // espace entre les têtes
-            $html .= "\n";
-            
         }
 
         // éventuelles icones semi transparentes
@@ -150,7 +152,7 @@ class AppExtension extends AbstractExtension
                     $html .= "\"";
                     
                     // id
-                    $html .= " id=\"teteDeMortUtilisateur{{ difficulteUtilisateurCourant.note + i }}\">";
+                    $html .= " id=\"teteDeMortUtilisateur" . ($note + $i) . "\">";
                 }
                 
                 // icones
@@ -158,7 +160,12 @@ class AppExtension extends AbstractExtension
                 // class
                 $html .= "<i class=\"fas fa-skull-crossbones";
                 if ($liens)
-                $html .= " teteColoree tete";
+                {
+                    if ($note == 0)
+                        $html .= " teteGrise tete";
+                    else
+                        $html .= " teteTransparente tete";
+                }
                 $html .= "\"";
                 
                 // style
@@ -181,7 +188,10 @@ class AppExtension extends AbstractExtension
         // commentaires relatifs à la difficulté (ici $mots)
 
         if ($liens)
-            $html .= "<span id=\"commentaireDifficulte\">";
+        {
+            $html .= "<span id=\"commentaireDifficulte\"";
+            $html .= " style=\"height: 1em; display:block;\">"; // évite l'effet "épileptique" quand il n'y a aucune note sur la figure et que le texte tout les têtes apparait et disparait alternativement au survol de la souris
+        }
         else
             $html .= "<span>";
         
