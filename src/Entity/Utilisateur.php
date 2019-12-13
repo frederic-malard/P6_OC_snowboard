@@ -75,6 +75,11 @@ class Utilisateur implements UserInterface
     private $difficultes;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $aVerifier;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -287,6 +292,18 @@ class Utilisateur implements UserInterface
                 $difficulte->setNotant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAVerifier(): ?string
+    {
+        return $this->aVerifier;
+    }
+
+    public function setAVerifier(?string $aVerifier): self
+    {
+        $this->aVerifier = $aVerifier;
 
         return $this;
     }
