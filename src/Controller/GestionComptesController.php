@@ -52,7 +52,7 @@ class GestionComptesController extends AbstractController
      * @Route("/suppression-utilisateur/{slug}", name="suppression_utilisateur")
      * @IsGranted("ROLE_MODO")
      */
-    public function suppressionUtilisateur(Utilisateur $utilisateur, ObjectManager $manager)
+    public function suppressionUtilisateur(Utilisateur $utilisateur, ObjectManager $manager, \Swift_Mailer $mailer)
     {
         $figures = $utilisateur->getFigures();
         $commentaires = $utilisateur->getCommentaires();
@@ -69,6 +69,31 @@ class GestionComptesController extends AbstractController
         $manager->flush();
 
         $this->addFlash("success", "Utilisateur supprimé");
+
+        $message = (new \Swift_Message("Compte snowtricks supprimé"))
+                ->setFrom("frederic.malard.pro@gmail.com")
+                ->setTo($utilisateur->getMail())
+                ->setBody(
+                    $this->renderView(
+                        "gestionComptes/mailSuppression.html.twig",
+                        [
+                            "utilisateur" => $utilisateur
+                        ]
+                    ),
+                    "text/html"
+                )
+                ->addPart(
+                    $this->renderView(
+                        "gestionComptes/mailSuppression.txt.twig",
+                        [
+                            "utilisateur" => $utilisateur
+                        ]
+                    ),
+                    "text/plain"
+                )
+            ;
+
+            $mailer->send($message);
     
         return $this->redirectToRoute('gestion_utilisateurs');
     }
