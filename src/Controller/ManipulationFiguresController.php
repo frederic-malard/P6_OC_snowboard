@@ -29,7 +29,7 @@ class ManipulationFiguresController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $figure->setEditeur($this->getUser());
 
-            $illustrations = $form['illustrations']->getData();
+            /*$illustrations = $form['illustrations']->getData();
 
             if($illustrations)
             {
@@ -52,7 +52,7 @@ class ManipulationFiguresController extends AbstractController
         
                     $figure->addIllustration($illustration);
                 }
-            }
+            }*/
 
             $videos = $figure->getVideos();
 

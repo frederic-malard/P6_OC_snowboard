@@ -29,7 +29,7 @@ class FigureType extends AbstractType
                 'choice_label' => 'nom',
                 'multiple' => false
             ])
-            ->add('illustrations', FileType::class, [
+            /*->add('illustrations', FileType::class, [
                 "label" => "Illustrations (optionnel)",
                 "multiple" => true,
                 "mapped" => false,
@@ -46,11 +46,17 @@ class FigureType extends AbstractType
                         "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif, de 10 mégas octets maximum"
                     ])
                 ]
-            ])
+            ])*/
             ->add('videos', CollectionType::class, [
                 "label" => "Videos (optionnel)",
                 "entry_type" => VideoType::class,
                 "allow_add" => true
+            ])
+            ->add('prerequis', EntityType::class, [
+                'class' => Figure::class,
+                'choice_label' => 'nom',
+                'multiple' => true,
+                'expanded' => true
             ])
             ->add('Valider', SubmitType::class)
         ;
