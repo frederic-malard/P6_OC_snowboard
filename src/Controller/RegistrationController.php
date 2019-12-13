@@ -32,6 +32,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // code à vérifier pour se connecter (envoyé par mail)
+            $user->setAVerifier(substr(sha1(random_bytes(12)), -12));
+
             $fichier = $form['attachment']->getData();
 
             if($fichier)
@@ -81,12 +84,17 @@ class RegistrationController extends AbstractController
             //dump($user->getMail());
             //die();
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
+            $this->addFlash("success", "Inscription réussie, un email vous a été envoyé. Veuillez cliquer sur le lien qu'il contient pour valider votre compte.");
+
+            return $this->redirectToRoute("accueil");
+
+            // pour connexion automatique
+            /*return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
                 'main' // firewall name in security.yaml
-            );
+            );*/
         }
 
         return $this->render('registration/register.html.twig', [

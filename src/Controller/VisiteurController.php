@@ -48,6 +48,14 @@ class VisiteurController extends AbstractController
     }
 
     /**
+     * @Route("/verification-mail", name="verification_mail")
+     */
+    public function verificationMail()
+    {
+        return $this->render("visiteur/verificationMail.html.twig");
+    }
+
+    /**
      * @Route("/deconnexion", name="deconnexion")
      */
     public function deconnexion()
