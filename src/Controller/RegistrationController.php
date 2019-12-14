@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
-use App\Security\AppUtilisateurAuthAuthenticator;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Security\AppUtilisateurAuthAuthenticator;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -33,7 +34,9 @@ class RegistrationController extends AbstractController
             );
 
             // code à vérifier pour se connecter (envoyé par mail)
-            $user->setAVerifier(substr(sha1(random_bytes(12)), -12));
+            $codeVerification = substr(sha1(random_bytes(12)), -12);
+
+            $user->setAVerifier($codeVerification);
 
             $fichier = $form['attachment']->getData();
 
@@ -100,5 +103,18 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/confirmerInscription/{slug}/{code}", name="confirmer_inscription")
+     */
+    public function confirmerInscription(Utilisateur $utilisateur, $code, ObjectManager $manager)
+    {
+        $utilisateur->setAVerifier(null);
+
+        $manager->persist($utilisateur);
+        $manager->flush();
+
+        return $this->redirectToRoute("connexion");
     }
 }
