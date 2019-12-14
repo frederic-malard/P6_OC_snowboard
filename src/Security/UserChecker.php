@@ -23,8 +23,10 @@ class UserChecker implements UserCheckerInterface
     {
         // utilisateur vérifié ? aVerifier contient une string à entrer pour confirmer inscription, est stockée pour pouvoir comparer jusqu'à ce que l'utilisateur soit vérifié. Si L'utilisateur est vérifié, c'est mit à null (plus rien à vérifier)
         if ($user->getAVerifier() != null) {
-            return $this->router->generate("verification_mail");
-            //throw new \Exception("Utilisateur non vérifié. Regardez vos mails.");
+            // renvoyer un mail ?
+
+            // return $this->router->generate("verification_mail");
+            throw new \Exception("Utilisateur non vérifié. Regardez vos mails.");
         }
 
         if (!$user instanceof AppUser) {

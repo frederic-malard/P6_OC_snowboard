@@ -1,17 +1,9 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Inscription Snowtricks{% endblock %}
-
-{% block body %}
-
 <p>
-    confirmation d'inscription (à améliorer plus tard)
+    Vous êtes inscrits à snowtricks avec le login {{ utilisateur.login }} !
 </p>
 <p>
-    vous êtes inscrits avec le login {{ utilisateur.login }} !
+    Dernière étape : la validation de votre compte. Veuillez, pour valider votre compte, cliquer sur le lien ci dessous.
 </p>
 <p>
-    code de validation : {{ utilisateur.aVerifier }}
+    {{ url("confirmer_inscription", {"slug" : utilisateur.slug, "code" : utilisateur.aVerifier}) }}
 </p>
-
-{% endblock %}

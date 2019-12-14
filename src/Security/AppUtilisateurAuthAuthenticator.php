@@ -88,11 +88,11 @@ class AppUtilisateurAuthAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        if ($this->user->getAVerifier() != null) {
+        /*if ($this->user->getAVerifier() != null) {
             return new RedirectResponse($this->urlGenerator->generate('verification_mail'));
             //return $this->router->generate("verification_mail");
             //throw new \Exception("Utilisateur non vérifié. Regardez vos mails.");
-        }
+        }*/
 
         return new RedirectResponse($this->urlGenerator->generate('accueil'));
     }

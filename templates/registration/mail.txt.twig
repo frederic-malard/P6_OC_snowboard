@@ -1,3 +1,3 @@
-confirmation d'inscription (à améliorer plus tard)\n\n
-vous êtes inscrits avec le login {{ utilisateur.login }} !\n\n
-code de validation : {{ utilisateur.aVerifier }}
+Vous êtes inscrits à snowtricks avec le login {{ utilisateur.login }} !\n\n
+Dernière étape : la validation de votre compte. Veuillez, pour valider votre compte, cliquer sur le lien ci dessous.\n\n
+{{ url("confirmer_inscription", {"slug" : utilisateur.slug, "code" : utilisateur.aVerifier}) }}
