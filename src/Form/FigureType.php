@@ -29,12 +29,12 @@ class FigureType extends AbstractType
                 'choice_label' => 'nom',
                 'multiple' => false
             ])
-            /*->add('illustrations', FileType::class, [
+            ->add('illustrations', FileType::class, [
                 "label" => "Illustrations (optionnel)",
                 "multiple" => true,
                 "mapped" => false,
-                "required" => false,
-                "constraints" => [
+                "required" => false/*,
+                "constraints" => [ // appeler mon callback ici à la place du new file, validator custom (dans src validation, précisé dans doc) en paramètre du callback
                     new File([
                         "maxSize" => "10M",
                         "mimeTypes" => [
@@ -45,8 +45,8 @@ class FigureType extends AbstractType
                         ],
                         "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif, de 10 mégas octets maximum"
                     ])
-                ]
-            ])*/
+                ]*/
+            ])
             ->add('videos', CollectionType::class, [
                 "label" => "Videos (optionnel)",
                 "entry_type" => VideoType::class,

@@ -2,20 +2,28 @@
 
 namespace App\Security;
 
-use App\Exception\AccountDeletedException;
 use App\Security\User as AppUser;
+use App\Exception\AccountDeletedException;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
+    private $router;
+
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
     public function checkPreAuth(UserInterface $user)
     {
         // utilisateur vérifié ? aVerifier contient une string à entrer pour confirmer inscription, est stockée pour pouvoir comparer jusqu'à ce que l'utilisateur soit vérifié. Si L'utilisateur est vérifié, c'est mit à null (plus rien à vérifier)
         if ($user->getAVerifier() != null) {
-            return $this->redirectToRoute("verification_mail");
+            return $this->router->generate("verification_mail");
             //throw new \Exception("Utilisateur non vérifié. Regardez vos mails.");
         }
 

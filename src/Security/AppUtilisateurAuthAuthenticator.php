@@ -27,6 +27,7 @@ class AppUtilisateurAuthAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $user = null;
 
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -71,6 +72,8 @@ class AppUtilisateurAuthAuthenticator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Login inconnu.');
         }
 
+        $this->user = $user;
+
         return $user;
     }
 
@@ -83,6 +86,12 @@ class AppUtilisateurAuthAuthenticator extends AbstractFormLoginAuthenticator
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
+        }
+
+        if ($this->user->getAVerifier() != null) {
+            return new RedirectResponse($this->urlGenerator->generate('verification_mail'));
+            //return $this->router->generate("verification_mail");
+            //throw new \Exception("Utilisateur non vérifié. Regardez vos mails.");
         }
 
         return new RedirectResponse($this->urlGenerator->generate('accueil'));
