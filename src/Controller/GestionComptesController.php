@@ -14,15 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class GestionComptesController extends AbstractController
 {
     /**
-     * @Route("/menu-administrateur", name="menu_admin")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function menuAdmin()
-    {
-        return $this->render('gestionComptes/menuAdmin.html.twig');
-    }
-    
-    /**
      * @Route("/gestion-utilisateurs", name="gestion_utilisateurs")
      * @IsGranted("ROLE_MODO")
      */
