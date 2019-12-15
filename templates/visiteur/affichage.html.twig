@@ -52,6 +52,15 @@
 </div>
 
 <div class="container my-4 jumbotron">
+    {# ajouter la figure aux favorites #}
+    {% if app.user and not (figure in app.user.favoris) %}
+        <p class="text-center mb-5">
+            <a href="{{ path("ajout_favoris", {"slugUtilisateur" : app.user.slug, "slugFigure" : figure.slug}) }}" class="text-danger">
+                <i class="fas fa-heart text-danger mr-1"></i> ajouter la figure à vos favorites
+            </a>
+        </p>
+    {% endif %}
+
     {# description #}
     {{ figure.description }}
 

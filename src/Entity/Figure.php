@@ -92,6 +92,11 @@ class Figure
     private $suitesPossibles;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", mappedBy="favoris")
+     */
+    private $interesses;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -111,6 +116,7 @@ class Figure
         $this->difficultes = new ArrayCollection();
         $this->prerequis = new ArrayCollection();
         $this->suitesPossibles = new ArrayCollection();
+        $this->interesses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -349,7 +355,7 @@ class Figure
      * 
      * @return Collection|self[]
      */
-    public function getPrerequisIndirects($profondeurMaxRecherche = 5): Collection
+    public function getPrerequisIndirects($profondeurMaxRecherche = 8): Collection
     {
         if ($this->prerequis != null && $this->prerequis->isEmpty())
         {
@@ -487,6 +493,34 @@ class Figure
         if ($this->suitesPossibles->contains($suitesPossible)) {
             $this->suitesPossibles->removeElement($suitesPossible);
             $suitesPossible->removePrerequi($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getInteresses(): Collection
+    {
+        return $this->interesses;
+    }
+
+    public function addInteress(Utilisateur $interess): self
+    {
+        if (!$this->interesses->contains($interess)) {
+            $this->interesses[] = $interess;
+            $interess->addFavori($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInteress(Utilisateur $interess): self
+    {
+        if ($this->interesses->contains($interess)) {
+            $this->interesses->removeElement($interess);
+            $interess->removeFavori($this);
         }
 
         return $this;

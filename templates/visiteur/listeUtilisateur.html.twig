@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}vos figures favorites{% endblock %}
+
+{% block body %}
+
+<div class="container jumbotron">
+    <h1 class="text-center mb-5">
+        Vos figures favorites
+    </h1>
+
+    {% if favorites is empty %}
+        <p>
+            Vous n'avez pas encore de figures favorites.
+        </p>
+    {% else %}
+        <p class="text-center">
+            {% for favorite in favorites %}
+                <a href="{{ path("figure_affichage", {"slug" : favorite.slug}) }}">
+                    {{ favorite.nom }} <br>
+                </a>
+            {% endfor %}
+        </p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -80,6 +80,11 @@ class Utilisateur implements UserInterface
     private $aVerifier;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Figure", inversedBy="interesses")
+     */
+    private $favoris;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -96,6 +101,7 @@ class Utilisateur implements UserInterface
         $this->figures = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->difficultes = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -304,6 +310,32 @@ class Utilisateur implements UserInterface
     public function setAVerifier(?string $aVerifier): self
     {
         $this->aVerifier = $aVerifier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Figure[]
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Figure $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Figure $favori): self
+    {
+        if ($this->favoris->contains($favori)) {
+            $this->favoris->removeElement($favori);
+        }
 
         return $this;
     }
