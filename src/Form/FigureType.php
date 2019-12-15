@@ -53,6 +53,7 @@ class FigureType extends AbstractType
                 "allow_add" => true
             ])
             ->add('prerequis', EntityType::class, [
+                'label' => "prérequis (ne sélectionnez que les prérequis direct, ne sélectionnez pas des prérequis qui sont eux même déjà prérequis d'autres prérequis que vous sélectionnez. Exemple : pour un saut perilleux vrillé, sélectionnez le saut périlleux, et la vrille, mais pas le simple saut.)",
                 'class' => Figure::class,
                 'choice_label' => 'nom',
                 'multiple' => true,

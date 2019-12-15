@@ -54,6 +54,16 @@ class ManipulationFiguresController extends AbstractController
                 }
             }
 
+            // efface tous les prérequis pour les réinsérer avec addPrerequis pour faire toutes les vérifications incluses dans la méthode avec ajout
+            $prerequis = $figure->getPrerequis();
+
+            $figure->removeAllPrerequis();
+
+            foreach($prerequis as $unPrerequis)
+            {
+                $figure->addPrerequi($unPrerequis);
+            }
+
             $videos = $figure->getVideos();
 
             foreach ($videos as $video) {
