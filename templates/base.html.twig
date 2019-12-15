@@ -23,32 +23,44 @@
 
             <div class="collapse navbar-collapse" id="navbarColor03">
                 <ul class="navbar-nav ml-auto">
-                    {% if app.user and "ROLE_MODO" in app.user.roles %}
-                        <li class="nav-item">
-                            <a href="{{ path("consulter_signales") }}" class="nav-link text-warning">
-                                <i class="fas fa-comments"></i>
-                                commentaires signalés
+                    {% if app.user %}
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="utilisateur" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                                {% if app.user.login|length <= 15 %}
+                                    {{ app.user.login }}
+                                {% else %}
+                                    {{ app.user.login | slice(0, 10) }}...
+                                {% endif %}
                             </a>
+                            <div class="dropdown-menu" aria-labeledby="utilisateur">
+                                {% if app.user and "ROLE_ADMIN" in app.user.roles %}
+                                    <a href="{{ path("gestion_moderateurs") }}" class="dropdown-item text-danger">
+                                        <i class="fas fa-user"></i>
+                                        gestion modérateurs
+                                    </a>
+                                {% endif %}
+                                {% if app.user and "ROLE_MODO" in app.user.roles %}
+                                    <a href="{{ path("gestion_utilisateurs") }}" class="dropdown-item text-danger">
+                                        <i class="fas fa-user"></i>
+                                        gestion utilisateurs
+                                    </a>
+                                    <a href="{{ path("consulter_signales") }}" class="dropdown-item text-warning">
+                                        <i class="fas fa-comments"></i>
+                                        commentaires signalés
+                                    </a>
+                                {% endif %}
+                                <a href="{{ path("liste_figures_persos", {"slug" : app.user.slug}) }}" class="dropdown-item text-success">
+                                    <i class="fas fa-pen mr-1"></i>
+                                    vos figures
+                                </a>
+                                <a href="{{ path("liste_favorites", {"slug" : app.user.slug}) }}" class="dropdown-item text-info">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    favorites
+                                </a>
+                            </div>
                         </li>
                     {% endif %}
-                    {% if app.user and "ROLE_ADMIN" in app.user.roles %}
-                        <li class="nav-item">
-                            <a href="{{ path("menu_admin") }}" class="nav-link text-info">
-                                <i class="fas fa-user"></i>
-                                administration comptes
-                            </a>
-                        </li>
-                    {% elseif app.user and "ROLE_MODO" in app.user.roles %}
-                        <li class="nav-item">
-                            <a href="{{ path("gestion_utilisateurs") }}" class="nav-link text-info">
-                                <i class="fas fa-user"></i>
-                                modération comptes
-                            </a>
-                        </li>
-                    {% endif %}
-                    {#{% if path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) == path('accueil') %}
-                        <li class="nav-item active">
-                    {% else %}#}
                     <li class="nav-item">
                     {#{% endif %}#}
                         <a class="nav-link" href="{{ path("accueil") }}">
@@ -62,22 +74,6 @@
                             figures
                         </a>
                     </li>
-                    {% if app.user %}
-                        <li class="nav-item">
-                            <a href="{{ path("liste_favorites", {"slug" : app.user.slug}) }}" class="nav-link">
-                                <i class="fas fa-heart"></i>
-                                favorites
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if app.user and not (app.user.figures is empty) %}
-                        <li class="nav-item">
-                            <a href="{{ path("liste_figures_persos", {"slug" : app.user.slug}) }}" class="nav-link">
-                                <i class="fas fa-pen"></i>
-                                vos figures
-                            </a>
-                        </li>
-                    {% endif %}
                     {% if app.user %}
                         <li class="nav-item">
                             <a href="{{ path("deconnexion") }}" class="nav-link">
