@@ -220,4 +220,17 @@ class VisiteurController extends AbstractController
             "favorites" => $favorites
         ]);
     }
+
+    /**
+     * @Route("liste-figures-persos/{slug}", name="liste_figures_persos")
+     */
+    public function listeFiguresPersos(Utilisateur $utilisateur)
+    {
+        $figures = $utilisateur->getFigures();
+
+        return $this->render("visiteur/listeFiguresPersos.html.twig", [
+            "utilisateur" => $utilisateur,
+            "figures" => $figures
+        ]);
+    }
 }
