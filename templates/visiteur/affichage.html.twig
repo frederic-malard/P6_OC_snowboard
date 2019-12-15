@@ -79,6 +79,23 @@
         {% endif %}
     </div>
 
+    {# prérequis #}
+
+    {% if not figure.prerequis is empty %}
+        <div class="prerequis bg-dark py-3 mt-3">
+            <p class="text-center text-white">
+                prérequis :
+            </p>
+            <p class="text-center">
+                {% for prerequis in figure.prerequis %}
+                    <a href="{{ path("figure_affichage", {"slug" : prerequis.slug}) }}" class="badge badge-warning" style="color: black;">
+                        {{ prerequis.nom }}
+                    </a>
+                {% endfor %}
+            </p>
+        </div>
+    {% endif %}
+
     {# difficulté #}
 
     {% set opacite = 0.2 %}

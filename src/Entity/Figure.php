@@ -351,48 +351,60 @@ class Figure
      */
     public function getPrerequisIndirects($profondeurMaxRecherche = 5): Collection
     {
-        $prerequisIndirects = $this->prerequis; // les prérequis "indirects" portent mal leurs noms (ils contiennent les prérequis directs) ce sont tous les prérequis de la figure, directs ou non
-
-        $longueur = count($prerequisIndirects);
-        $premierAVerifier = 0; // indice du premier prérequis à scanner pour ajouter ses propres prérequis à la liste
-        $trouveNouveauxAuTourPrecedent = true; // si on vérifie tous les prérequis du tableau sans en trouver de nouveaux, ça ne sert à rien de continuer à chercher les prérequis indirects
-        $toursRestants = $profondeurMaxRecherche; // pour éviter que le temps de calcul soit trop long
-
-        while ($toursRestants > 0 && $trouveNouveauxAuTourPrecedent)
-        { 
-            $longueurDebutTour = $longueur; // pour voir si on trouve de nouveaux éléments, et pour savoir où commencer à scanner la prochaine fois (les éléments nouveaux à la fin du tour sont ceux entre $longueurDebutTour et $longueur, qui devrait elle même grandir au fil du tour)
-            for ($i=$premierAVerifier; $i < $longueurDebutTour; $i++) // les nouveaux éléments du tour précédent (ou du début si premier tour)
+        if ($this->prerequis != null && $this->prerequis->isEmpty())
+        {
+            $prerequisIndirects = $this->prerequis; // les prérequis "indirects" portent mal leurs noms (ils contiennent les prérequis directs) ce sont tous les prérequis de la figure, directs ou non
+    
+            $longueur = count($prerequisIndirects);
+            $premierAVerifier = 0; // indice du premier prérequis à scanner pour ajouter ses propres prérequis à la liste
+            $trouveNouveauxAuTourPrecedent = true; // si on vérifie tous les prérequis du tableau sans en trouver de nouveaux, ça ne sert à rien de continuer à chercher les prérequis indirects
+            $toursRestants = $profondeurMaxRecherche; // pour éviter que le temps de calcul soit trop long
+    
+            while ($toursRestants > 0 && $trouveNouveauxAuTourPrecedent)
             { 
-                $prerequisAScanner = $prerequisIndirects[$i]; // prérequis dont on va chercher les prérequis à ce tour ci
-                $prerequisDuPrerequis = $prerequisAScanner->getPrerequis();
-                foreach ($prerequisDuPrerequis as $prerequisNivInf)
-                {
-                    // le if évite les boucles et les répétitions
-                    if ($prerequisNivInf != $this && ! in_array($prerequisNivInf, $prerequisIndirects))
+                $longueurDebutTour = $longueur; // pour voir si on trouve de nouveaux éléments, et pour savoir où commencer à scanner la prochaine fois (les éléments nouveaux à la fin du tour sont ceux entre $longueurDebutTour et $longueur, qui devrait elle même grandir au fil du tour)
+                for ($i=$premierAVerifier; $i < $longueurDebutTour; $i++) // les nouveaux éléments du tour précédent (ou du début si premier tour)
+                { 
+                    $prerequisAScanner = $prerequisIndirects[$i]; // prérequis dont on va chercher les prérequis à ce tour ci
+                    $prerequisDuPrerequis = $prerequisAScanner->getPrerequis();
+                    foreach ($prerequisDuPrerequis as $prerequisNivInf)
                     {
-                        $prerequisIndirects[] = $prerequisNivInf; // on ajoute le prérequis à la liste des prérequis indirects s'il ne s'y trouve pas déjà
-                        $longueur++;
+                        // le if évite les boucles et les répétitions
+                        if ($prerequisNivInf != $this && ! in_array($prerequisNivInf, $prerequisIndirects))
+                        {
+                            $prerequisIndirects[] = $prerequisNivInf; // on ajoute le prérequis à la liste des prérequis indirects s'il ne s'y trouve pas déjà
+                            $longueur++;
+                        }
                     }
                 }
+                
+                $trouveNouveauxAuTourPrecedent = ($longueur != $longueurDebutTour); // de nouveaux éléments ont été trouvés si la taille du tableau a augmentée
+                $premierAVerifier = $longueurDebutTour; // au tour précédent, on scannera les prérequis qui viennent d'être ajoutés à ce tour
+                $toursRestants--;
             }
-            
-            $trouveNouveauxAuTourPrecedent = ($longueur != $longueurDebutTour); // de nouveaux éléments ont été trouvés si la taille du tableau a augmentée
-            $premierAVerifier = $longueurDebutTour; // au tour précédent, on scannera les prérequis qui viennent d'être ajoutés à ce tour
-            $toursRestants--;
-        }
 
-        return $prerequisIndirects;
+            return $prerequisIndirects;
+        }
+        else
+        {
+            return new ArrayCollection();
+        }
     }
     
     public function addPrerequi(self $prerequi): self
     {
-        foreach ($this->prerequis as $prerequisDejaPresents ) {
-            if ($prerequi != $this && $prerequisDejaPresents->getSuitesPossiblesIndirectes()->contains($prerequis))
+        if ($this->prerequis != null)
+        {
+            foreach ($this->prerequis as $prerequisDejaPresents)
             {
-                $this->removePrerequi($prerequisDejaPresents);
+                if ($prerequi != $this && $prerequisDejaPresents->getSuitesPossiblesIndirectes()->contains($prerequi))
+                {
+                    $this->removePrerequi($prerequisDejaPresents);
+                }
             }
         }
-        if ($prerequi != $this && !$this->getPrerequisIndirects()->contains($prerequi)) {
+        if ($prerequi != $this && ($this->getPrerequisIndirects() == null || !$this->getPrerequisIndirects()->contains($prerequi)))
+        {
             $this->prerequis[] = $prerequi;
         }
         
@@ -406,6 +418,11 @@ class Figure
         }
         
         return $this;
+    }
+
+    public function removeAllPrerequis()
+    {
+        $this->prerequis = new ArrayCollection();;
     }
     
     /**
@@ -439,7 +456,7 @@ class Figure
                 $suitesPossiblesDeLaSuitePossible = $suitePossiblesAScanner->getSuitesPossibles();
                 foreach ($suitesPossiblesDeLaSuitePossible as $suitePossiblesNivInf)
                 {
-                    if ($suitePossiblesNivInf != $this && ! in_array($suitePossiblesNivInf, $suitesPossiblesIndirects))
+                    if ($suitePossiblesNivInf != $this && ! $suitesPossiblesIndirects->contains($suitePossiblesNivInf))
                     {
                         $suitesPossiblesIndirects[] = $suitePossiblesNivInf;
                         $longueur++;
