@@ -59,9 +59,17 @@
                     <li class="nav-item">
                         <a href="{{ path("accueil", {"_fragment" : "tricks"}) }}" class="nav-link">
                             <i class="fas fa-snowboarding"></i>
-                            tricks
+                            figures
                         </a>
                     </li>
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a href="{{ path("liste_favorites", {"slug" : app.user.slug}) }}" class="nav-link">
+                                <i class="fas fa-heart"></i>
+                                favorites
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if app.user %}
                         <li class="nav-item">
                             <a href="{{ path("deconnexion") }}" class="nav-link">

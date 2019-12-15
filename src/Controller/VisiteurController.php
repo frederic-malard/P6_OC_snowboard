@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Figure;
 use App\Entity\Difficulte;
 use App\Entity\Commentaire;
+use App\Entity\Utilisateur;
 use App\Form\CommentaireType;
 use App\Repository\FigureRepository;
 use App\Repository\DifficulteRepository;
@@ -181,6 +182,42 @@ class VisiteurController extends AbstractController
 
         return $this->redirectToRoute("figure_affichage", [
             "slug" => $figure->getSlug()
+        ]);
+    }
+
+    /**
+     * @Route("ajouter-favoris/{slugUtilisateur}/{slugFigure}", name="ajout_favoris")
+     */
+    public function ajoutFavoris($slugUtilisateur, $slugFigure, UtilisateurRepository $utilisateurRepository, FigureRepository $figureRepository, ObjectManager $manager)
+    {
+        $utilisateur = $utilisateurRepository->findOneBySlug($slugUtilisateur);
+        $figure = $figureRepository->findOneBySlug($slugFigure);
+
+        $utilisateur->addFavori($figure);
+        $figure->addInteress($utilisateur);
+
+        $manager->persist($utilisateur);
+        $manager->persist($figure);
+
+        $manager->flush();
+
+        $this->addFlash("success", "Figure ajoutée aux favorites");
+
+        return $this->redirectToRoute("figure_affichage", [
+            "slug" => $figure->getSlug()
+        ]);
+    }
+
+    /**
+     * @Route("liste-favorites/{slug}", name="liste_favorites")
+     */
+    public function listeFavorites(Utilisateur $utilisateur)
+    {
+        $favorites = $utilisateur->getFavoris();
+
+        return $this->render("visiteur/listeUtilisateur.html.twig", [
+            "utilisateur" => $utilisateur,
+            "favorites" => $favorites
         ]);
     }
 }
