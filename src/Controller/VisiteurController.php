@@ -119,6 +119,31 @@ class VisiteurController extends AbstractController
             $difficulteMoyenneSansEditeur = round($sommeSansEditeur / $nbDifficultesSansEditeur);
         }
 
+        // uniquement pour le choix de couleur du titre difficulté
+
+        $difficulteGlobale = null;
+        $couleurTitreDifficulte = "white";
+
+        if ($difficulteMoyenneSansEditeur != null and $difficulteEditeur != null)
+        {
+            $difficulteGlobale = round(($difficulteMoyenneSansEditeur + $difficulteEditeur->getNote()) / 2);
+        }
+        elseif ($difficulteEditeur != null)
+        {
+            $difficulteGlobale = $difficulteEditeur->getNote();
+        }
+        else
+        {
+            $difficulteGlobale = $difficulteMoyenneSansEditeur;
+        }
+
+        if ($difficulteGlobale != null)
+        {
+            $rouge = min(round(($difficulteGlobale-1)*(255/4.5)), 255);
+            $vert = min(round((10-$difficulteGlobale)*(255/4.5)), 255);
+            $couleurTitreDifficulte = "rgb(" . $rouge . ", " . $vert . ", 0)";
+        }
+
         $commentaire = new Commentaire();
 
         $commentaire->setAuteur($this->getUser())
@@ -145,7 +170,8 @@ class VisiteurController extends AbstractController
             'utilisateurCourantEstEditeur' => $utilisateurCourantEstEditeur,
             'difficultes' => $difficultes,
             'nbAffichages' => $nbAffichages,
-            'difficulteMoyenneSansEditeur' => $difficulteMoyenneSansEditeur
+            'difficulteMoyenneSansEditeur' => $difficulteMoyenneSansEditeur,
+            'couleur' => $couleurTitreDifficulte
         ]);
     }
 
