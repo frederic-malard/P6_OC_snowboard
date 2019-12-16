@@ -90,18 +90,32 @@
 
     {# prérequis #}
 
-    {% if not figure.prerequis is empty %}
+    {% if not (figure.prerequis is empty and figure.suitesPossibles is empty) %}
         <div class="prerequis bg-dark py-3 mt-3">
-            <p class="text-center text-white">
-                prérequis :
-            </p>
-            <p class="text-center">
-                {% for prerequis in figure.prerequis %}
-                    <a href="{{ path("figure_affichage", {"slug" : prerequis.slug}) }}" class="badge badge-warning" style="color: black;">
-                        {{ prerequis.nom }}
-                    </a>
-                {% endfor %}
-            </p>
+            {% if not figure.prerequis is empty %}
+                <p class="text-center text-warning">
+                    prérequis :
+                </p>
+                <p class="text-center">
+                    {% for prerequis in figure.prerequis %}
+                        <a href="{{ path("figure_affichage", {"slug" : prerequis.slug}) }}" class="badge badge-warning" style="color: black;">
+                            {{ prerequis.nom }}
+                        </a>
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {% if not figure.suitesPossibles is empty %}
+                <p class="text-center text-success">
+                    suites possibles :
+                </p>
+                <p class="text-center">
+                    {% for suitePossible in figure.suitesPossibles %}
+                        <a href="{{ path("figure_affichage", {"slug" : suitePossible.slug}) }}" class="badge badge-success" style="color: black;">
+                            {{ suitePossible.nom }}
+                        </a>
+                    {% endfor %}
+                </p>
+            {% endif %}
         </div>
     {% endif %}
 
