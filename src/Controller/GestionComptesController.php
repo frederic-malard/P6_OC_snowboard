@@ -211,4 +211,14 @@ class GestionComptesController extends AbstractController
         
         return $this->redirectToRoute('gestion_moderateurs');
     }
+
+    /**
+     * @Route("/reinitialiser-mdp", name="reinitialiser_mdp")
+     */
+    public function reinitialiserMdp()
+    {
+        
+
+        return $this->render("gestionComptes/reinitialiserMdp.html.twig");
+    }
 }
