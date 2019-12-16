@@ -25,6 +25,177 @@
     </a>
 </p>
 
+{# champs de recherche de figure (ce qui est dans le champs doit être inclu dans le nom des figures en résultat) + filtres + tri #}
+
+<form action="post" class="container jumbotron" id="blockRecherche">
+    <h3 class="text-center mb-4">
+        rechercher
+    </h3>
+    <div class="form-group">
+        <label for="recherche">recheche par nom</label>
+        <input type="text" id="recherche" name="recherche" class="form-control">
+    </div>
+    <hr class="mt-5 mb-4">
+    <h3 class="text-center mb-4">
+        filtrer
+    </h3>
+    <div class="filtrer">
+        <div class="form-group">
+            <h5 class="mb-3">
+                type de figure
+            </h5>
+            {% for groupe in groupes %}
+                <p style="margin-bottom : 0px;">
+                    <input type="checkbox" name="{{ groupe.nom }}" id="{{ groupe.nom }}">
+                    <label for="{{ groupe.nom }}">{{ groupe.nom }}</label>
+                </p>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <h5 class="mb-3">
+                difficulté 
+            </h5>
+            <p class="my-1">
+                selon éditeur :
+                <label for="minDifficulteEditeur" class="ml-3">
+                    minimale
+                </label>
+                <select name="minDifficulteEditeur" id="minDifficulteEditeur">
+                    {% for i in 1..10 %}
+                        <option value="minDifficulteEditeur" {% if i == 1 %}selected="selected"{% endif %}>
+                            {{ i }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label for="minDifficulteEditeur" class="ml-3">
+                    maximale
+                </label>
+                <select name="minDifficulteEditeur" id="minDifficulteEditeur">
+                    {% for i in 1..10 %}
+                        <option value="minDifficulteEditeur" {% if i == 10 %}selected="selected"{% endif %}>
+                            {{ i }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="checkbox" name="inclureNonNotesEditeur" id="inclureNonNotesEditeur" checked class="ml-3">
+                <label for="inclureNonNotesEditeur">inclure les non notés</label>
+            </p>
+            <p class="my-1">
+                moyenne utilisateurs :
+                <label for="minDifficulteUtilisateur" class="ml-3">
+                    minimale
+                </label>
+                <select name="minDifficulteUtilisateur" id="minDifficulteUtilisateur">
+                    {% for i in 1..10 %}
+                        <option value="minDifficulteUtilisateur" {% if i == 1 %}selected="selected"{% endif %}>
+                            {{ i }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label for="minDifficulteUtilisateur" class="ml-3">
+                    maximale
+                </label>
+                <select name="minDifficulteUtilisateur" id="minDifficulteUtilisateur">
+                    {% for i in 1..10 %}
+                        <option value="minDifficulteUtilisateur" {% if i == 10 %}selected="selected"{% endif %}>
+                            {{ i }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="checkbox" name="inclureNonNotesUtilisateur" id="inclureNonNotesUtilisateur" checked class="ml-3">
+                <label for="inclureNonNotesUtilisateur">inclure les non notés</label>
+            </p>
+            <p class="my-1">
+                selon moi :
+                <label for="minDifficultePerso" class="ml-3">
+                    minimale
+                </label>
+                <select name="minDifficultePerso" id="minDifficultePerso">
+                    {% for i in 1..10 %}
+                        <option value="minDifficultePerso" {% if i == 1 %}selected="selected"{% endif %}>
+                            {{ i }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label for="minDifficultePerso" class="ml-3">
+                    maximale
+                </label>
+                <select name="minDifficultePerso" id="minDifficultePerso">
+                    {% for i in 1..10 %}
+                        <option value="minDifficultePerso" {% if i == 10 %}selected="selected"{% endif %}>
+                            {{ i }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="checkbox" name="inclureNonNotesPerso" id="inclureNonNotesPerso" checked class="ml-3">
+                <label for="inclureNonNotesPerso">inclure les non notés</label>
+            </p>
+        </div>
+        <div class="form-group">
+            <h5 class="mb-3">
+                favoris 
+            </h5>
+            <p class="my-1">
+                <input type="checkbox" name="dansMesFavoris" id="dansMesFavoris">
+                <label for="dansMesFavoris" class="ml-1">dans mes favoris</label>
+            </p>
+            <p class="my-1">
+                <label for="nbMinFavoris">
+                    dans les favoris d'au moins
+                </label>
+                <input type="number" name="nbMinFavoris" id="nbMinFavoris" value="0" style="width:4em;" class="ml-1">
+                <label for="nbMinFavoris" class="ml-1">
+                    utilisateurs
+                </label>
+            </p>
+        </div>
+    </div>
+    <hr class="mt-5 mb-4">
+    <h3 class="text-center mb-4">
+        trier
+    </h3>
+    <div class="form-group">
+        <h5 class="mb-3">
+            trier par
+        </h5>
+        <p class="my-1">
+            <input type="checkbox" name="triDate" id="triDate">
+            <label for="triDate" class="ml-1">date d'ajout</label>
+            <input type="radio" name="ordreDate" id="recenteDabord" class="ml-3">
+            <label for="recenteDabord" class="ml-1">les récentes en premier</label>
+            <input type="radio" name="ordreDate" id="anciennesDabord" class="ml-3">
+            <label for="anciennesDabord" class="ml-1">les anciennes en premier</label>
+        </p>
+        <p class="my-1">
+            <input type="checkbox" name="triDifficulte" id="triDifficulte">
+            <label for="triDifficulte" class="ml-1">difficulté</label>
+            <input type="radio" name="ordreDifficulte" id="difficilesDabord" class="ml-3">
+            <label for="difficilesDabord" class="ml-1">les difficiles en premier</label>
+            <input type="radio" name="ordreDifficulte" id="facilesDabord" class="ml-3">
+            <label for="facilesDabord" class="ml-1">les faciles en premier</label>
+        </p>
+        <p class="my-1">
+            <input type="checkbox" name="triFavoris" id="triFavoris">
+            <label for="triFavoris" class="ml-1">nombre de mises en favoris</label>
+            <input type="radio" name="ordreFavoris" id="succesDabord" class="ml-3">
+            <label for="succesDabord" class="ml-1">les plus appréciées en premier</label>
+            <input type="radio" name="ordreFavoris" id="desaimeesDabord" class="ml-3">
+            <label for="desaimeesDabord" class="ml-1">les moins appréciées en premier</label>
+        </p>
+    </div>
+
+</form>
+
+<p class="text-center mx-4">
+    <a href="#" id="toggleRecherche">
+        <i class="fas fa-arrow-up mx-3" style="font-size: 1.5em;"></i>
+        <i class="fas fa-arrow-down mx-3" style="font-size: 1.5em;"></i>
+        rechercher / filtrer / trier figures
+        <i class="fas fa-arrow-up mx-3" style="font-size: 1.5em;"></i>
+        <i class="fas fa-arrow-down mx-3" style="font-size: 1.5em;"></i>
+    </a>
+</p>
+
 <div id="corps">
     <div id="tricks">
         <div class="row m-3 mt-4">
@@ -84,5 +255,6 @@
     </script>
 
     <script src="/js/gestionFigures.js"></script>
+    <script src="/js/rechercheFigure.js"></script>
 
 {% endblock %}

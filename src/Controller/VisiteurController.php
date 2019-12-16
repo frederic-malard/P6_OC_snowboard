@@ -8,6 +8,7 @@ use App\Entity\Commentaire;
 use App\Entity\Utilisateur;
 use App\Form\CommentaireType;
 use App\Repository\FigureRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\DifficulteRepository;
 use App\Repository\UtilisateurRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,14 @@ class VisiteurController extends AbstractController
     /**
      * @Route("/", name="accueil")
      */
-    public function accueil(FigureRepository $repoFigures)
+    public function accueil(FigureRepository $repoFigures, GroupeRepository $repoGroupes)
     {
         $figures = $repoFigures->findAll();
+        $groupes = $repoGroupes->findAll();
 
         return $this->render('visiteur/accueil.html.twig', [
-            'figures' => $figures
+            'figures' => $figures,
+            'groupes' => $groupes
         ]);
     }
 
