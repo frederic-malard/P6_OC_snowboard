@@ -44,12 +44,12 @@
             <h5 class="mb-3">
                 type de figure
             </h5>
+            <p style="margin-bottom : 0px;">
             {% for groupe in groupes %}
-                <p style="margin-bottom : 0px;">
-                    <input type="checkbox" name="{{ groupe.nom }}" id="{{ groupe.nom }}">
-                    <label for="{{ groupe.nom }}">{{ groupe.nom }}</label>
-                </p>
+                <input type="checkbox" name="{{ groupe.nom }}" id="{{ groupe.nom }}">
+                <label for="{{ groupe.nom }}" style="width: 150px;">{{ groupe.nom }}</label>
             {% endfor %}
+            </p>
         </div>
         <div class="form-group">
             <h5 class="mb-3">
@@ -201,10 +201,15 @@
         <div class="row m-3 mt-4">
             {% for figure in figures %}
                 {% if loop.index > 15 %}
-                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-none">
+                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-none {{ figure.groupe.nom }}" id="{{ figure.nom }}">
                 {% else %}
-                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-block">
+                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-block {{ figure.groupe.nom }}" id="{{ figure.nom }}">
                 {% endif %}
+                    <div class="donnees d-none">
+                        <div class="noteEditeur">
+                            
+                        </div>
+                    </div>
                     <div class="card bg-light mb-3" style="max-width: 20rem;">
                         <a href="{{ path("figure_affichage", {"slug" : figure.slug}) }}">
                             {% if figure.illustrations|length > 0 %}

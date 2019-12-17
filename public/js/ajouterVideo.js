@@ -13,7 +13,6 @@ $(function(){
     }
 
     $('#ajoutVideo').click(function (){
-        console.log("click");
         $('#figure_videos').append($('#figure_videos').data('prototype').replace(/__name__/g, lastIndex));
         handleDeleteButtons();
         lastIndex++;
@@ -27,5 +26,9 @@ $(function(){
     }
 
     handleDeleteButtons();
+
+    // affichage illustrations (pas vidéo du coup)
+
+    $("#figure_illustrations").css("opacity", 1);
 
 });
