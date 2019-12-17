@@ -2,8 +2,8 @@ $(function(){
     $corps = $("#corps");
     $tricks = $('#tricks');
 
-    $figuresAffichees = $('.d-block');
-    $figuresMasquees = $('.d-none');
+    $figuresAffichees = $('.figure.d-block');
+    $figuresMasquees = $('.figure.d-none');
     $figuresTotal = $('.figure');
 
     $portionAffichage = 15;
@@ -14,6 +14,7 @@ $(function(){
 
         $boutonAfficher = $('<button></button>');
         $boutonAfficher.text("Afficher plus");
+        $boutonAfficher.attr("id", "boutonAfficherPlus");
 
         $corps.append($pBouton);
         $pBouton.append($boutonAfficher);
@@ -37,8 +38,8 @@ $(function(){
                 }
             });
 
-            $figuresAffichees = $('.d-block');
-            $figuresMasquees = $('.d-none');
+            $figuresAffichees = $('.figure.d-block');
+            $figuresMasquees = $('.figure.d-none');
 
             // retire le bouton "afficher plus" si toutes les figures sont affichées
             if ($figuresMasquees.length == 0) {
@@ -67,52 +68,7 @@ $(function(){
 
                 $flecheVersHautAffichee = true;
             }
-
-            //$gererModification();
-            $gererSuppression();
         });
         
     }
-
-
-
-    // confirmation modification figure
-
-    /*$gererModification = function(){
-        $lienModifier = $("#modifierFigure");
-
-        $lienModifier.click(function(event){
-            if (confirm("Etes vous sur de vouloir modifier la figure ?")){
-                window.location.replace($pathModifier);
-            }
-        });
-    };
-
-    $gererModification();*/
-
-
-
-    // confirmation suppression figure
-
-    $gererSuppression = function(){
-        /*$liensSupprimer = $('.supprimerFigure');
-    
-        $liensSupprimer.each(function(cle, lien){
-            $lien = jQuery(lien);
-            
-            $lien.click(function(event){
-                event.preventDefault();
-
-                $lien = jQuery(event.target.parentNode);
-                $slugFigure = $lien.attr('id');
-                console.log($slugFigure);
-                
-                if (confirm("Etes vous sur de vouloir supprimer la figure ?")){
-                    window.location.replace($pathSupprimer.substring(0, $pathSupprimer.length - 6) + $slugFigure);
-                }
-            });
-        });*/
-    };
-
-    $gererSuppression();
 });

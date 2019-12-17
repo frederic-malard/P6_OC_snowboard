@@ -44,9 +44,9 @@
             <h5 class="mb-3">
                 type de figure
             </h5>
-            <p style="margin-bottom : 0px;">
+            <p style="margin-bottom : 0px;" class="filtreGroupes">
             {% for groupe in groupes %}
-                <input type="checkbox" name="{{ groupe.nom }}" id="{{ groupe.nom }}">
+                <input type="checkbox" name="{{ groupe.nom }}" id="{{ groupe.nom }}" class="filtreGroupe">
                 <label for="{{ groupe.nom }}" style="width: 150px;">{{ groupe.nom }}</label>
             {% endfor %}
             </p>
@@ -167,12 +167,20 @@
             <label for="anciennesDabord" class="ml-1">les anciennes en premier</label>
         </p>
         <p class="my-1">
-            <input type="checkbox" name="triDifficulte" id="triDifficulte">
-            <label for="triDifficulte" class="ml-1">difficulté</label>
-            <input type="radio" name="ordreDifficulte" id="difficilesDabord" class="ml-3">
-            <label for="difficilesDabord" class="ml-1">les difficiles en premier</label>
-            <input type="radio" name="ordreDifficulte" id="facilesDabord" class="ml-3">
-            <label for="facilesDabord" class="ml-1">les faciles en premier</label>
+            <input type="checkbox" name="triDifficulteEditeur" id="triDifficulteEditeur">
+            <label for="triDifficulteEditeur" class="ml-1">difficulté selon l'éditeur</label>
+            <input type="radio" name="ordreDifficulteEditeur" id="difficilesDabordEditeur" class="ml-3">
+            <label for="difficilesDabordEditeur" class="ml-1">les difficiles en premier</label>
+            <input type="radio" name="ordreDifficulteEditeur" id="facilesDabordEditeur" class="ml-3">
+            <label for="facilesDabordEditeur" class="ml-1">les faciles en premier</label>
+        </p>
+        <p class="my-1">
+            <input type="checkbox" name="triDifficulteAutres" id="triDifficulteAutres">
+            <label for="triDifficulteAutres" class="ml-1">difficulté selon les autres</label>
+            <input type="radio" name="ordreDifficulteAutres" id="difficilesDabordAutres" class="ml-3">
+            <label for="difficilesDabordAutres" class="ml-1">les difficiles en premier</label>
+            <input type="radio" name="ordreDifficulteAutres" id="facilesDabordAutres" class="ml-3">
+            <label for="facilesDabordAutres" class="ml-1">les faciles en premier</label>
         </p>
         <p class="my-1">
             <input type="checkbox" name="triFavoris" id="triFavoris">
@@ -207,7 +215,26 @@
                 {% endif %}
                     <div class="donnees d-none">
                         <div class="noteEditeur">
-                            
+                            {{ figure.getDifficulteEditeur() }}
+                        </div>
+                        <div class="noteMoyenne">
+                            {{ figure.getDifficulteMoyenneSansEditeur() }}
+                        </div>
+                        <div class="notePerso">
+                            {{ figure.getDifficulteUtilisateur(app.user) }}
+                        </div>
+                        <div class="estInteresse">
+                            {% if figure.estInteresse(app.user) %}
+                                oui
+                            {% else %}
+                                non
+                            {% endif %}
+                        </div>
+                        <div class="nbInteresses">
+                            {{ figure.interesses|length }}
+                        </div>
+                        <div class="dateCreation">
+                            {{ figure.getDateCreationString() }}
                         </div>
                     </div>
                     <div class="card bg-light mb-3" style="max-width: 20rem;">
