@@ -146,7 +146,7 @@
 
             {# affichage note éditeur si l'éditeur n'est pas l'utilisateur courant (sinon ferait doublon avec la suite) #}
             {% if not difficulteEditeur is null and not utilisateurCourantEstEditeur %}
-                {{ "selon l'éditeur" | tetes(difficulteEditeur.note) | raw }}
+                {{ "selon l'éditeur" | tetes(difficulteEditeur) | raw }}
                 
                 {% set nbAffiches = 1 %}
 
@@ -162,7 +162,7 @@
             {% endif %}
 
             {# affichage note moyenne sans compter l'éditeur #}
-            {% if not difficultesAutres|length == 0 %}
+            {% if not (difficulteMoyenneSansEditeur is null) %}
                 {{ "moyenne des utilisateurs" | tetes(difficulteMoyenneSansEditeur) | raw }}
                 
                 {% set nbAffiches = nbAffiches + 1 %}
@@ -180,7 +180,7 @@
 
             {# affichage note utilisateur courant s'il en a mit une #}
             {% if not difficulteUtilisateurCourant is null %}
-                {{ "votre avis" | tetes(difficulteUtilisateurCourant.note, true, path("noter_difficulte", {"slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug, "note" : 0})) | raw }}
+                {{ "votre avis" | tetes(difficulteUtilisateurCourant, true, path("noter_difficulte", {"slugFigure" : figure.slug, "slugUtilisateur" : app.user.slug, "note" : 0})) | raw }}
             {% endif %}
 
             {# pour l'utilisateur courant, si est connecté mais n'a pas noté : affichage têtes grisées, qui serviront à noter en cliquant sur l'une d'elle #}

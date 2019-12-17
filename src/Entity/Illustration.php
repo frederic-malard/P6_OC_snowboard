@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IllustrationRepository")
@@ -18,6 +19,7 @@ class Illustration
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex("/((.jpg)|(.jpeg)|(.png)|(.gif))$/")
      */
     private $url;
 

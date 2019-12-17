@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FigureRepository")
@@ -58,6 +60,9 @@ class Figure
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Illustration", mappedBy="figure")
+     * @ A ssert \ All({
+     *      @ Assert \ Valid
+     * })
      */
     private $illustrations;
 
@@ -106,6 +111,27 @@ class Figure
             $this->slug = (new Slugify())->slugify($this->nom);
         if (empty($this->dateCreation))
             $this->dateCreation = new \DateTime();
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function verifieIllustrations(ExecutionContextInterface $context, $payload)
+    {
+        $extensionsInterdites = false;
+
+        foreach ($this->illustrations as $illustration) {
+            $url = $illustration->getUrl();
+            if (! preg_match('/((.jpg)|(.jpeg)|(.png)|(.gif))$/', $url))
+                $extensionsInterdites = true;
+        }
+
+        if ($extensionsInterdites)
+        {
+            $context->buildViolation("L'un des fichiers semble ne pas être une image. Seuls les extensions jpg, jpeg, png et gif sont acceptés.")
+                    ->atPath("illustrations")
+                    ->addViolation();
+        }
     }
 
     public function __construct()
@@ -524,5 +550,107 @@ class Figure
         }
 
         return $this;
+    }
+
+    public function getDifficulteEditeur()
+    {
+        $editeur = $this->editeur;
+
+        $difficultes = $this->difficultes;
+
+        foreach ($difficultes as $difficulte)
+        {
+            $notant = $difficulte->getNotant();
+
+            if ($notant == $editeur)
+                return $difficulte->getNote();
+        }
+
+        return null;
+    }
+
+    public function getDifficulteMoyenneSansEditeur()
+    {
+        $sommeSansEditeur = 0;
+        $nbDifficultesSansEditeur = 0;
+
+        $editeur = $this->editeur;
+
+        $difficultes = $this->difficultes;
+
+        foreach ($difficultes as $difficulte) {
+            $notant = $difficulte->getNotant();
+
+            if ($notant != $editeur)
+            {
+                $sommeSansEditeur += $difficulte->getNote();
+                $nbDifficultesSansEditeur++;
+            } 
+        }
+
+        if ($nbDifficultesSansEditeur == 0)
+            return null;
+        else
+            return round($sommeSansEditeur / $nbDifficultesSansEditeur);
+    }
+
+    public function getDifficulteUtilisateur($utilisateur)
+    {
+        $difficultes = $this->difficultes;
+
+        foreach ($difficultes as $difficulte)
+        {
+            $notant = $difficulte->getNotant();
+
+            if ($notant == $utilisateur)
+                return $difficulte->getNote();
+        }
+
+        return null;
+    }
+
+    // calcule le nombre de difficultés à afficher pour la figure
+    public function nbAffichagesDifficulte($utilisateur)
+    {
+        $nbAffichages = 0;
+
+        if ($utilisateur != null)
+            $nbAffichages++;
+        if ($this->getDifficulteEditeur() != null && $this->editeur != $utilisateur)
+            $nbAffichages++;
+        if ($this->getDifficulteMoyenneSansEditeur() != null)
+            $nbAffichages++;
+        
+        return $nbAffichages;
+    }
+
+    public function couleurTitreDifficulte()
+    {
+        $difficulteGlobale = null;
+        $couleurTitreDifficulte = "white";
+        $difficulteMoyenneSansEditeur = $this->getDifficulteMoyenneSansEditeur();
+        $difficulteEditeur = $this->getDifficulteEditeur();
+
+        if ($difficulteMoyenneSansEditeur != null and $difficulteEditeur != null)
+        {
+            $difficulteGlobale = round(($difficulteMoyenneSansEditeur + $difficulteEditeur) / 2);
+        }
+        elseif ($difficulteEditeur != null)
+        {
+            $difficulteGlobale = $difficulteEditeur;
+        }
+        else
+        {
+            $difficulteGlobale = $difficulteMoyenneSansEditeur;
+        }
+
+        if ($difficulteGlobale != null)
+        {
+            $rouge = min(round(($difficulteGlobale-1)*(255/4.5)), 255);
+            $vert = min(round((10-$difficulteGlobale)*(255/4.5)), 255);
+            $couleurTitreDifficulte = "rgb(" . $rouge . ", " . $vert . ", 0)";
+        }
+
+        return $couleurTitreDifficulte;
     }
 }

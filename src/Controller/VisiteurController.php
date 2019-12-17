@@ -72,80 +72,13 @@ class VisiteurController extends AbstractController
      */
     public function affichage(Figure $figure, DifficulteRepository $difficulteRepo, Request $request, ObjectManager $manager)
     {
-        $difficultes = $difficulteRepo->findByFigure($figure);
-        $difficulteEditeur = null;
-        $difficulteUtilisateurCourant = null;
+        // préparation variables pour twig
+        $difficulteEditeur = $figure->getDifficulteEditeur();
+        $difficulteUtilisateurCourant = $figure->getDifficulteUtilisateur($this->getUser());
         $utilisateurCourantEstEditeur = ($figure->getEditeur() == $this->getUser());
-        $difficultesAutres = array();
-        $nbAffichages = 0;
-        $sommeSansEditeur = 0; // pour calculer la difficulté moyenne donnée par ceux qui ne sont pas l'éditeur
-        $nbDifficultesSansEditeur = 0; // idem, les deux évoluent ci dessous
-
-        if ($this->getUser() != null)
-            $nbAffichages++;
-
-        foreach ($difficultes as $difficulte)
-        {
-            // si la difficulté étudiée est celle donnée par l'utilisateur courant, qui se trouve aussi être l'éditeur de la figure
-            if ($difficulte->getNotant() == $this->getUser() && $difficulte->getNotant() == $figure->getEditeur())
-            {
-                $difficulteUtilisateurCourant = $difficulte;
-                $difficulteEditeur = $difficulte;
-            } // si la difficulté étudiée est donnée par l'utilisateur courant, et qu'il n'est pas l'éditeur
-            elseif ($difficulte->getNotant() == $this->getUser())
-            {
-                $difficulteUtilisateurCourant = $difficulte;
-                $sommeSansEditeur += $difficulte->getNote();
-                $nbDifficultesSansEditeur++;
-            } // si la difficulté étudiée est donnée par l'éditeur, et qu'il n'est pas l'utilisateur courant
-            elseif ($difficulte->getNotant() == $figure->getEditeur())
-            {
-                $difficulteEditeur = $difficulte;
-                $nbAffichages++;
-            }
-            else // si la difficulté étudiée est donnée par quelqu'un qui n'est ni l'utilisateur courant, ni l'éditeur de la figure
-            {
-                if (count($difficultesAutres) == 0)
-                {
-                    $nbAffichages++;
-                }
-                $difficultesAutres[] = $difficulte;
-                $sommeSansEditeur += $difficulte->getNote();
-                $nbDifficultesSansEditeur++;
-            }
-        }
-
-        if ($nbDifficultesSansEditeur == 0) {
-            $difficulteMoyenneSansEditeur = null;
-        }
-        else {
-            $difficulteMoyenneSansEditeur = round($sommeSansEditeur / $nbDifficultesSansEditeur);
-        }
-
-        // uniquement pour le choix de couleur du titre difficulté
-
-        $difficulteGlobale = null;
-        $couleurTitreDifficulte = "white";
-
-        if ($difficulteMoyenneSansEditeur != null and $difficulteEditeur != null)
-        {
-            $difficulteGlobale = round(($difficulteMoyenneSansEditeur + $difficulteEditeur->getNote()) / 2);
-        }
-        elseif ($difficulteEditeur != null)
-        {
-            $difficulteGlobale = $difficulteEditeur->getNote();
-        }
-        else
-        {
-            $difficulteGlobale = $difficulteMoyenneSansEditeur;
-        }
-
-        if ($difficulteGlobale != null)
-        {
-            $rouge = min(round(($difficulteGlobale-1)*(255/4.5)), 255);
-            $vert = min(round((10-$difficulteGlobale)*(255/4.5)), 255);
-            $couleurTitreDifficulte = "rgb(" . $rouge . ", " . $vert . ", 0)";
-        }
+        $nbAffichages = $figure->nbAffichagesDifficulte($this->getUser());
+        $difficulteMoyenneSansEditeur = $figure->getDifficulteMoyenneSansEditeur();
+        $couleurTitreDifficulte = $figure->couleurTitreDifficulte();
 
         $commentaire = new Commentaire();
 
@@ -169,9 +102,7 @@ class VisiteurController extends AbstractController
             'form' => $form->createView(),
             'difficulteEditeur' => $difficulteEditeur,
             'difficulteUtilisateurCourant' => $difficulteUtilisateurCourant,
-            'difficultesAutres' => $difficultesAutres,
             'utilisateurCourantEstEditeur' => $utilisateurCourantEstEditeur,
-            'difficultes' => $difficultes,
             'nbAffichages' => $nbAffichages,
             'difficulteMoyenneSansEditeur' => $difficulteMoyenneSansEditeur,
             'couleur' => $couleurTitreDifficulte
