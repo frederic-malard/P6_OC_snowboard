@@ -80,6 +80,7 @@ class VisiteurController extends AbstractController
         $difficulteMoyenneSansEditeur = $figure->getDifficulteMoyenneSansEditeur();
         $couleurTitreDifficulte = $figure->couleurTitreDifficulte();
 
+        // préparation du formulaire de commentaire
         $commentaire = new Commentaire();
 
         $commentaire->setAuteur($this->getUser())
@@ -87,6 +88,7 @@ class VisiteurController extends AbstractController
 
         $form = $this->createForm(CommentaireType::class, $commentaire);
 
+        // traitement des données éventuelles du formulaire de commentaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())

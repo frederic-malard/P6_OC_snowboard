@@ -596,6 +596,9 @@ class Figure
 
     public function getDifficulteUtilisateur($utilisateur)
     {
+        if ($utilisateur == null)
+            return null;
+        
         $difficultes = $this->difficultes;
 
         foreach ($difficultes as $difficulte)
@@ -652,5 +655,15 @@ class Figure
         }
 
         return $couleurTitreDifficulte;
+    }
+
+    public function estInteresse($utilisateur)
+    {
+        foreach ($this->interesses as $interesse) {
+            if ($interesse == $utilisateur)
+                return true;
+        }
+
+        return false;
     }
 }
