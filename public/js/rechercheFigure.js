@@ -94,12 +94,58 @@ $(function(){
         }
     };
 
+    // masquer les notés (en difficulté) par l'éditeur, les autres, ou l'utilisateur (en fonction du paramètre) avec une note hors de l'intervalle
+
+    $masquerDifficulte = function($typeNote){
+        $minDifficulte = parseInt($("#minDifficulte"+$typeNote).val());
+        $maxDifficulte = parseInt($("#maxDifficulte"+$typeNote).val());
+        $inclureNonNotes = $("#inclureNonNotes"+$typeNote).is(":checked") ? true : false;
+
+        $figures.each(function(){
+            $noteAvecEspaces = ($(this).find(".note"+$typeNote)[0]).textContent;
+            $regex = /[0-9]+/g;
+            $reponses = $regex.exec($noteAvecEspaces);
+            $note = null;
+            if ($reponses != null)
+                $note = parseInt($reponses[0]);
+            if (((! $inclureNonNotes) && $note == null) || ($note != null && ($note < $minDifficulte || $note > $maxDifficulte))){
+                $(this).removeClass("d-block");
+                $(this).addClass("d-none");
+            }
+        });
+    };
+
+    // masquer les figures qui ne sont pas dans les favoris de l'utilisateur courant
+
+    $masquerFavoris = function(){
+        $checkbox = $("#dansMesFavoris");
+        $estCoche = $checkbox.is(":checked");
+        if ($estCoche){
+            $figures.each(function(){
+                $interesseAvecEspaces = ($(this).find(".estInteresse")[0]).textContent;
+                $regex = /[a-z]+/g;
+                $interesseString = $regex.exec($interesseAvecEspaces)[0];
+                $interesse = false;
+                if ($interesseString == "oui")
+                    $interesse = true;
+                if ($estCoche && (! $interesse)){
+                    $(this).removeClass("d-block");
+                    $(this).addClass("d-none");
+                }
+            });
+        }
+    }
+
     // actions à faire à chaque événement
 
     $actions = function(){
         $toutAfficher();
         $masquerRecherche();
         $masquerGroupes();
+        $masquerDifficulte("Editeur");
+        $masquerDifficulte("MoyenneSansEditeur");
+        $masquerDifficulte("Perso");
+        $masquerFavoris();
         $masquerBouton();
     };
 
@@ -118,5 +164,46 @@ $(function(){
         });
     });
 
+    // filtrer par difficulté éditeur
+
+    $("#minDifficulteEditeur").change(function(){
+        $actions();
+    });
+    $("#maxDifficulteEditeur").change(function(){
+        $actions();
+    });
+    $("#inclureNonNotesEditeur").click(function(){
+        $actions();
+    });
+
+    // filtrer par difficulté éditeur
+
+    $("#minDifficulteMoyenneSansEditeur").change(function(){
+        $actions();
+    });
+    $("#maxDifficulteMoyenneSansEditeur").change(function(){
+        $actions();
+    });
+    $("#inclureNonNotesMoyenneSansEditeur").click(function(){
+        $actions();
+    });
+
+    // filtrer par difficulté éditeur
+
+    $("#minDifficultePerso").change(function(){
+        $actions();
+    });
+    $("#maxDifficultePerso").change(function(){
+        $actions();
+    });
+    $("#inclureNonNotesPerso").click(function(){
+        $actions();
+    });
+
+    // filtrer les figures qui ne sont pas favorites de l'utilisateur courant
+
+    $("#dansMesFavoris").click(function(){
+        $actions();
+    });
 
 });

@@ -62,17 +62,17 @@
                 </label>
                 <select name="minDifficulteEditeur" id="minDifficulteEditeur">
                     {% for i in 1..10 %}
-                        <option value="minDifficulteEditeur" {% if i == 1 %}selected="selected"{% endif %}>
+                        <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
                             {{ i }}
                         </option>
                     {% endfor %}
                 </select>
-                <label for="minDifficulteEditeur" class="ml-3">
+                <label for="maxDifficulteEditeur" class="ml-3">
                     maximale
                 </label>
-                <select name="minDifficulteEditeur" id="minDifficulteEditeur">
+                <select name="maxDifficulteEditeur" id="maxDifficulteEditeur">
                     {% for i in 1..10 %}
-                        <option value="minDifficulteEditeur" {% if i == 10 %}selected="selected"{% endif %}>
+                        <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
                             {{ i }}
                         </option>
                     {% endfor %}
@@ -82,28 +82,28 @@
             </p>
             <p class="my-1">
                 moyenne utilisateurs :
-                <label for="minDifficulteUtilisateur" class="ml-3">
+                <label for="minDifficulteMoyenneSansEditeur" class="ml-3">
                     minimale
                 </label>
-                <select name="minDifficulteUtilisateur" id="minDifficulteUtilisateur">
+                <select name="minDifficulteMoyenneSansEditeur" id="minDifficulteMoyenneSansEditeur">
                     {% for i in 1..10 %}
-                        <option value="minDifficulteUtilisateur" {% if i == 1 %}selected="selected"{% endif %}>
+                        <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
                             {{ i }}
                         </option>
                     {% endfor %}
                 </select>
-                <label for="minDifficulteUtilisateur" class="ml-3">
+                <label for="maxDifficulteMoyenneSansEditeur" class="ml-3">
                     maximale
                 </label>
-                <select name="minDifficulteUtilisateur" id="minDifficulteUtilisateur">
+                <select name="maxDifficulteMoyenneSansEditeur" id="maxDifficulteMoyenneSansEditeur">
                     {% for i in 1..10 %}
-                        <option value="minDifficulteUtilisateur" {% if i == 10 %}selected="selected"{% endif %}>
+                        <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
                             {{ i }}
                         </option>
                     {% endfor %}
                 </select>
-                <input type="checkbox" name="inclureNonNotesUtilisateur" id="inclureNonNotesUtilisateur" checked class="ml-3">
-                <label for="inclureNonNotesUtilisateur">inclure les non notés</label>
+                <input type="checkbox" name="inclureNonNotesMoyenneSansEditeur" id="inclureNonNotesMoyenneSansEditeur" checked class="ml-3">
+                <label for="inclureNonNotesMoyenneSansEditeur">inclure les non notés</label>
             </p>
             <p class="my-1">
                 selon moi :
@@ -112,17 +112,17 @@
                 </label>
                 <select name="minDifficultePerso" id="minDifficultePerso">
                     {% for i in 1..10 %}
-                        <option value="minDifficultePerso" {% if i == 1 %}selected="selected"{% endif %}>
+                        <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
                             {{ i }}
                         </option>
                     {% endfor %}
                 </select>
-                <label for="minDifficultePerso" class="ml-3">
+                <label for="maxDifficultePerso" class="ml-3">
                     maximale
                 </label>
-                <select name="minDifficultePerso" id="minDifficultePerso">
+                <select name="maxDifficultePerso" id="maxDifficultePerso">
                     {% for i in 1..10 %}
-                        <option value="minDifficultePerso" {% if i == 10 %}selected="selected"{% endif %}>
+                        <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
                             {{ i }}
                         </option>
                     {% endfor %}
@@ -214,10 +214,8 @@
                     <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-block {{ figure.groupe.nom }}" id="{{ figure.nom }}">
                 {% endif %}
                     <div class="donnees d-none">
-                        <div class="noteEditeur">
-                            {{ figure.getDifficulteEditeur() }}
-                        </div>
-                        <div class="noteMoyenne">
+                        <div class="noteEditeur">{{ figure.getDifficulteEditeur() }}</div>
+                        <div class="noteMoyenneSansEditeur">
                             {{ figure.getDifficulteMoyenneSansEditeur() }}
                         </div>
                         <div class="notePerso">
