@@ -117,7 +117,7 @@ $(function(){
 
     // masquer les figures qui ne sont pas dans les favoris de l'utilisateur courant
 
-    $masquerFavoris = function(){
+    $masquerFavorisPerso = function(){
         $checkbox = $("#dansMesFavoris");
         $estCoche = $checkbox.is(":checked");
         if ($estCoche){
@@ -136,6 +136,25 @@ $(function(){
         }
     }
 
+    // masquer les figures qui ne sont pas dans les favoris d'au moins x utilisateurs
+
+    $masquerFavorisXUtilisateurs = function(){
+        $nbInput = $("#nbMinFavoris");
+        $nbMinFavoris = parseInt($nbInput.val());
+        if ($nbMinFavoris > 0){
+            $figures.each(function(){
+                $nbInteressesAvecEspaces = ($(this).find(".nbInteresses")[0]).textContent;
+                $regex = /[0-9]+/g;
+                $nbInteresses = parseInt($regex.exec($nbInteressesAvecEspaces)[0]);
+                console.log("nbInteresses : " + $nbInteresses + " nbMinFavoris : " + $nbMinFavoris);
+                if ($nbInteresses < $nbMinFavoris){
+                    $(this).removeClass("d-block");
+                    $(this).addClass("d-none");
+                }
+            });
+        }
+    }
+
     // actions à faire à chaque événement
 
     $actions = function(){
@@ -145,7 +164,8 @@ $(function(){
         $masquerDifficulte("Editeur");
         $masquerDifficulte("MoyenneSansEditeur");
         $masquerDifficulte("Perso");
-        $masquerFavoris();
+        $masquerFavorisPerso();
+        $masquerFavorisXUtilisateurs();
         $masquerBouton();
     };
 
@@ -200,9 +220,15 @@ $(function(){
         $actions();
     });
 
-    // filtrer les figures qui ne sont pas favorites de l'utilisateur courant
+    // filtrer les figures qui ne sont pas favorites de l'utilisateur courant ou de X utilisateurs au moins
 
     $("#dansMesFavoris").click(function(){
+        $actions();
+    });
+    $("#nbMinFavoris").keyup(function(){
+        $actions();
+    });
+    $("#nbMinFavoris").mouseup(function(){
         $actions();
     });
 
