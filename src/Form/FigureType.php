@@ -8,6 +8,7 @@ use App\Form\VideoType;
 use App\Repository\GroupeRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,19 +34,21 @@ class FigureType extends AbstractType
                 "label" => "Illustrations (optionnel)",
                 "multiple" => true,
                 "mapped" => false,
-                "required" => false/*,
-                "constraints" => [ // appeler mon callback ici à la place du new file, validator custom (dans src validation, précisé dans doc) en paramètre du callback
-                    new File([
-                        "maxSize" => "10M",
-                        "mimeTypes" => [
-                            "image/png",
-                            "image/jpg",
-                            "image/jpeg",
-                            "image/gif"
-                        ],
-                        "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif, de 10 mégas octets maximum"
+                "required" => false,
+                "constraints" => [
+                    new All([
+                        new File([
+                            "maxSize" => "10M",
+                            "mimeTypes" => [
+                                "image/png",
+                                "image/jpg",
+                                "image/jpeg",
+                                "image/gif"
+                            ],
+                            "mimeTypesMessage" => "Veuillez envoyer une image au format png, jpg, jpeg ou gif, de 10 mégas octets maximum"
+                        ])
                     ])
-                ]*/
+                ]
             ])
             ->add('videos', CollectionType::class, [
                 "label" => "Videos (optionnel)",
