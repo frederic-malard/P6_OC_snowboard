@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Illustration;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class TraitementDonneesFigure
+class TraitementAjoutFigure
 {
     private $manager;
     private $figure;

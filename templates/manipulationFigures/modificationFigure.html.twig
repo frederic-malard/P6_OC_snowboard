@@ -2,7 +2,7 @@
 
 {% block title %}modifier {{ figure.nom }}{% endblock %}
 
-{% form_theme form "manipulationFigures/_collection.html.twig" %}
+{% form_theme form with ["manipulationFigures/_modifs_illu_anciennes.html.twig", "manipulationFigures/_modifs_videos_anciennes.html.twig", "manipulationFigures/_modifs_videos_ajout.html.twig"] %}
 
 {% block body %}
 
@@ -15,5 +15,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="/js/ajouterVideo.js"></script>
+    <script src="/js/modifFigureAjouterVideos.js"></script>
+    {#<script src="/js/supprimerIllustrationsEtVideos.js"></script>#}
 {% endblock %}
