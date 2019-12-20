@@ -6,7 +6,9 @@ use App\Entity\Video;
 use App\Entity\Figure;
 use App\Form\FigureType;
 use App\Entity\Illustration;
-use App\Service\TraitementDonneesFigure;
+use App\Form\FigureModifType;
+use App\Service\TraitementAjoutFigure;
+use App\Service\TraitementModifFigure;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +22,7 @@ class ManipulationFiguresController extends AbstractController
      * @Route("/ajout-figure", name="ajout_figure")
      * @IsGranted("ROLE_USER")
      */
-    public function ajoutFigure(Request $request, ObjectManager $manager, TraitementDonneesFigure $traitement)
+    public function ajoutFigure(Request $request, ObjectManager $manager, TraitementAjoutFigure $traitement)
     {
         $figure = new Figure();
 
@@ -50,14 +52,16 @@ class ManipulationFiguresController extends AbstractController
      * @Route("/modifier/{slug}", name="modifier_figure")
      * @Security("is_granted('ROLE_MODO') or (is_granted('ROLE_USER') and user === figure.getEditeur())")
      */
-    public function modifierFigure(Figure $figure, Request $request, ObjectManager $manager)
+    public function modifierFigure(Figure $figure, Request $request, ObjectManager $manager, TraitementModifFigure $traitement)
     {
-        $form = $this->createForm(FigureType::class, $figure);
+        $form = $this->createForm(FigureModifType::class, $figure);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($figure);
-            $manager->flush();
+            $nouvellesIllustrations = $form['nouvellesIllustrations']->getData();
+            $nouvellesVideos = $form['nouvellesVideos']->getData();
+
+            $traitement->traiterDonnees($figure, $nouvellesIllustrations, $nouvellesVideos);
 
             $this->addFlash("success", "Figure modifiée avec succès");
 

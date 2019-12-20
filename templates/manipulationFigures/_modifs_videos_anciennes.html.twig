@@ -1,0 +1,26 @@
+
+{% block _figure_modif_videos_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _figure_modif_videos_widget %}
+    {{ form_widget(form, {"attr" : {"class" : "row", "style" : "margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;"}}) }}
+{% endblock %}
+
+{% block _figure_modif_videos_entry_row %}
+    <div class="col-md-6 col-lg-4 row mb-3" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;" id="block_{{ id }}">
+        <div class="col-10" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-1" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;">
+            <button type="button" class="btn btn-danger" style="margin-left: 7px;" data-action="delete" data-target="#block_{{ id }}">
+                X
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _figure_modif_videos_entry_widget %}
+    <iframe src="{#{ form.url.vars.value }#}https://www.youtube.com/embed/pYJbes1VChQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="mx-auto my-3 w-100">video{#{ form.alt.vars.value }#}</iframe>
+    {{ form_widget(form, { "attr" : {"class" : "d-none"}}) }}
+{% endblock %}

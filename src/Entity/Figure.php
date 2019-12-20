@@ -59,7 +59,11 @@ class Figure
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Illustration", mappedBy="figure")
+     * @ORM\OneToMany(
+     *      targetEntity="App\Entity\Illustration",
+     *      mappedBy="figure",
+     *      orphanRemoval=true
+     * )
      * @ A ssert \ All({
      *      @ Assert \ Valid
      * })
@@ -67,7 +71,11 @@ class Figure
     private $illustrations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="figure")
+     * @ORM\OneToMany(
+     *      targetEntity="App\Entity\Video",
+     *      mappedBy="figure",
+     *      orphanRemoval=true
+     * )
      */
     private $videos;
 
@@ -103,7 +111,6 @@ class Figure
 
     /**
      * @ORM\PrePersist
-     * @ORM\PreUpdate
      */
     public function prepare()
     {
@@ -111,6 +118,15 @@ class Figure
             $this->slug = (new Slugify())->slugify($this->nom);
         if (empty($this->dateCreation))
             $this->dateCreation = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updating()
+    {
+        $this->slug = (new Slugify())->slugify($this->nom);
+        $this->dateModification = new \DateTime();
     }
 
     /**
@@ -246,6 +262,13 @@ class Figure
      */
     public function getIllustrations(): Collection
     {
+        return $this->illustrations;
+    }
+
+    public function setIllustrations($illustrations): Collection
+    {
+        $this->illustrations = $illustrations;
+
         return $this->illustrations;
     }
 

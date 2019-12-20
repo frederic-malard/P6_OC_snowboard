@@ -1,0 +1,26 @@
+
+{% block _figure_modif_illustrations_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _figure_modif_illustrations_widget %}
+    {{ form_widget(form, {"attr" : {"class" : "row", "style" : "margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;"}}) }}
+{% endblock %}
+
+{% block _figure_modif_illustrations_entry_row %}
+    <div class="col-md-6 col-lg-4 row mb-3" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;" id="block_{{ id }}">
+        <div class="col-10" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-1" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;">
+            <button type="button" class="btn btn-danger" style="margin-left: 7px;" data-action="delete" data-target="#block_{{ id }}">
+                X
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _figure_modif_illustrations_entry_widget %}
+    <img src="{{ form.url.vars.value }}" alt="{{ form.alt.vars.value }}" class="w-100">
+    {{ form_widget(form, { "attr" : {"class" : "d-none"}}) }}
+{% endblock %}

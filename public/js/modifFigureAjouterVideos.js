@@ -2,11 +2,10 @@ $(function(){
 
     lastIndex = 0;
 
-    if ($('#figure_videos').has('.form-group'))
+    if ($('#figure_modif_nouvellesVideos').has('.form-group'))
     {
-        $('#figure_videos .form-group input').each(function(index, value)
+        $('#figure_modif_nouvellesVideos .form-group input').each(function(index, value)
         {
-            console.log("test");
             $idBlock = $(value).attr('id');
             $longueurId = $idBlock.length;
             lastIndex = parseInt($idBlock.substring(19, $longueurId)) + 1;
@@ -14,7 +13,7 @@ $(function(){
     }
 
     $('#ajoutVideo').click(function (){
-        $('#figure_videos').append($('#figure_videos').data('prototype').replace(/__name__/g, lastIndex));
+        $('#figure_modif_nouvellesVideos').append($('#figure_modif_nouvellesVideos').data('prototype').replace(/__name__/g, lastIndex));
         handleDeleteButtons();
         lastIndex++;
     });
@@ -30,6 +29,6 @@ $(function(){
 
     // affichage illustrations (pas vidéo du coup)
 
-    $("#figure_illustrations").css("opacity", 1);
+    $("#figure_modif_nouvellesIllustrations").css("opacity", 1);
 
 });
