@@ -90,7 +90,11 @@ class Figure
     private $dateModification;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Difficulte", mappedBy="figure")
+     * @ORM\OneToMany(
+     *      targetEntity="App\Entity\Difficulte",
+     *      mappedBy="figure",
+     *      orphanRemoval=true
+     * )
      */
     private $difficultes;
 
