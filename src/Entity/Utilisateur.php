@@ -85,6 +85,11 @@ class Utilisateur implements UserInterface
     private $favoris;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $reinitialisation;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -336,6 +341,18 @@ class Utilisateur implements UserInterface
         if ($this->favoris->contains($favori)) {
             $this->favoris->removeElement($favori);
         }
+
+        return $this;
+    }
+
+    public function getReinitialisation(): ?string
+    {
+        return $this->reinitialisation;
+    }
+
+    public function setReinitialisation(?string $reinitialisation): self
+    {
+        $this->reinitialisation = $reinitialisation;
 
         return $this;
     }

@@ -38,6 +38,7 @@ class RegistrationController extends AbstractController
 
             $user->setAVerifier($codeVerification);
 
+            // gestion de l'avatar
             $fichier = $form['attachment']->getData();
 
             if($fichier)

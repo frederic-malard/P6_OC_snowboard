@@ -1,0 +1,12 @@
+<p>
+    Vous avez demandé à réinitialiser votre compte {{ utilisateur.login }} sur le site Snowtricks.
+</p>
+<p>
+    Pour ce faire, veuillez cliquer sur le lien ci dessous.
+</p>
+<p>
+    <a href="{{ url("reinitialisation_nouveau_mdp", {"slug" : utilisateur.slug, "code" : utilisateur.reinitialisation}) }}">Réinitialiser le mot de passe</a>
+</p>
+<p>
+    Vous n'avez pas demandé à réinitialiser le mot de passe, ou souhaitez annuler ? <a href="{{ url("annuler_reinitialisation", {"slug" : utilisateur.slug, "code" : utilisateur.reinitialisation}) }}">Cliquez ici</a>.
+</p>

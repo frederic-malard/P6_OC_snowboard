@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class GestionComptesController extends AbstractController
 {
@@ -215,10 +217,131 @@ class GestionComptesController extends AbstractController
     /**
      * @Route("/reinitialiser-mdp", name="reinitialiser_mdp")
      */
-    public function reinitialiserMdp()
+    public function reinitialiserMdp(UtilisateurRepository $repo, Request $request, \Swift_Mailer $mailer, ObjectManager $manager)
     {
-        
+        if (null != $request->request->get("login"))
+        {
+            $login = $request->request->get("login");
+            $utilisateur = $repo->findOneByLogin($login);
+            if ($utilisateur == null)
+            {
+                $this->addFlash("danger", "login non reconnu. Veuillez réessayer.");
+            }
+            else
+            {
+                // code à vérifier pour se connecter (envoyé par mail)
+
+                $codeVerification = substr(sha1(random_bytes(12)), -12);
+                $utilisateur->setReinitialisation($codeVerification);
+
+                // envoie de l'email de confirmation
+
+                $message = (new \Swift_Message("Réinitialisation mot de passe"))
+                    ->setFrom("frederic.malard.pro@gmail.com")
+                    ->setTo($utilisateur->getMail())
+                    ->setBody(
+                        $this->renderView(
+                            "gestionComptes/mailReinitialisation.html.twig",
+                            [
+                                "utilisateur" => $utilisateur
+                            ]
+                        ),
+                        "text/html"
+                )
+                ->addPart(
+                    $this->renderView(
+                        "gestionComptes/mailReinitialisation.txt.twig",
+                        [
+                            "utilisateur" => $utilisateur
+                        ]
+                    ),
+                    "text/plain"
+                )
+                ;
+
+                $mailer->send($message);
+
+                // sauvegarde du code de réinitialisation
+                $manager->persist($utilisateur);
+                $manager->flush();
+
+                return $this->render("gestionComptes/confirmationReinitialisation.html.twig");
+            }
+        }
 
         return $this->render("gestionComptes/reinitialiserMdp.html.twig");
+    }
+
+    /**
+     * @Route("/nouveau-mot-de-passe/{slug}/{code}", name="reinitialisation_nouveau_mdp")
+     */
+    public function nouveauMotDePasse(Utilisateur $utilisateur, $code, ObjectManager $manager, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        if ($code != null && $code == $utilisateur->getReinitialisation())
+        {
+            if (null != $request->request->get("motDePasse") && null != $request->request->get("confirmation"))
+            {
+                $motDePasse = $request->request->get("motDePasse");
+                $confirmation = $request->request->get("confirmation");
+    
+                if ($motDePasse == $confirmation)
+                {
+                    $utilisateur
+                        ->setMotDePasse(
+                            $passwordEncoder->encodePassword(
+                                $utilisateur,
+                                $motDePasse
+                            )
+                        )
+                        ->setReinitialisation(null)
+                    ;
+
+                    $manager->persist($utilisateur);
+                    $manager->flush();
+
+                    $this->addFlash("success", "Mot de passe réinitialisé avec succès");
+
+                    return $this->redirectToRoute("connexion");
+                }
+                else
+                {
+                    $this->addFlash("warning", "Le mot de passe et la confirmation ne sont pas identiques. Veuillez réessayer.");
+                }
+            }
+        }
+        else
+        {
+            $this->addFlash("danger", "code de réinitialisation non reconnu !");
+
+            return $this->redirectToRoute("accueil");
+        }
+
+        return $this->render("gestionComptes/nouveauMdp.html.twig", [
+            "utilisateur" => $utilisateur
+        ]);
+    }
+
+    /**
+     * @Route("/annuler-reinitialisation/{slug}/{code}", name="annuler_reinitialisation")
+     */
+    public function annulerReinitialisation(Utilisateur $utilisateur, $code, ObjectManager $manager)
+    {
+        if ($code != null && $code == $utilisateur->getReinitialisation())
+        {
+            $utilisateur->setReinitialisation(null);
+
+            $manager->persist($utilisateur);
+            $manager->flush();
+
+            $this->addFlash("success", "Réinitialisation du mot de passe annulée");
+
+            return $this->redirectToRoute("accueil");
+        }
+        else
+        {
+            $this->addFlash("danger", "code de réinitialisation non reconnu !");
+        }
+
+        return $this->redirectToRoute("accueil");
     }
 }

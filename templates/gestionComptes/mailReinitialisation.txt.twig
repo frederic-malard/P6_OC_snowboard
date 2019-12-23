@@ -1,0 +1,5 @@
+Vous avez demandé à réinitialiser votre compte {{ utilisateur.login }} sur le site Snowtricks.\n\n
+Pour ce faire, veuillez copier coller le lien ci dessous dans votre barre d'adresse.\n\n
+{{ url("reinitialisation_nouveau_mdp", {"slug" : utilisateur.slug, "code" : utilisateur.reinitialisation}) }}\n\n
+Vous n'avez pas demandé à réinitialiser le mot de passe, ou souhaitez annuler ?
+{{ url("annuler_reinitialisation", {"slug" : utilisateur.slug, "code" : utilisateur.reinitialisation}) }}
