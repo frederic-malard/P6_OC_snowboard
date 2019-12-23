@@ -39,6 +39,11 @@
     color: #a0a0a0
 }
 
+.custom-file-input[type="file"]
+{
+    opacity : 1;
+}
+
 /*.decaleParBootstraps
 {
     margin-right: 0px;
