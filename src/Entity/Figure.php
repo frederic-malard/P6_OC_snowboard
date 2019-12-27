@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Figure;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
@@ -410,21 +411,44 @@ class Figure
      */
     public function getPrerequisIndirects($profondeurMaxRecherche = 8): Collection
     {
-        if ($this->prerequis != null && $this->prerequis->isEmpty())
+        if ($this->prerequis != null && !$this->prerequis->isEmpty())
         {
             $prerequisIndirects = $this->prerequis; // les prérequis "indirects" portent mal leurs noms (ils contiennent les prérequis directs) ce sont tous les prérequis de la figure, directs ou non
-    
+
+            dump('$prerequisIndirects');
+            dump($prerequisIndirects);
+            dump('$this->getPrerequis()');
+            dump($this->getPrerequis());
+            
             $longueur = count($prerequisIndirects);
             $premierAVerifier = 0; // indice du premier prérequis à scanner pour ajouter ses propres prérequis à la liste
             $trouveNouveauxAuTourPrecedent = true; // si on vérifie tous les prérequis du tableau sans en trouver de nouveaux, ça ne sert à rien de continuer à chercher les prérequis indirects
             $toursRestants = $profondeurMaxRecherche; // pour éviter que le temps de calcul soit trop long
-    
+            
             while ($toursRestants > 0 && $trouveNouveauxAuTourPrecedent)
             { 
+                dump("getPrerequisIndirects if while");
                 $longueurDebutTour = $longueur; // pour voir si on trouve de nouveaux éléments, et pour savoir où commencer à scanner la prochaine fois (les éléments nouveaux à la fin du tour sont ceux entre $longueurDebutTour et $longueur, qui devrait elle même grandir au fil du tour)
                 for ($i=$premierAVerifier; $i < $longueurDebutTour; $i++) // les nouveaux éléments du tour précédent (ou du début si premier tour)
                 { 
+                    dump("getPrerequisIndirects if while for");
+                    
                     $prerequisAScanner = $prerequisIndirects[$i]; // prérequis dont on va chercher les prérequis à ce tour ci
+                    
+                    if ($this->nom == "Est voluptates vero voluptatum.")
+                    {
+                        dump($prerequisAScanner);
+                        die();
+                    }
+
+                    dump('$prerequisAScanner');
+                    dump($prerequisAScanner);
+                    dump($prerequisAScanner->getNom());
+                    //$prerequisAScanner->addPrerequi(new Figure());
+                    dump($prerequisAScanner->getPrerequis());
+                    if ($toursRestants == 7)
+                        die();
+
                     $prerequisDuPrerequis = $prerequisAScanner->getPrerequis();
                     foreach ($prerequisDuPrerequis as $prerequisNivInf)
                     {
@@ -462,7 +486,7 @@ class Figure
                 }
             }
         }
-        if ($prerequi != $this && ($this->getPrerequisIndirects() == null || !$this->getPrerequisIndirects()->contains($prerequi)))
+        if ($prerequi != $this && ($this->getPrerequisIndirects() == null || $this->getPrerequisIndirects()->isEmpty() || !$this->getPrerequisIndirects()->contains($prerequi)))
         {
             $this->prerequis[] = $prerequi;
         }
