@@ -38,17 +38,30 @@ class Figure
     /**
      * note : nullable car peut supprimer utilisateur sans supprimer figure
      * 
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="figures")
+     * @ORM\ManyToOne(
+     *      targetEntity="App\Entity\Utilisateur",
+     *      inversedBy="figures",
+     *      onDelete="SET NULL"
+     * )
      */
     private $editeur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="figure", orphanRemoval=true)
+     * @ORM\OneToMany(
+     *      targetEntity="App\Entity\Commentaire",
+     *      mappedBy="figure",
+     *      orphanRemoval=true,
+     *      onDelete="SET NULL"
+     * )
      */
     private $commentaires;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Groupe", inversedBy="figures")
+     * @ORM\ManyToOne(
+     *      targetEntity="App\Entity\Groupe",
+     *      inversedBy="figures",
+     *      onDelete="SET NULL"
+     * )
      * @ORM\JoinColumn(nullable=false)
      */
     private $groupe;
@@ -565,6 +578,11 @@ class Figure
     public function getInteresses(): Collection
     {
         return $this->interesses;
+    }
+
+    public function setInteresses($interesses)
+    {
+        $this->interesses = $interesses;
     }
 
     public function addInteress(Utilisateur $interess): self
