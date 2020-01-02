@@ -47,7 +47,7 @@
         <img src="{{ illustration.url }}" alt="{{ illustration.alt }}" style="display: block; width: 250px;" class="mx-auto my-3">
     {% endfor %}
     {% for video in figure.videos %}
-        <iframe src="https://www.youtube.com/embed/pYJbes1VChQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 250px;" class="mx-auto my-3">{{ video.alt }}</iframe>
+        <iframe src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 250px;" class="mx-auto my-3">{{ video.alt }}</iframe>
     {% endfor %}
 </div>
 
