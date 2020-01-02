@@ -13,6 +13,7 @@ use Faker\Provider\Youtube;
 use App\Entity\Illustration;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -99,11 +100,17 @@ class AppFixtures extends Fixture
     {
         $dossierIllustrations = "/illustrations/";
 
+        $illustrations = new ArrayCollection();
+
         foreach ($nomsImages as $nomImage) {
-            $illustrations[] = (new Illustration())
+            $illustration = new Illustration();
+
+            $illustration
                 ->setUrl($dossierIllustrations . $nomImage)
                 ->setAlt("photo " . $nomImage)
             ;
+
+            $illustrations->add($illustration);
         }
 
         return $illustrations;
@@ -114,11 +121,17 @@ class AppFixtures extends Fixture
         $youtubeEmbed = "https://www.youtube.com/embed/";
         //$dailymotionEmbed = "https://www.dailymotion.com/video/";
 
+        $videos = new ArrayCollection();
+
         foreach ($embeds as $embed) {
-            $videos[] = (new Video())
+            $video = new Video();
+
+            $video
                 ->setUrl($youtubeEmbed . $embed)
                 ->setAlt("video")
             ;
+
+            $videos->add($video);
         }
 
         return $videos;
@@ -135,7 +148,9 @@ class AppFixtures extends Fixture
                 $interesses[] = $utilisateur;
         }
 
-        $figure = (new Figure())
+        $figure = new Figure();
+
+        $figure
             ->setNom($nom)
             ->setDescription($description)
             ->setEditeur($editeur)
@@ -199,7 +214,7 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($regular, $illustrations, $videos);
+        $this->liensFigureIllusVideos($regular, $illustrations, $videos);
         
         $figures["regular"] = $regular;
         
@@ -227,7 +242,7 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($goofy, $illustrations, $videos);
+        $this->liensFigureIllusVideos($goofy, $illustrations, $videos);
         
         $figures["goofy"] = $goofy;
 
@@ -242,7 +257,7 @@ class AppFixtures extends Fixture
         $description = "Saisie de la carre frontside de la planche entre les deux pieds avec la main avant.";
         
         $nomsIllustrations = [
-            "mute-grab-1",
+            "mute-grab-1.png",
             "grabs-1.jpg",
             "grabs-2.png",
             "grabs-3.jpg"
@@ -260,10 +275,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($mute, $illustrations, $videos);
+        $this->liensFigureIllusVideos($mute, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $mute->addPrerequi($regular);
+        $mute->addPrerequi($goofy);
         
         $figures["mute"] = $mute;
 
@@ -272,7 +287,7 @@ class AppFixtures extends Fixture
         $description = "Saisie de la carre backside de la planche, entre les deux pieds, avec la main avant. Aussi appelé \"melancholie\" ou \"style week\"";
         
         $nomsIllustrations = [
-            "sad-1"
+            "sad-1.jpg"
         ];
         
         $embeds = ["KEdFwJ4SWq4", "CA5bURVJ5zk"];
@@ -287,10 +302,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($sad, $illustrations, $videos);
+        $this->liensFigureIllusVideos($sad, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $sad->addPrerequi($regular);
+        $sad->addPrerequi($goofy);
         
         $figures["sad"] = $sad;
 
@@ -320,10 +335,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($indy, $illustrations, $videos);
+        $this->liensFigureIllusVideos($indy, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $indy->addPrerequi($regular);
+        $indy->addPrerequi($goofy);
         
         $figures["indy"] = $indy;
 
@@ -351,10 +366,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($stalefish, $illustrations, $videos);
+        $this->liensFigureIllusVideos($stalefish, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $stalefish->addPrerequi($regular);
+        $stalefish->addPrerequi($goofy);
         
         $figures["stalefish"] = $stalefish;
 
@@ -386,10 +401,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($tail, $illustrations, $videos);
+        $this->liensFigureIllusVideos($tail, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $tail->addPrerequi($regular);
+        $tail->addPrerequi($goofy);
         
         $figures["tail"] = $tail;
 
@@ -418,10 +433,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($nose, $illustrations, $videos);
+        $this->liensFigureIllusVideos($nose, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $nose->addPrerequi($regular);
+        $nose->addPrerequi($goofy);
         
         $figures["nose"] = $nose;
 
@@ -449,10 +464,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($japan, $illustrations, $videos);
+        $this->liensFigureIllusVideos($japan, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $japan->addPrerequi($regular);
+        $japan->addPrerequi($goofy);
         
         $figures["japan"] = $japan;
 
@@ -480,10 +495,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($seatbelt, $illustrations, $videos);
+        $this->liensFigureIllusVideos($seatbelt, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $seatbelt->addPrerequi($regular);
+        $seatbelt->addPrerequi($goofy);
         
         $figures["seatbelt"] = $seatbelt;
 
@@ -510,10 +525,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($truckdriver, $illustrations, $videos);
+        $this->liensFigureIllusVideos($truckdriver, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $truckdriver->addPrerequi($regular);
+        $truckdriver->addPrerequi($goofy);
         
         $figures["truckdriver"] = $truckdriver;
 
@@ -541,10 +556,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($r180, $illustrations, $videos);
+        $this->liensFigureIllusVideos($r180, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $r180->addPrerequi($regular);
+        $r180->addPrerequi($goofy);
         
         $figures["180"] = $r180;
 
@@ -566,10 +581,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($r360, $illustrations, $videos);
+        $this->liensFigureIllusVideos($r360, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $r360->addPrerequi($regular);
+        $r360->addPrerequi($goofy);
         
         $figures["360"] = $r360;
 
@@ -591,10 +606,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($r540, $illustrations, $videos);
+        $this->liensFigureIllusVideos($r540, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $r540->addPrerequi($regular);
+        $r540->addPrerequi($goofy);
         
         $figures["540"] = $r540;
 
@@ -616,10 +631,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($r720, $illustrations, $videos);
+        $this->liensFigureIllusVideos($r720, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $r720->addPrerequi($regular);
+        $r720->addPrerequi($goofy);
         
         $figures["720"] = $r720;
 
@@ -641,10 +656,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($r900, $illustrations, $videos);
+        $this->liensFigureIllusVideos($r900, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $r900->addPrerequi($regular);
+        $r900->addPrerequi($goofy);
         
         $figures["900"] = $r900;
 
@@ -666,10 +681,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($r1080, $illustrations, $videos);
+        $this->liensFigureIllusVideos($r1080, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $r1080->addPrerequi($regular);
+        $r1080->addPrerequi($goofy);
         
         $figures["1080"] = $r1080;
 
@@ -702,10 +717,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($frontflip, $illustrations, $videos);
+        $this->liensFigureIllusVideos($frontflip, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $frontflip->addPrerequi($regular);
+        $frontflip->addPrerequi($goofy);
         
         $figures["frontflip"] = $frontflip;
 
@@ -731,10 +746,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($backflip, $illustrations, $videos);
+        $this->liensFigureIllusVideos($backflip, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $backflip->addPrerequi($regular);
+        $backflip->addPrerequi($goofy);
         
         $figures["backflip"] = $backflip;
 
@@ -765,10 +780,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($cork540, $illustrations, $videos);
+        $this->liensFigureIllusVideos($cork540, $illustrations, $videos);
 
-        $figure->addPrerequi($backflip);
-        $figure->addPrerequi($r540);
+        $cork540->addPrerequi($backflip);
+        $cork540->addPrerequi($r540);
         
         $figures["cork540"] = $cork540;
 
@@ -799,10 +814,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($slide, $illustrations, $videos);
+        $this->liensFigureIllusVideos($slide, $illustrations, $videos);
 
-        $figure->addPrerequi($goofy);
-        $figure->addPrerequi($regular);
+        $slide->addPrerequi($goofy);
+        $slide->addPrerequi($regular);
         
         $figures["slide"] = $slide;
 
@@ -826,9 +841,9 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($noseSlide, $illustrations, $videos);
+        $this->liensFigureIllusVideos($noseSlide, $illustrations, $videos);
 
-        $figure->addPrerequi($slide);
+        $noseSlide->addPrerequi($slide);
         
         $figures["nose slide"] = $noseSlide;
 
@@ -852,9 +867,9 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($tailSlide, $illustrations, $videos);
+        $this->liensFigureIllusVideos($tailSlide, $illustrations, $videos);
 
-        $figure->addPrerequi($slide);
+        $tailSlide->addPrerequi($slide);
         
         $figures["tail slide"] = $tailSlide;
 
@@ -886,7 +901,7 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($oneFootTrick, $illustrations, $videos);
+        $this->liensFigureIllusVideos($oneFootTrick, $illustrations, $videos);
         
         $figures["one foot trick"] = $oneFootTrick;
 
@@ -918,10 +933,10 @@ class AppFixtures extends Fixture
         $illustrations = $this->illustrations($nomsIllustrations);
         $videos = $this->videos($embeds);
 
-        liensFigureIllusVideos($rocketAir, $illustrations, $videos);
+        $this->liensFigureIllusVideos($rocketAir, $illustrations, $videos);
 
-        $figure->addPrerequi($regular);
-        $figure->addPrerequi($goofy);
+        $rocketAir->addPrerequi($regular);
+        $rocketAir->addPrerequi($goofy);
         
         $figures["rocket air"] = $rocketAir;
 
@@ -976,7 +991,7 @@ class AppFixtures extends Fixture
         $utilisateurs = $this->utilisateurs();
         $figures = $this->figures($utilisateurs, $groupes);
         $commentaires = $this->commentaires($utilisateurs, $figures);
-        $difficultes = $this->difficultes($figures, $utilisateurs);
+        $difficultes = $this->difficultes($utilisateurs, $figures);
 
         foreach ($groupes as $groupe) {
             $this->manager->persist($groupe);

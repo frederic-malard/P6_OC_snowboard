@@ -40,8 +40,7 @@ class Figure
      * 
      * @ORM\ManyToOne(
      *      targetEntity="App\Entity\Utilisateur",
-     *      inversedBy="figures",
-     *      onDelete="SET NULL"
+     *      inversedBy="figures"
      * )
      */
     private $editeur;
@@ -50,8 +49,7 @@ class Figure
      * @ORM\OneToMany(
      *      targetEntity="App\Entity\Commentaire",
      *      mappedBy="figure",
-     *      orphanRemoval=true,
-     *      onDelete="SET NULL"
+     *      orphanRemoval=true
      * )
      */
     private $commentaires;
@@ -59,8 +57,7 @@ class Figure
     /**
      * @ORM\ManyToOne(
      *      targetEntity="App\Entity\Groupe",
-     *      inversedBy="figures",
-     *      onDelete="SET NULL"
+     *      inversedBy="figures"
      * )
      * @ORM\JoinColumn(nullable=false)
      */
@@ -282,11 +279,11 @@ class Figure
         return $this->illustrations;
     }
 
-    public function setIllustrations($illustrations): Collection
+    public function setIllustrations($illustrations)
     {
         $this->illustrations = $illustrations;
 
-        return $this->illustrations;
+        return $this;
     }
 
     public function addIllustration(Illustration $illustration): self
@@ -318,6 +315,13 @@ class Figure
     public function getVideos(): Collection
     {
         return $this->videos;
+    }
+
+    public function setVideos($videos)
+    {
+        $this->videos = $videos;
+
+        return $this;
     }
 
     public function addVideo(Video $video): self
@@ -583,6 +587,12 @@ class Figure
     public function setInteresses($interesses)
     {
         $this->interesses = $interesses;
+
+        foreach ($interesses as $interesse) {
+            $interesse->addFavori($this);
+        }
+
+        return $this;
     }
 
     public function addInteress(Utilisateur $interess): self
