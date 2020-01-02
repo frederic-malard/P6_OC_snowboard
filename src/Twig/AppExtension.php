@@ -16,6 +16,10 @@ class AppExtension extends AbstractExtension
 
     public function tetesDeMort($enTete, $note = 0, $liens = false, $pathSansNote = "")
     {
+        dump($enTete);
+        dump($note);
+        dump($liens);
+        dump($pathSansNote);
         // opacité des têtes semi transparentes
 
         $opacite = 0.2;
@@ -106,6 +110,7 @@ class AppExtension extends AbstractExtension
                     $longueurPath = strlen($pathSansNote);
                     $pathSansNote = substr($pathSansNote, 0, $longueurPath - 1);
                     $path = $pathSansNote . $i;
+                    $pathSansNote = $path; // sinon à chaque tour de boucle ça raccourci
 
                     // href avec path
                     $html .= "<a href=\"";
@@ -145,6 +150,7 @@ class AppExtension extends AbstractExtension
                     $longueurPath = strlen($pathSansNote);
                     $pathSansNote = substr($pathSansNote, 0, $longueurPath - 1);
                     $path = $pathSansNote . ($i + $note);
+                    $pathSansNote = $path; // sinon à chaque tour de boucle ça raccourci
 
                     // href
                     $html .= "<a href=\"";
