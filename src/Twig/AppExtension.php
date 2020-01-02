@@ -104,7 +104,7 @@ class AppExtension extends AbstractExtension
                 {
                     // préparation path : remplacement du 0 mit par défaut
                     $longueurPath = strlen($pathSansNote);
-                    $pathSansNote = substr(0, $longueurPath - 1);
+                    $pathSansNote = substr($pathSansNote, 0, $longueurPath - 1);
                     $path = $pathSansNote . $i;
 
                     // href avec path
@@ -143,7 +143,7 @@ class AppExtension extends AbstractExtension
                 {
                     // préparation path : remplacement du 0 mit par défaut
                     $longueurPath = strlen($pathSansNote);
-                    $pathSansNote = substr(0, $longueurPath - 1);
+                    $pathSansNote = substr($pathSansNote, 0, $longueurPath - 1);
                     $path = $pathSansNote . ($i + $note);
 
                     // href
