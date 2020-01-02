@@ -429,13 +429,13 @@ class Figure
     {
         if ($this->prerequis != null && ! $this->prerequis->isEmpty())
         {
-            $prerequisIndirects = $this->prerequis; // les prérequis "indirects" portent mal leurs noms (ils contiennent les prérequis directs) ce sont tous les prérequis de la figure, directs ou non
-    
+            $prerequisIndirects = clone $this->prerequis; // les prérequis "indirects" portent mal leurs noms (ils contiennent les prérequis directs) ce sont tous les prérequis de la figure, directs ou non
+            
             $longueur = count($prerequisIndirects);
             $premierAVerifier = 0; // indice du premier prérequis à scanner pour ajouter ses propres prérequis à la liste
             $trouveNouveauxAuTourPrecedent = true; // si on vérifie tous les prérequis du tableau sans en trouver de nouveaux, ça ne sert à rien de continuer à chercher les prérequis indirects
             $toursRestants = $profondeurMaxRecherche; // pour éviter que le temps de calcul soit trop long
-    
+            
             while ($toursRestants > 0 && $trouveNouveauxAuTourPrecedent)
             { 
                 $longueurDebutTour = $longueur; // pour voir si on trouve de nouveaux éléments, et pour savoir où commencer à scanner la prochaine fois (les éléments nouveaux à la fin du tour sont ceux entre $longueurDebutTour et $longueur, qui devrait elle même grandir au fil du tour)
@@ -469,7 +469,7 @@ class Figure
     
     public function addPrerequi(self $prerequi): self
     {
-        if ($this->prerequis != null)
+        if ($this->prerequis != null && ! $this->prerequis->isEmpty())
         {
             foreach ($this->prerequis as $prerequisDejaPresents)
             {
@@ -518,7 +518,7 @@ class Figure
     {
         if ($this->suitesPossibles != null && ! $this->suitesPossibles->isEmpty())
         {
-            $suitesPossiblesIndirects = $this->suitesPossibles; // note : rempli automatiquement ? Vérifier
+            $suitesPossiblesIndirects = clone $this->suitesPossibles; // note : rempli automatiquement ? Vérifier
 
             $longueur = count($suitesPossiblesIndirects);
             $premierAVerifier = 0;
