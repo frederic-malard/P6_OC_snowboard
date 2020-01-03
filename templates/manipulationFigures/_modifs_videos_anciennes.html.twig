@@ -21,6 +21,6 @@
 {% endblock %}
 
 {% block _figure_modif_videos_entry_widget %}
-    <iframe src="{#{ form.url.vars.value }#}https://www.youtube.com/embed/pYJbes1VChQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="mx-auto my-3 w-100">video{#{ form.alt.vars.value }#}</iframe>
+    <iframe src="{{ form.url.vars.value }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="mx-auto my-3 w-100">video{#{ form.alt.vars.value }#}</iframe>
     {{ form_widget(form, { "attr" : {"class" : "d-none"}}) }}
 {% endblock %}
