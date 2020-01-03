@@ -59,14 +59,16 @@ class AppFixtures extends Fixture
 
             /*$urlAvatar = "https://randomuser.me/api/portraits/";
             $genre = $faker->randomElement($genres);
-            $idAvatar = $faker->numberBetween(1, 99);
+            $idAvatar = $faker->numberBetween(1, 99);*/
 
-            $avatar = $urlAvatar . $genre . "/" . $idAvatar . ".jpg";*/
-
+            
             $utilisateur->setMail($faker->email);
             
-            /*if ($faker->numberBetween(0, 3) != 0)
-                $utilisateur->setAvatar($avatar);*/
+            if ($i < 7)
+            {
+                $avatar = "/avatars/" . ($i+1) . ".png";
+                $utilisateur->setAvatar($avatar);
+            }
             
             if (! $moderateurExiste)
             {
@@ -950,7 +952,7 @@ class AppFixtures extends Fixture
 
         foreach ($utilisateurs as $utilisateur) {
             foreach ($figures as $figure) {
-                if (mt_rand(0, 7) == 3)
+                if (mt_rand(0, 3) == 2)
                 {
                     $commentaire = new Commentaire();
 
@@ -958,6 +960,9 @@ class AppFixtures extends Fixture
                                 ->setContenu(implode(" ", $faker->sentences()))
                                 ->setAuteur($utilisateur)
                                 ->setFigure($figure);
+
+                    if (mt_rand(0, 4) == 2)
+                        $commentaire->setSignale(true);
                     
                     $this->manager->persist($commentaire);
                 }
