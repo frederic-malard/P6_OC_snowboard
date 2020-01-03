@@ -46,8 +46,8 @@
             </h5>
             <p style="margin-bottom : 0px;" class="filtreGroupes">
             {% for groupe in groupes %}
-                <input type="checkbox" name="{{ groupe.nom }}" id="{{ groupe.nom }}" class="filtreGroupe">
-                <label for="{{ groupe.nom }}" style="width: 150px;">{{ groupe.nom }}</label>
+                <input type="checkbox" name="{{ groupe.slug }}" id="{{ groupe.slug }}" class="filtreGroupe">
+                <label for="{{ groupe.slug }}" style="width: 150px;">{{ groupe.nom }}</label>
             {% endfor %}
             </p>
         </div>
@@ -209,9 +209,9 @@
         <div class="row m-3 mt-4">
             {% for figure in figures %}
                 {% if loop.index > 15 %}
-                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-none {{ figure.groupe.nom }}" id="{{ figure.nom }}">
+                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-none {{ figure.groupe.slug }}" id="{{ figure.slug }}">
                 {% else %}
-                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-block {{ figure.groupe.nom }}" id="{{ figure.nom }}">
+                    <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-block {{ figure.groupe.slug }}" id="{{ figure.slug }}">
                 {% endif %}
                     <div class="donnees d-none">
                         <div class="noteEditeur">{{ figure.getDifficulteEditeur() }}</div>

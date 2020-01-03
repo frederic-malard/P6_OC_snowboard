@@ -146,7 +146,6 @@ $(function(){
                 $nbInteressesAvecEspaces = ($(this).find(".nbInteresses")[0]).textContent;
                 $regex = /[0-9]+/g;
                 $nbInteresses = parseInt($regex.exec($nbInteressesAvecEspaces)[0]);
-                console.log("nbInteresses : " + $nbInteresses + " nbMinFavoris : " + $nbMinFavoris);
                 if ($nbInteresses < $nbMinFavoris){
                     $(this).removeClass("d-block");
                     $(this).addClass("d-none");
