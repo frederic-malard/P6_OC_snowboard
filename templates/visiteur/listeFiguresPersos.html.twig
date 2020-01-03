@@ -10,11 +10,16 @@
     </h1>
 
     <p class="text-center">
-        {% for figure in figures %}
-            <a href="{{ path("figure_affichage", {"slug" : figure.slug}) }}">
-                {{ figure.nom }} <br>
-            </a>
-        {% endfor %}
+        {% if figures|length == 0 %}
+            Vous n'avez publié aucune figure.
+        {% else %}
+            {% for figure in figures %}
+                <a href="{{ path("figure_affichage", {"slug" : figure.slug}) }}">
+                    {{ figure.nom }}
+                </a>
+                <br>
+            {% endfor %}
+        {% endif %}
     </p>
 </div>
 
