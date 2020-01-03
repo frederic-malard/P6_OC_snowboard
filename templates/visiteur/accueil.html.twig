@@ -46,8 +46,10 @@
             </h5>
             <p style="margin-bottom : 0px;" class="filtreGroupes">
             {% for groupe in groupes %}
-                <input type="checkbox" name="{{ groupe.slug }}" id="{{ groupe.slug }}" class="filtreGroupe">
-                <label for="{{ groupe.slug }}" style="width: 150px;">{{ groupe.nom }}</label>
+                <span class="d-inline-block">
+                    <input type="checkbox" name="{{ groupe.slug }}" id="{{ groupe.slug }}" class="filtreGroupe">
+                    <label for="{{ groupe.slug }}" style="width: 150px;">{{ groupe.nom }}</label>
+                </span>
             {% endfor %}
             </p>
         </div>
