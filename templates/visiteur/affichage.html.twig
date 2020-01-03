@@ -34,7 +34,7 @@
             <i class="fas fa-pencil-alt">
             </i>
         </a>
-        <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}" style="color: #fea;" class="ml-3 text-danger">
+        <a href="{{ path("supprimer_figure", {"slug" : figure.slug}) }}" style="color: #fea;" class="ml-3 text-danger" onclick="return confirm('Voulez vous supprimer la figure {{ figure.nom }} ?');">
             <i class="fas fa-trash-alt">
             </i>
         </a>
