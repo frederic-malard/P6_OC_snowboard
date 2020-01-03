@@ -44,7 +44,9 @@
 {# illustrations et vidéos #}
 <div class="d-sm-flex justify-content-center flex-wrap">
     {% for illustration in figure.illustrations %}
-        <img src="{{ illustration.url }}" alt="{{ illustration.alt }}" style="display: block; width: 250px;" class="mx-auto my-3">
+        <a href="{{ illustration.url }}" style="display: block; width: 250px;" class="mx-auto my-3">
+            <img src="{{ illustration.url }}" alt="{{ illustration.alt }}" style="width: 100%;">
+        </a>
     {% endfor %}
     {% for video in figure.videos %}
         <iframe src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 250px;" class="mx-auto my-3">{{ video.alt }}</iframe>
