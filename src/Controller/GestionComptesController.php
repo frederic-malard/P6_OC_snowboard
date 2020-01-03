@@ -49,9 +49,13 @@ class GestionComptesController extends AbstractController
     {
         $figures = $utilisateur->getFigures();
         $commentaires = $utilisateur->getCommentaires();
+        $difficultes = $utilisateur->getDifficultes();
 
         foreach ($figures as $figure) {
             $figure->setEditeur(null);
+        }
+        foreach ($difficultes as $difficulte) {
+            $manager->remove($difficulte);
         }
         foreach ($commentaires as $commentaire) {
             $manager->remove($commentaire);
