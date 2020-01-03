@@ -442,14 +442,21 @@ class Figure
                 for ($i=$premierAVerifier; $i < $longueurDebutTour; $i++) // les nouveaux éléments du tour précédent (ou du début si premier tour)
                 { 
                     $prerequisAScanner = $prerequisIndirects[$i]; // prérequis dont on va chercher les prérequis à ce tour ci
-                    $prerequisDuPrerequis = $prerequisAScanner->getPrerequis();
-                    foreach ($prerequisDuPrerequis as $prerequisNivInf)
+                    /*dump($this);
+                    dump($this->prerequis);
+                    dump($prerequisAScanner);
+                    die();*/
+                    if ($prerequisAScanner != null)
                     {
-                        // le if évite les boucles et les répétitions
-                        if ($prerequisNivInf != $this && ! $prerequisIndirects->contains($prerequisNivInf)) // plutot contains ?
+                        $prerequisDuPrerequis = $prerequisAScanner->getPrerequis();
+                        foreach ($prerequisDuPrerequis as $prerequisNivInf)
                         {
-                            $prerequisIndirects[] = $prerequisNivInf; // on ajoute le prérequis à la liste des prérequis indirects s'il ne s'y trouve pas déjà
-                            $longueur++;
+                            // le if évite les boucles et les répétitions
+                            if ($prerequisNivInf != $this && ! $prerequisIndirects->contains($prerequisNivInf)) // plutot contains ?
+                            {
+                                $prerequisIndirects[] = $prerequisNivInf; // on ajoute le prérequis à la liste des prérequis indirects s'il ne s'y trouve pas déjà
+                                $longueur++;
+                            }
                         }
                     }
                 }
