@@ -171,6 +171,7 @@ $(function(){
         $masquerDifficulte("Perso");
         $masquerFavorisPerso();
         $masquerFavorisXUtilisateurs();
+        $configurationTri();
         $masquerBouton();
     };
 
@@ -312,8 +313,6 @@ $(function(){
         // tri le tableau
         $quicksort(tableau, 0, (tableau.length - 1), $ordreCroissant);
 
-        console.log(tableau);
-
         // ranger les éléments divs en fonction du tableau
         tableau.forEach(element => (function(element){
             $id = element[0];
@@ -325,38 +324,36 @@ $(function(){
     // choix de la fonction de tri
 
     $configurationTri = function(){
-        $toutAfficher();
-
-        $triSelectionne = $("input[type=radio][name=typeTri]:checked")[0].value;
-
-        if ($triSelectionne == "triDate"){
-            if ($("input[type=radio][name=ordreDate]:checked")[0].value == "recenteDabord"){
-                $tri(".dateCreation", false);
+        if (typeof $("input[type=radio][name=typeTri]:checked")[0] !== "undefined"){
+            $triSelectionne = $("input[type=radio][name=typeTri]:checked")[0].value;
+    
+            if ($triSelectionne == "triDate"){
+                if ($("input[type=radio][name=ordreDate]:checked")[0].value == "recenteDabord"){
+                    $tri(".dateCreation", false);
+                } else {
+                    $tri(".dateCreation", true);
+                }
+            } else if ($triSelectionne == "triDifficulteEditeur"){
+                if ($("input[type=radio][name=ordreDifficulteEditeur]:checked")[0].value == "difficilesDabordEditeur"){
+                    $tri(".noteEditeur", false);
+                } else {
+                    $tri(".noteEditeur", true);
+                }
+            } else if ($triSelectionne == "triDifficulteAutres"){
+                if ($("input[type=radio][name=ordreDifficulteAutres]:checked")[0].value == "difficilesDabordAutres"){
+                    $tri(".noteMoyenneSansEditeur", false);
+                } else {
+                    $tri(".noteMoyenneSansEditeur", true);
+                }
+            } else if ($triSelectionne == "triFavoris"){
+                if ($("input[type=radio][name=ordreFavoris]:checked")[0].value == "succesDabord"){
+                    $tri(".nbInteresses", false);
+                } else {
+                    $tri(".nbInteresses", true);
+                }
             } else {
-                $tri(".dateCreation", true);
+                console.log("dans else");
             }
-        } else if ($triSelectionne == "triDifficulteEditeur"){
-            if ($("input[type=radio][name=ordreDifficulteEditeur]:checked")[0].value == "difficilesDabordEditeur"){
-                $tri(".noteEditeur", false);
-            } else {
-                $tri(".noteEditeur", true);
-            }
-        } else if ($triSelectionne == "triDifficulteAutres"){
-            if ($("input[type=radio][name=ordreDifficulteAutres]:checked")[0].value == "difficilesDabordAutres"){
-                $tri(".noteMoyenneSansEditeur", false);
-            } else {
-                $tri(".noteMoyenneSansEditeur", true);
-            }
-        } else if ($triSelectionne == "triFavoris"){
-            if ($("input[type=radio][name=ordreFavoris]:checked")[0].value == "succesDabord"){
-                $tri(".nbInteresses", false);
-            } else {
-                $tri(".nbInteresses", true);
-            }
-        } else {
-            console.log("dans else");
-            console.log($triSelectionne);
-            console.log($("input[type=radio][name=typeTri]:checked"));
         }
     };
     
@@ -364,32 +361,32 @@ $(function(){
     // listeners, lancement choix
     
     $("input[type=radio][name=typeTri]").change(function(){
-        $configurationTri();
+        $actions();
     });
     
     // idem pour changement ordres, ssi la valeur de typetri correspond, sinon ne pas lancer de tri
     
     $("input[type=radio][name=ordreDate]").change(function(){
         if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDate"){
-            $configurationTri();
+            $actions();
         }
     });
     
     $("input[type=radio][name=ordreDifficulteEditeur]").change(function(){
         if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDifficulteEditeur"){
-            $configurationTri();
+            $actions();
         }
     });
     
     $("input[type=radio][name=ordreDifficulteAutres]").change(function(){
         if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDifficulteAutres"){
-            $configurationTri();
+            $actions();
         }
     });
     
     $("input[type=radio][name=ordreFavoris]").change(function(){
         if ($("input[type=radio][name=typeTri]:checked")[0].value == "triFavoris"){
-            $configurationTri();
+            $actions();
         }
     });
 

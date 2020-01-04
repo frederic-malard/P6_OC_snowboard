@@ -59,78 +59,96 @@
             </h5>
             <p class="my-1">
                 selon éditeur :
-                <label for="minDifficulteEditeur" class="ml-3">
-                    minimale
-                </label>
-                <select name="minDifficulteEditeur" id="minDifficulteEditeur">
-                    {% for i in 1..10 %}
-                        <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
-                            {{ i }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <label for="maxDifficulteEditeur" class="ml-3">
-                    maximale
-                </label>
-                <select name="maxDifficulteEditeur" id="maxDifficulteEditeur">
-                    {% for i in 1..10 %}
-                        <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
-                            {{ i }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="checkbox" name="inclureNonNotesEditeur" id="inclureNonNotesEditeur" checked class="ml-3">
-                <label for="inclureNonNotesEditeur">inclure les non notés</label>
+                <span class="d-inline-block">
+                    <label for="minDifficulteEditeur" class="ml-3">
+                        minimale
+                    </label>
+                    <select name="minDifficulteEditeur" id="minDifficulteEditeur">
+                        {% for i in 1..10 %}
+                            <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
+                                {{ i }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="d-inline-block">
+                    <label for="maxDifficulteEditeur" class="ml-3">
+                        maximale
+                    </label>
+                    <select name="maxDifficulteEditeur" id="maxDifficulteEditeur">
+                        {% for i in 1..10 %}
+                            <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
+                                {{ i }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="d-inline-block">
+                    <input type="checkbox" name="inclureNonNotesEditeur" id="inclureNonNotesEditeur" checked class="ml-3">
+                    <label for="inclureNonNotesEditeur">inclure les non notés</label>
+                </span>
             </p>
             <p class="my-1">
                 moyenne utilisateurs :
-                <label for="minDifficulteMoyenneSansEditeur" class="ml-3">
-                    minimale
-                </label>
-                <select name="minDifficulteMoyenneSansEditeur" id="minDifficulteMoyenneSansEditeur">
-                    {% for i in 1..10 %}
-                        <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
-                            {{ i }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <label for="maxDifficulteMoyenneSansEditeur" class="ml-3">
-                    maximale
-                </label>
-                <select name="maxDifficulteMoyenneSansEditeur" id="maxDifficulteMoyenneSansEditeur">
-                    {% for i in 1..10 %}
-                        <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
-                            {{ i }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="checkbox" name="inclureNonNotesMoyenneSansEditeur" id="inclureNonNotesMoyenneSansEditeur" checked class="ml-3">
-                <label for="inclureNonNotesMoyenneSansEditeur">inclure les non notés</label>
+                <span class="d-inline-block">
+                    <label for="minDifficulteMoyenneSansEditeur" class="ml-3">
+                        minimale
+                    </label>
+                    <select name="minDifficulteMoyenneSansEditeur" id="minDifficulteMoyenneSansEditeur">
+                        {% for i in 1..10 %}
+                            <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
+                                {{ i }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="d-inline-block">
+                    <label for="maxDifficulteMoyenneSansEditeur" class="ml-3">
+                        maximale
+                    </label>
+                    <select name="maxDifficulteMoyenneSansEditeur" id="maxDifficulteMoyenneSansEditeur">
+                        {% for i in 1..10 %}
+                            <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
+                                {{ i }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="d-inline-block">
+                    <input type="checkbox" name="inclureNonNotesMoyenneSansEditeur" id="inclureNonNotesMoyenneSansEditeur" checked class="ml-3">
+                    <label for="inclureNonNotesMoyenneSansEditeur">inclure les non notés</label>
+                </span>
             </p>
             <p class="my-1">
                 selon moi :
-                <label for="minDifficultePerso" class="ml-3">
-                    minimale
-                </label>
-                <select name="minDifficultePerso" id="minDifficultePerso">
-                    {% for i in 1..10 %}
-                        <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
-                            {{ i }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <label for="maxDifficultePerso" class="ml-3">
-                    maximale
-                </label>
-                <select name="maxDifficultePerso" id="maxDifficultePerso">
-                    {% for i in 1..10 %}
-                        <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
-                            {{ i }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="checkbox" name="inclureNonNotesPerso" id="inclureNonNotesPerso" checked class="ml-3">
-                <label for="inclureNonNotesPerso">inclure les non notés</label>
+                <span class="d-inline-block">
+                    <label for="minDifficultePerso" class="ml-3">
+                        minimale
+                    </label>
+                    <select name="minDifficultePerso" id="minDifficultePerso">
+                        {% for i in 1..10 %}
+                            <option value="{{ i }}" {% if i == 1 %}selected="selected"{% endif %}>
+                                {{ i }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="d-inline-block">
+                    <label for="maxDifficultePerso" class="ml-3">
+                        maximale
+                    </label>
+                    <select name="maxDifficultePerso" id="maxDifficultePerso">
+                        {% for i in 1..10 %}
+                            <option value="{{ i }}" {% if i == 10 %}selected="selected"{% endif %}>
+                                {{ i }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="d-inline-block">
+                    <input type="checkbox" name="inclureNonNotesPerso" id="inclureNonNotesPerso" checked class="ml-3">
+                    <label for="inclureNonNotesPerso">inclure les non notés</label>
+                </span>
             </p>
         </div>
         <div class="form-group">
@@ -161,36 +179,60 @@
             trier par
         </h5>
         <p class="my-1">
-            <input type="radio" name="typeTri" id="triDate" value="triDate">
+            <span class="d-inline-block">
+                <input type="radio" name="typeTri" id="triDate" value="triDate">
                 <label for="triDate" class="ml-1 text-warning">date d'ajout</label>
-            <input type="radio" name="ordreDate" id="recenteDabord" value="recenteDabord" class="ml-3" checked>
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreDate" id="recenteDabord" value="recenteDabord" class="ml-3" checked>
                 <label for="recenteDabord" class="ml-1">les récentes en premier</label>
-            <input type="radio" name="ordreDate" id="anciennesDabord" value="anciennesDabord" class="ml-3">
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreDate" id="anciennesDabord" value="anciennesDabord" class="ml-3">
                 <label for="anciennesDabord" class="ml-1">les anciennes en premier</label>
+            </span>
         </p>
         <p class="my-1">
-            <input type="radio" name="typeTri" id="triDifficulteEditeur" value="triDifficulteEditeur">
+            <span class="d-inline-block">
+                <input type="radio" name="typeTri" id="triDifficulteEditeur" value="triDifficulteEditeur">
                 <label for="triDifficulteEditeur" class="ml-1 text-warning">difficulté selon l'éditeur</label>
-            <input type="radio" name="ordreDifficulteEditeur" id="difficilesDabordEditeur" value="difficilesDabordEditeur" class="ml-3">
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreDifficulteEditeur" id="difficilesDabordEditeur" value="difficilesDabordEditeur" class="ml-3">
                 <label for="difficilesDabordEditeur" class="ml-1">les difficiles en premier</label>
-            <input type="radio" name="ordreDifficulteEditeur" id="facilesDabordEditeur" value="facilesDabordEditeur" class="ml-3" checked>
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreDifficulteEditeur" id="facilesDabordEditeur" value="facilesDabordEditeur" class="ml-3" checked>
                 <label for="facilesDabordEditeur" class="ml-1">les faciles en premier</label>
+            </span>
         </p>
         <p class="my-1">
-            <input type="radio" name="typeTri" id="triDifficulteAutres" value="triDifficulteAutres">
+            <span class="d-inline-block">
+                <input type="radio" name="typeTri" id="triDifficulteAutres" value="triDifficulteAutres">
                 <label for="triDifficulteAutres" class="ml-1 text-warning">difficulté selon les autres</label>
-            <input type="radio" name="ordreDifficulteAutres" id="difficilesDabordAutres" value="difficilesDabordAutres" class="ml-3">
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreDifficulteAutres" id="difficilesDabordAutres" value="difficilesDabordAutres" class="ml-3">
                 <label for="difficilesDabordAutres" class="ml-1">les difficiles en premier</label>
-            <input type="radio" name="ordreDifficulteAutres" id="facilesDabordAutres" value="facilesDabordAutres" class="ml-3" checked>
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreDifficulteAutres" id="facilesDabordAutres" value="facilesDabordAutres" class="ml-3" checked>
                 <label for="facilesDabordAutres" class="ml-1">les faciles en premier</label>
+            </span>
         </p>
         <p class="my-1">
-            <input type="radio" name="typeTri" id="triFavoris" value="triFavoris">
+            <span class="d-inline-block">
+                <input type="radio" name="typeTri" id="triFavoris" value="triFavoris">
                 <label for="triFavoris" class="ml-1 text-warning">nombre de mises en favoris</label>
-            <input type="radio" name="ordreFavoris" id="succesDabord" value="succesDabord" class="ml-3" checked>
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreFavoris" id="succesDabord" value="succesDabord" class="ml-3" checked>
                 <label for="succesDabord" class="ml-1">les plus appréciées en premier</label>
-            <input type="radio" name="ordreFavoris" id="desaimeesDabord" value="desaimeesDabord" class="ml-3">
+            </span>
+            <span class="d-inline-block">
+                <input type="radio" name="ordreFavoris" id="desaimeesDabord" value="desaimeesDabord" class="ml-3">
                 <label for="desaimeesDabord" class="ml-1">les moins appréciées en premier</label>
+            </span>
         </p>
     </div>
 
