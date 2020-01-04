@@ -328,13 +328,14 @@ $(function(){
         $toutAfficher();
 
         $triSelectionne = $("input[type=radio][name=typeTri]:checked")[0].value;
-        /*if ($triSelectionne == "triDate"){
+
+        if ($triSelectionne == "triDate"){
             if ($("input[type=radio][name=ordreDate]:checked")[0].value == "recenteDabord"){
-                $triDate(true);
+                $tri(".dateCreation", false);
             } else {
-                $triDate(false);
+                $tri(".dateCreation", true);
             }
-        } else */if ($triSelectionne == "triDifficulteEditeur"){
+        } else if ($triSelectionne == "triDifficulteEditeur"){
             if ($("input[type=radio][name=ordreDifficulteEditeur]:checked")[0].value == "difficilesDabordEditeur"){
                 $tri(".noteEditeur", false);
             } else {
@@ -368,11 +369,11 @@ $(function(){
     
     // idem pour changement ordres, ssi la valeur de typetri correspond, sinon ne pas lancer de tri
     
-    /*$("input[type=radio][name=ordreDate]").change(function(){
+    $("input[type=radio][name=ordreDate]").change(function(){
         if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDate"){
             $configurationTri();
         }
-    });*/
+    });
     
     $("input[type=radio][name=ordreDifficulteEditeur]").change(function(){
         if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDifficulteEditeur"){
