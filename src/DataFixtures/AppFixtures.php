@@ -160,6 +160,13 @@ class AppFixtures extends Fixture
             ->setInteresses($interesses)
         ;
 
+        // pour tester le tri par date
+        $timestampRandom = time() - (mt_rand(0, 365*86400)); // un timestamp au hasard dans l'année passée
+        $dateRandom = new \DateTime();
+        $dateRandom->setTimestamp($timestampRandom);
+
+        $figure->setDateCreation($dateRandom);
+
         return $figure;
     }
 
