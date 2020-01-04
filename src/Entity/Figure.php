@@ -357,6 +357,11 @@ class Figure
         return $this->dateCreation->format('d/m/Y H:i:s');
     }
 
+    public function getDateCreationTimestamp()
+    {
+        return $this->dateCreation->getTimestamp();
+    }
+
     public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
