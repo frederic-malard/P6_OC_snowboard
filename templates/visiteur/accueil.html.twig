@@ -160,14 +160,14 @@
         <h5 class="mb-3">
             trier par
         </h5>
-        <p class="my-1">
+        {#<p class="my-1">
             <input type="radio" name="typeTri" id="triDate" value="triDate">
                 <label for="triDate" class="ml-1 text-warning">date d'ajout</label>
             <input type="radio" name="ordreDate" id="recenteDabord" value="recenteDabord" class="ml-3" checked>
                 <label for="recenteDabord" class="ml-1">les récentes en premier</label>
             <input type="radio" name="ordreDate" id="anciennesDabord" value="anciennesDabord" class="ml-3">
                 <label for="anciennesDabord" class="ml-1">les anciennes en premier</label>
-        </p>
+        </p>#}
         <p class="my-1">
             <input type="radio" name="typeTri" id="triDifficulteEditeur" value="triDifficulteEditeur">
                 <label for="triDifficulteEditeur" class="ml-1 text-warning">difficulté selon l'éditeur</label>
@@ -208,7 +208,7 @@
 
 <div id="corps">
     <div id="tricks">
-        <div class="row m-3 mt-4">
+        <div class="row m-3 mt-4 figures">
             {% for figure in figures %}
                 {% if loop.index > 15 %}
                     <div class="figure col-sm-6 col-md-4 col-lg-3 col-xl-2 d-none {{ figure.groupe.slug }}" id="{{ figure.slug }}">

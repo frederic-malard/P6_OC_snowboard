@@ -1,5 +1,11 @@
 $(function(){
 
+    /**************************
+     * 
+     * FILTRES ET RECHERCHES
+     * 
+     **************************/
+
     // préparation variables
 
     $inputGroupes = $(".filtreGroupe");
@@ -229,6 +235,161 @@ $(function(){
     });
     $("#nbMinFavoris").mouseup(function(){
         $actions();
+    });
+    
+    /**********************************
+     * 
+     * TRIS FIGURES
+     * 
+     **********************************/
+
+    // implémentation quicksort
+
+    // note : dans commentaires et noms variables, ordre doit être considéré inverse pour les explications si $ordreCroissant est à false
+    $partition = function($tableau, $debut, $fin, $ordreCroissant){
+        $valeurReference = $tableau[$fin][1]; // valeur qui va scinder la partition du tableau : à gauche, toutes les valeurs inférieurs ou égales, à droite, toutes les plus grandes strictement
+        $indiceDernierInferieur = $debut - 1; // indice de la dernière case telle que, entre debut et indiceDernierInferieur, toutes les valeurs sont plus petites que valeurReference. Se déplace au fil du tri. Commence à -1 car au début, aucune case n'est validée comme étant inférieure.
+        for ($indiceARanger = $debut ; $indiceARanger < $fin ; $indiceARanger++) // note : entre indiceARanger et fin-1, les valeurs sont en vrac et à ranger. Entre indiceDernierInferieur+1 et indiceARanger-1, les valeurs sont supérieurs strictement à valeurReference
+        {
+            if ($ordreCroissant)
+                $condition = ($tableau[$indiceARanger][1] <= $valeurReference);
+            else
+                $condition = ($tableau[$indiceARanger][1] > $valeurReference);
+            if ($condition)
+            {
+                $indiceDernierInferieur++;
+                // échange du premier supérieur (juste après le dernier inférieur), et du premier non trié (indiceARanger), qui, selon la condition, est inférieur à la valeur référence. Ainsi, on aggrandit la zone des inférieurs.
+                $tampon = $tableau[$indiceDernierInferieur];
+                $tableau[$indiceDernierInferieur] = $tableau[$indiceARanger];
+                $tableau[$indiceARanger] = $tampon;
+            }
+        }
+        // échange du premier supérieur (après le dernier inférieur) et de la valeur référence. La valeur référence est ainsi placée entre les valeurs plus petites (placées avant elle) et les plus grande (après elle)
+        $tampon = $tableau[$indiceDernierInferieur + 1];
+        $tableau[$indiceDernierInferieur + 1] = $tableau[$fin];
+        $tableau[$fin] = $tampon;
+
+        return $indiceDernierInferieur + 1; // correspond au nouvel indice de la valeur référence, qui sépare la partition en deux partitions plus petites
+    };
+
+    $quicksort = function($tableau, $debut, $fin, $ordreCroissant){
+        if ($debut < $fin){
+            $pivot = $partition($tableau, $debut, $fin, $ordreCroissant); // indice de la case pour laquelle : soit x sa valeur, une fois la fonction partition achevée, toute case précédent la case pivot contient une valeur plus petite que x ou égale, toute case suivant contient une plus grande strictement
+            $quicksort($tableau, $debut, ($pivot-1), $ordreCroissant); // on relance quicksort récursivement sur les cases entre la case "debut" et le pivot pour trier cette partie du tableau
+            $quicksort($tableau, ($pivot+1), $fin, $ordreCroissant); // analogue
+        }
+    };
+
+    
+    // fonctions de tri
+    
+    $tri = function($classe, $ordreCroissant){
+        // créé le tableau a trier avec les valeurs et les id
+        tableau = [];
+
+        $(".figure").each(function(){
+            $avecEspaces = ($(this).find($classe)[0]).textContent;
+            $regex = /[0-9]+/g;
+
+            $resultat = $regex.exec($avecEspaces);
+
+            if ($resultat == null){ // les difficultes ne sont pas indiquees (donc regex cherchant nombre vaut null) quand les difficultes ne sont pas présentes. Nombre favoris en revanche n'est jamais null donc pas à considérer ici.
+                if($ordreCroissant)
+                $nombre = 11; // range les non notés à la fin
+                else
+                $nombre = 0; // range les non notés à la fin
+            } else {
+                $nombre = parseInt($resultat[0]);
+            }
+
+            $case = [];
+            $case.push($(this).attr("id"));
+            $case.push($nombre);
+
+            tableau.push($case);
+        });
+
+        // tri le tableau
+        $quicksort(tableau, 0, (tableau.length - 1), $ordreCroissant);
+
+        console.log(tableau);
+
+        // ranger les éléments divs en fonction du tableau
+        tableau.forEach(element => (function(element){
+            $id = element[0];
+
+            $(".figure#"+$id).detach().appendTo($(".figures"));
+        })(element));
+    };
+    
+    // choix de la fonction de tri
+
+    $configurationTri = function(){
+        $toutAfficher();
+
+        $triSelectionne = $("input[type=radio][name=typeTri]:checked")[0].value;
+        /*if ($triSelectionne == "triDate"){
+            if ($("input[type=radio][name=ordreDate]:checked")[0].value == "recenteDabord"){
+                $triDate(true);
+            } else {
+                $triDate(false);
+            }
+        } else */if ($triSelectionne == "triDifficulteEditeur"){
+            if ($("input[type=radio][name=ordreDifficulteEditeur]:checked")[0].value == "difficilesDabordEditeur"){
+                $tri(".noteEditeur", false);
+            } else {
+                $tri(".noteEditeur", true);
+            }
+        } else if ($triSelectionne == "triDifficulteAutres"){
+            if ($("input[type=radio][name=ordreDifficulteAutres]:checked")[0].value == "difficilesDabordAutres"){
+                $tri(".noteMoyenneSansEditeur", false);
+            } else {
+                $tri(".noteMoyenneSansEditeur", true);
+            }
+        } else if ($triSelectionne == "triFavoris"){
+            if ($("input[type=radio][name=ordreFavoris]:checked")[0].value == "succesDabord"){
+                $tri(".nbInteresses", false);
+            } else {
+                $tri(".nbInteresses", true);
+            }
+        } else {
+            console.log("dans else");
+            console.log($triSelectionne);
+            console.log($("input[type=radio][name=typeTri]:checked"));
+        }
+    };
+    
+    
+    // listeners, lancement choix
+    
+    $("input[type=radio][name=typeTri]").change(function(){
+        $configurationTri();
+    });
+    
+    // idem pour changement ordres, ssi la valeur de typetri correspond, sinon ne pas lancer de tri
+    
+    /*$("input[type=radio][name=ordreDate]").change(function(){
+        if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDate"){
+            $configurationTri();
+        }
+    });*/
+    
+    $("input[type=radio][name=ordreDifficulteEditeur]").change(function(){
+        if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDifficulteEditeur"){
+            $configurationTri();
+        }
+    });
+    
+    $("input[type=radio][name=ordreDifficulteAutres]").change(function(){
+        if ($("input[type=radio][name=typeTri]:checked")[0].value == "triDifficulteAutres"){
+            $configurationTri();
+        }
+    });
+    
+    $("input[type=radio][name=ordreFavoris]").change(function(){
+        if ($("input[type=radio][name=typeTri]:checked")[0].value == "triFavoris"){
+            $configurationTri();
+        }
     });
 
 });
