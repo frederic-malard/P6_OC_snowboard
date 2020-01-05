@@ -16,10 +16,6 @@ class AppExtension extends AbstractExtension
 
     public function tetesDeMort($enTete, $note = 0, $liens = false, $pathSansNote = "")
     {
-        dump($enTete);
-        dump($note);
-        dump($liens);
-        dump($pathSansNote);
         // opacité des têtes semi transparentes
 
         $opacite = 0.2;
