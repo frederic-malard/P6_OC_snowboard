@@ -25,7 +25,7 @@ $(function(){
     
     $blockRecherche = $("#blockRecherche");
     $blockRecherche.toggle();
-    $(".fa-arrow-up").toggle();
+    $(".fa-arrow-up").hide();
 
     $("#toggleRecherche").click(function(event){
         event.preventDefault();
