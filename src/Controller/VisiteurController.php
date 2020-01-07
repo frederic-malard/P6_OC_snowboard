@@ -63,8 +63,8 @@ class VisiteurController extends AbstractController
      * @Route("/deconnexion", name="deconnexion")
      */
     public function deconnexion()
-    {
-        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+    { // 'This method can be blank - it will be intercepted by the logout key on your firewall'
+        throw new \Exception();
     }
 
     /**
