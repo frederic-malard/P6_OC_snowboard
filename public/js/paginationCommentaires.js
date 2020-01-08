@@ -17,13 +17,13 @@ $(function(){
         }
         $fin = Math.min(($debut + $nbParPages - 1), ($nombreCommentaires - 1));
         for ($i = $debut; $i <= $fin; $i++) {
-            $commentaire = $commentaires[i];
+            $commentaire = $commentaires[$i];
             $commentaire.show();
         }
         $debutSuite = $debut + $nbParPages;
         if ($debutSuite < $nombreCommentaires){
             for ($i = $debutSuite; $i < $nombreCommentaires; $i++) {
-                $commentaire = $commentaires[i];
+                $commentaire = $commentaires[$i];
                 $commentaire.hide();
             }
         }
