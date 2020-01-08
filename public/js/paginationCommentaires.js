@@ -12,6 +12,7 @@ $(function(){
         if ($debut > 0){
             for (let i = 0; i < $debut; i++) {
                 $commentaire = $commentaires[i];
+                $commentaire = $($commentaire);
                 $commentaire.hide();
             }
         }
@@ -19,13 +20,13 @@ $(function(){
         for ($i = $debut; $i <= $fin; $i++) {
             $commentaire = $commentaires[$i];
             $commentaire = $($commentaire);
-            console.log($commentaire);
             $commentaire.show();
         }
         $debutSuite = $debut + $nbParPages;
         if ($debutSuite < $nombreCommentaires){
             for ($i = $debutSuite; $i < $nombreCommentaires; $i++) {
                 $commentaire = $commentaires[$i];
+                $commentaire = $($commentaire);
                 $commentaire.hide();
             }
         }
