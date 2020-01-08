@@ -23,7 +23,7 @@ $(function(){
             $commentaire.show();
         }
         $debutSuite = $debut + $nbParPages;
-        console.log($debutSuite + " " + $nbCommentaires);
+        console.log($debutSuite + " " + $nombreCommentaires);
         if ($debutSuite < $nombreCommentaires){
             console.log("dans if");
             for ($i = $debutSuite; $i < $nombreCommentaires; $i++) {
