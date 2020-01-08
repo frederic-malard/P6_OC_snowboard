@@ -25,8 +25,12 @@ $(function(){
     
     $blockRecherche = $("#blockRecherche");
     $blockRecherche.toggle();
-    console.log(); // sans cette instruction, l'instruction suivante n'est pas effectuée sur mobile
-    $(".fa-arrow-up").toggle();
+    $(".fa-arrow-up").hide();
+    $(".fa-arrow-up").hide();
+    $(".fa-arrow-up").hide();
+    $(".fa-arrow-up").hide();
+    $(".fa-arrow-up").hide();
+    $(".fa-arrow-up").hide();
 
     $("#toggleRecherche").click(function(event){
         event.preventDefault();
