@@ -6,7 +6,6 @@ $(function(){
     {
         $('#figure_videos .form-group input').each(function(index, value)
         {
-            console.log("test");
             $idBlock = $(value).attr('id');
             $longueurId = $idBlock.length;
             lastIndex = parseInt($idBlock.substring(19, $longueurId)) + 1;
