@@ -220,7 +220,7 @@
 
     <div id="commentaires">
         {% for commentaire in figure.commentaires|reverse %}
-            {% if loop.index > 7 %}
+            {% if loop.index > 10 %}
                 <div class="commentaire m-3 d-none">
             {% else %}
                 <div class="commentaire m-3 d-block">
@@ -254,6 +254,46 @@
         {% endfor %}
     </div>
 
+    <div id="paginationDiv">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#">
+                    &laquo;
+                </a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="#">
+                    1
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    2
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    3
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    4
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    5
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </div>
+
     {# bouton de chargement de commentaires #}
     
 </div>
@@ -268,5 +308,6 @@
     </script>
     <script src="/js/gestionCommentaires.js"></script>
     <script src="/js/survolTetesDeMort.js"></script>
+    <script src="/js/paginationCommentaires.js"></script>
 
 {% endblock %}

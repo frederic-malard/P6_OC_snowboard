@@ -1051,14 +1051,16 @@ class AppFixtures extends Fixture
             {
                 $utilisateur->setRole("moderateur")
                             ->setMotDePasse($this->encoder->encodePassword($utilisateur, "mdpModo1048"))
-                            ->setLogin("modo");
+                            ->setLogin("modo")
+                            ->setMail("fred.mgm2@gmail.com");
                 $moderateurExiste = true;
             }
             elseif (! $adminExiste)
             {
                 $utilisateur->setRole("administrateur")
                             ->setMotDePasse($this->encoder->encodePassword($utilisateur, "mdpAdmin8590"))
-                            ->setLogin("admin");
+                            ->setLogin("admin")
+                            ->setMail("fred.mgm2@gmail.com");
                 $adminExiste = true;
             }
             else
