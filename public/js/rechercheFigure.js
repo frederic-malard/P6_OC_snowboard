@@ -25,18 +25,13 @@ $(function(){
     
     $blockRecherche = $("#blockRecherche");
     $blockRecherche.toggle();
-    // $(".fa-arrow-up").hide();
-    setTimeout(
-        function(){
-            $(".fa-arrow-up").hide();
-        },
-        100
-    );
-    /*if ($(".fa-arrow-up").is(":visible")) // bug sous mobile donc besoin de vérifier
-        $(".fa-arrow-up").hide();*/
+    $(".fa-arrow-up").toggle();
 
     $("#toggleRecherche").click(function(event){
         event.preventDefault();
+
+        if ($(".fa-arrow-up").is(":visible") && $(".fa-arrow-down").is(":visible")) // pour répondre à un bug sur mobile
+            $(".fa-arrow-down").toggle();
 
         $(".fa-arrow-up").toggle();
         $(".fa-arrow-down").toggle();
