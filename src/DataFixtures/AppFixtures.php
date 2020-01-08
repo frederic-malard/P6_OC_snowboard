@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
 
         $utilisateurs = array();
 
-        for ($i=0 ; $i<8 ; $i++){
+        for ($i=0 ; $i<14 ; $i++){
             $utilisateur = new Utilisateur();
 
             /*$urlAvatar = "https://randomuser.me/api/portraits/";
@@ -959,7 +959,7 @@ class AppFixtures extends Fixture
 
         foreach ($utilisateurs as $utilisateur) {
             foreach ($figures as $figure) {
-                if (mt_rand(0, 3) == 2)
+                if (mt_rand(0, 2) != 1)
                 {
                     $commentaire = new Commentaire();
 
