@@ -18,6 +18,7 @@ $(function(){
         $fin = Math.min(($debut + $nbParPages - 1), ($nombreCommentaires - 1));
         for ($i = $debut; $i <= $fin; $i++) {
             $commentaire = $commentaires[$i];
+            console.log($commentaire);
             $commentaire.show();
         }
         $debutSuite = $debut + $nbParPages;
