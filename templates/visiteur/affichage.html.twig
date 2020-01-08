@@ -223,7 +223,7 @@
             {#% if loop.index > 10 %}
                 <div class="commentaire m-3 d-none">
             {% else %#}
-                <div class="commentaire m-3 d-block">
+                <div class="commentaire m-3{# d-block#}">
             {#% endif %#}
                 {% if commentaire.auteur.avatar is defined and not commentaire.auteur.avatar is null %}
                     <img src="{{ commentaire.auteur.avatar }}" alt="avatar" style="float: left; width: 64px; height: 64px; display:block;">
