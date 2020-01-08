@@ -23,6 +23,7 @@ $(function(){
             $commentaire.show();
         }
         $debutSuite = $debut + $nbParPages;
+        console.log($debutSuite + " " + $nbParPages);
         if ($debutSuite < $nombreCommentaires){
             for ($i = $debutSuite; $i < $nombreCommentaires; $i++) {
                 $commentaire = $commentaires[$i];
