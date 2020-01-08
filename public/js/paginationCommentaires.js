@@ -6,6 +6,8 @@ $(function(){
     $nombreCommentaires = $commentaires.length;
     $nbParPages = 10;
 
+    $pageSuivanteDiv = $("#pageSuivante");
+
     $nbPages = Math.ceil($nombreCommentaires / $nbParPages);
 
     $afficher = function($debut, $nbParPages, $nombreCommentaires){
@@ -42,7 +44,21 @@ $(function(){
     if ($nombreCommentaires < $nbParPages){
         $paginationDiv.hide();
     } else {
-        
+        for ($i = 0; $i < $nbPages; $i++) {
+            $page = $("<li></li>");
+            $page.addClass("page-item");
+            if ($i == 0)
+                $page.addClass("active");
+
+            $lien = $("<a></a>");
+            $lien.addClass("page-link");
+            $lien.attr("href", "#");
+            $lien.attr("onclick", ("afficher(" + ($i * $nbParPages)));
+            $lien.text($i+1);
+
+            $page.append($lien);
+            $pageSuivanteDiv.insterBefore($page);
+        }
     }
 
 });
