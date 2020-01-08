@@ -30,13 +30,8 @@ $(function(){
     $("#toggleRecherche").click(function(event){
         event.preventDefault();
 
-        if ($(".fa-arrow-up").is(":visible") && $(".fa-arrow-down").is(":visible")) // pour répondre à un bug sur mobile
-            $(".fa-arrow-down").toggle();
-        else
-        {
-            $(".fa-arrow-up").toggle();
-            $(".fa-arrow-down").toggle();
-        }
+        $(".fa-arrow-up").toggle();
+        $(".fa-arrow-down").toggle();
 
         $blockRecherche.toggle();
     });
