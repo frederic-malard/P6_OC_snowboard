@@ -25,12 +25,9 @@ $(function(){
     
     $blockRecherche = $("#blockRecherche");
     $blockRecherche.toggle();
-    $(".fa-arrow-up").hide();
-    $(".fa-arrow-up").hide();
-    $(".fa-arrow-up").hide();
-    $(".fa-arrow-up").hide();
-    $(".fa-arrow-up").hide();
-    $(".fa-arrow-up").hide();
+    $(".fa-arrow-up").toggle();
+    if ($(".fa-arrow-up").is(":visible")) // bug sous mobile donc besoin de vérifier
+        $(".fa-arrow-up").hide();
 
     $("#toggleRecherche").click(function(event){
         event.preventDefault();
