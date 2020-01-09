@@ -1,6 +1,10 @@
 # projet pour openclassrooms.com
 # site communautaire symfony sur les différentes figures de snowboard
 
+SITE EN LIGNE
+
+le site web est en ligne, à l'adresse https://snowboard.frederic-malard.com
+
 INSTALLATION
 
 1. cloner le projet
