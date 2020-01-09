@@ -44,6 +44,18 @@
     opacity : 1;
 }
 
+iframe
+{
+    display: block;
+}
+
+.row iframe
+{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin: auto;
+}
+
 /*.decaleParBootstraps
 {
     margin-right: 0px;
