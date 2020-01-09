@@ -47,9 +47,12 @@
 iframe
 {
     display: block;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin: auto;
 }
 
-.row iframe
+.row
 {
     margin-right: 0px;
     margin-left: 0px;
