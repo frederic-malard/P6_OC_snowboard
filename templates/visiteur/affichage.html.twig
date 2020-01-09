@@ -251,9 +251,9 @@
         {% endfor %}
     </div>
 
-    <div id="paginationDiv" class="d-flex justify-content-center">
+    <div id="paginationDiv" {% if figure.commentaires|length > 10 %}class="d-flex justify-content-center"{% endif %}>
         <ul class="pagination m-auto text-center">
-            <li class="page-item" id="pagePrecedente">
+            <li class="page-item disabled" id="pagePrecedente">
                 <a class="page-link" href="#">
                     &laquo;
                 </a>
