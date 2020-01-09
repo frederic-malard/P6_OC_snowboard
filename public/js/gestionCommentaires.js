@@ -99,8 +99,6 @@ $(function(){
                 $bouton = jQuery(event.target);
                 $idBouton = $bouton.attr('id');
                 $idCommentaire = $idBouton.substring(9);
-
-                console.log($idCommentaire);
                 
                 if (confirm("Etes vous sur de vouloir supprimer le commentaire ?")){
                     window.location.replace($pathSupprimer.substring(0, $pathSupprimer.length - 2) + $idCommentaire);

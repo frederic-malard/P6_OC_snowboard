@@ -52,7 +52,7 @@ class ManipulationFiguresController extends AbstractController
      * @Route("/modifier/{slug}", name="modifier_figure")
      * @Security("is_granted('ROLE_MODO') or (is_granted('ROLE_USER') and user === figure.getEditeur())")
      */
-    public function modifierFigure(Figure $figure, Request $request, ObjectManager $manager, TraitementModifFigure $traitement)
+    public function modifierFigure(Figure $figure, Request $request, TraitementModifFigure $traitement)
     {
         $form = $this->createForm(FigureModifType::class, $figure);
         $form->handleRequest($request);

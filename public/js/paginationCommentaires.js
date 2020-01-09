@@ -42,7 +42,22 @@ $(function(){
         }
     };
 
+    $changerNavPages = function($debut, $nbParPages){
+        $(".active").removeClass("active");
+        $numPage0 = Math.ceil($debut / $nbParPages); // numéro de la page en comptant à partir de 0
+        $($(".num-page")[$numPage0]).addClass("active");
+        if($numPage0 === 0)
+            $("#pagePrecedente").addClass("disabled");
+        else
+            $("#pagePrecedente").removeClass("disabled");
+        if($numPage0 === $nbPages - 1)
+            $("#pageSuivante").addClass("disabled");
+        else
+            $("#pageSuivante").removeClass("disabled");
+    }
+
     $afficher($debut, $nbParPages, $nombreCommentaires);
+    $("#pagePrecedente").addClass("disabled");
 
     $paginationDiv = $("#paginationDiv");
 
@@ -52,13 +67,14 @@ $(function(){
         for ($i = 0; $i < $nbPages; $i++) {
             $page = $("<li></li>");
             $page.addClass("page-item");
+            $page.addClass("num-page");
             if ($i == 0)
                 $page.addClass("active");
 
             $lien = $("<a></a>");
             $lien.addClass("page-link");
             $lien.attr("href", "#");
-            $lien.attr("onclick", ("(function(event){event.preventDefault()})(event); $afficher(" + ($i * $nbParPages) + ", " + $nbParPages + ", " + $nombreCommentaires + ")"));
+            $lien.attr("onclick", ("(function(event){event.preventDefault()})(event); $afficher(" + ($i * $nbParPages) + ", " + $nbParPages + ", " + $nombreCommentaires + "); $changerNavPages(" + ($i * $nbParPages) + ", " + $nbParPages + ")"));
             $lien.text($i+1);
 
             $page.insertBefore($pageSuivanteDiv);
@@ -68,11 +84,13 @@ $(function(){
         $pagePrecedenteDiv.click(function(event){
             event.preventDefault();
             $afficher($debutPrecedent, $nbParPages, $nombreCommentaires);
+            $changerNavPages($debutPrecedent, $nbParPages);
         });
 
         $pageSuivanteDiv.click(function(event){
             event.preventDefault();
             $afficher($debutSuivant, $nbParPages, $nombreCommentaires);
+            $changerNavPages($debutSuivant, $nbParPages);
         });
     }
 
