@@ -57,7 +57,6 @@ $(function(){
     }
 
     $afficher($debut, $nbParPages, $nombreCommentaires);
-    $("#pagePrecedente").addClass("disabled");
 
     $paginationDiv = $("#paginationDiv");
 
