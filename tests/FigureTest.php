@@ -38,23 +38,13 @@ class FigureTest extends TestCase
     public function testPrerequisDoublonEfface() // Possible à tester ? Accès traiterPrerequis
     {
         $figure1 = new Figure();
-        /*$figure2 = new Figure();
-        $figure3 = new Figure();*/
 
         $figure1->setNom("abc");
-        /*$figure2->setNom("def");
-        $figure3->setNom("ghi");*/
-
-        /*$figure2->addPrerequi($figure1);
-        $figure3->addPrerequi($figure2);
-        $figure3->addPrerequi($figure1); // tentative de création de doublons
-        $figure3->addPrerequi($figure3); // tentative de création de répétition
-        $figure1->addPrerequi($figure3); // tentative de création de boucle*/
+        
         $figure1->addPrerequi($figure1); // tentative de création de boucle*/
         
         // vérifie que toutes les mauvaises tentatives aient été déjouées
         $this->assertNotContains($figure1, $figure1->getPrerequis());
-        // $this->assertNotContains($figure1, $figure3->getPrerequis());
     }
 
     public function testSuitePossibleIndirecteTrouvee()
