@@ -282,9 +282,9 @@
                     <div class="card bg-light mb-3" style="max-width: 20rem;">
                         <a href="{{ path("figure_affichage", {"slug" : figure.slug}) }}">
                             {% if figure.illustrations|length > 0 %}
-                                <img src="{{ figure.illustrations[0].url }}" alt="{{ figure.illustrations[0].alt }}" class="miniatureFigure">
+                                <img src="{{ figure.illustrations[0].url }}" alt="{{ figure.illustrations[0].alt }}" class="miniatureFigure" height="150px" width="100%">
                             {% else %}
-                                <img src="/images/enTete.jpg" alt="image par défaut" class="miniatureFigure">
+                                <img src="/images/enTete.jpg" alt="image par défaut" class="miniatureFigure" height="150px" width="100%">
                             {% endif %}
                         </a>
                         <div class="card-header">

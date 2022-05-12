@@ -39,6 +39,8 @@ class VisiteurController extends AbstractController
      */
     public function connexion(AuthenticationUtils $authenticationUtils)
     {
+        $this->addFlash("info", "pour tester : login = user_test ; password = user_test");
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

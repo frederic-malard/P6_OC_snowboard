@@ -25,11 +25,7 @@ $(function(){
     
     $blockRecherche = $("#blockRecherche");
     $blockRecherche.toggle();
-<<<<<<< HEAD
-    $(".fa-arrow-up").hide();
-=======
     $(".fa-arrow-up").toggle();
->>>>>>> 1f93a83bc04efe580de72eb88d2a3d4e011c8469
 
     $("#toggleRecherche").click(function(event){
         event.preventDefault();
