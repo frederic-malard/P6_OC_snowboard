@@ -2,8 +2,8 @@ swiftmailer:
     url: '%env(MAILER_URL)%'
     spool: { type: 'memory' }
     #transport:        gmail
-    #username:         "frederic.malard.pro@gmail.com"
-    #password:         "Zar@2788"
+    #username:         "your mail"
+    #password:         "your password"
     #host:             smtp.gmail.com
     #port:             25
     #encryption:       ssl

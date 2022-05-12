@@ -1,5 +1,4 @@
 ###> symfony/framework-bundle ###
-/.env
 /config/packages/swiftmailer.yaml
 /.env.test
 config/packages/swiftmailer.yaml
@@ -31,3 +30,10 @@ vendor
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+### PERSO ###
+/.env
+/config/packages/swiftmailer.yaml
+**/.DS_Store
+**/_ign_**
+**/~lock**
