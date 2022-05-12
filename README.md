@@ -10,10 +10,10 @@ INSTALLATION
 
 2. Installer les fichiers manquants
 
-2.1. Lancez la commande « composer install » pour installer toutes les dépendances\
-2.1.2 Si nécessaire, faites "composer update"\
-2.2. Remplissez un fichier « .env » avec vos propres informations de base de données et de mail\
-2.3. Configurez un fichier « config/packages/swiftmailer.yaml » avec vos données de mail
+2.1. Remplissez un fichier « .env » avec vos propres informations de base de données et de mail\
+2.2. Lancez la commande « composer install » pour installer toutes les dépendances\
+2.3. Si nécessaire, faites "composer update"\
+2.4. Configurez un fichier « config/packages/swiftmailer.yaml » avec vos données de mail
 
 3. Base de données
 
